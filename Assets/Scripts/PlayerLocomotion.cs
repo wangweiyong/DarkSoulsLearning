@@ -10,7 +10,7 @@ namespace wwy
     {
         Transform cameraObject;
         InputHandler inputHandler;
-        Vector3 moveDiretion;
+        Vector3 moveDirection;
 
         [HideInInspector]
         public Transform myTransform;
@@ -23,8 +23,11 @@ namespace wwy
         [Header("Stats")]
         [SerializeField]
         float movementSpeed = 5;
+        float sprintSpeed = 7;
         [SerializeField]
         float rotationSpeed = 10;
+
+        public bool isSprinting;
 
         // Start is called before the first frame update
         void Start()
@@ -40,25 +43,11 @@ namespace wwy
         public void Update()
         {
             float delta = Time.deltaTime;
-            
+
+            isSprinting = inputHandler.b_Input;
             inputHandler.TickInput(delta);
-
-            moveDiretion = cameraObject.forward * inputHandler.vertical;
-            moveDiretion += cameraObject.right * inputHandler.horizontal;
-            moveDiretion.Normalize();
-
-            float speed = movementSpeed;
-            moveDiretion *= speed;
-
-            Vector3 projectVeclocity = Vector3.ProjectOnPlane(moveDiretion, normalVector);
-            //moveDiretion.y = 0;
-            rigidbody.velocity = projectVeclocity;
-
-            animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0);
-            if (animatorHandler.canRotate)
-            {
-                HandleRotation(delta);
-            }
+            HandleMovement(delta);
+            HandleRollingAndSprint(delta);
         }
 
         #region Movement
@@ -86,6 +75,61 @@ namespace wwy
             Quaternion tr = Quaternion.LookRotation(targetDir);
             Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * rotationSpeed * delta);
             myTransform.rotation = targetRotation;
+        }
+
+        private void HandleMovement(float delta)
+        {
+            if (inputHandler.rollFlag)
+            {
+                return;
+            }
+            moveDirection = cameraObject.forward * inputHandler.vertical;
+            moveDirection += cameraObject.right * inputHandler.horizontal;
+            moveDirection.Normalize();
+
+            float speed = movementSpeed;
+
+            if (inputHandler.sprintFlag)
+            {
+                speed = sprintSpeed;
+                isSprinting = true;
+            }
+            moveDirection *= speed;
+
+            Vector3 projectVeclocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
+            //moveDiretion.y = 0;
+            rigidbody.velocity = projectVeclocity;
+
+            animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, isSprinting);
+            if (animatorHandler.canRotate)
+            {
+                HandleRotation(delta);
+            }
+        }
+        
+        private void HandleRollingAndSprint(float delta)
+        {
+            if (animatorHandler.anim.GetBool("isInteracting"))
+            {
+                return;
+            }
+            if (inputHandler.rollFlag)
+            {
+                moveDirection = cameraObject.forward * inputHandler.vertical;
+                moveDirection += cameraObject.right * inputHandler.horizontal;
+
+                if(inputHandler.moveAmount > 0)
+                {
+                    animatorHandler.PlayTargetAnimation("Rolling", true);
+                    moveDirection.y = 0;
+                    Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
+                    myTransform.rotation = rollRotation;
+                }
+                else
+                {
+                    animatorHandler.PlayTargetAnimation("Backstep", true);
+                }
+            }
         }
         #endregion
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 
 namespace wwy
@@ -13,20 +14,27 @@ namespace wwy
         public float mouseX;
         public float mouseY;
 
+        public bool b_Input;
+        public bool sprintFlag;
+        public bool rollFlag;
+        public float rollInputTimer;
+
+        public bool isInteracting;
+
         PlayerControls inputActions;
         CameraHandler cameraHandler;
 
         Vector2 movementInput;
         Vector2 cameraInput;
 
-        private void Awake()
+        private void Start()
         {
             cameraHandler = CameraHandler.singleton;
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
-            float delta = Time.fixedDeltaTime;
+            float delta = Time.deltaTime;
             if(cameraHandler != null )
             {
                 cameraHandler.FollowTarget(delta);
@@ -54,6 +62,7 @@ namespace wwy
         public void TickInput(float delta)
         {
             MoveInput(delta);
+            HandleRollInput(delta);
         }
 
         private void MoveInput(float delta)
@@ -65,6 +74,24 @@ namespace wwy
             //Debug.Log($"{moveAmount}, {inputMagnitude}");
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
+        }
+        private void HandleRollInput(float delta)
+        {
+            b_Input = inputActions.PlayerActions.Roll.IsPressed();
+            if (b_Input)
+            {
+                rollInputTimer += delta;
+                sprintFlag = true;
+            }
+            else
+            {
+                if(rollInputTimer > 0 && rollInputTimer < 0.5f)
+                {
+                    sprintFlag = false;
+                    rollFlag = true;
+                }
+                rollInputTimer = 0;
+            }
         }
     }
 }

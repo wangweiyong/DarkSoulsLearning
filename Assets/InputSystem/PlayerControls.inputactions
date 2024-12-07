@@ -21,7 +21,7 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -96,9 +96,48 @@
                     "id": "fcd86dbc-2cb4-4d92-8869-7d8db65b5ff3",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "NormalizeVector2",
+                    "processors": "",
                     "groups": "",
                     "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player Actions",
+            "id": "41578357-3dda-462a-81f6-731fb847a4e3",
+            "actions": [
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "7f49ba9b-4187-481c-8c2b-0bed5b474d5e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c0a6c539-ed46-4028-9873-5206cc624526",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56cbfd8b-d5c2-4486-bfc6-458b6794345e",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
