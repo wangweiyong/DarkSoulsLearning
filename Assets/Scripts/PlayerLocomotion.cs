@@ -51,7 +51,7 @@ namespace wwy
             moveDiretion *= speed;
 
             Vector3 projectVeclocity = Vector3.ProjectOnPlane(moveDiretion, normalVector);
-            moveDiretion.y = 0;
+            //moveDiretion.y = 0;
             rigidbody.velocity = projectVeclocity;
 
             animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0);
