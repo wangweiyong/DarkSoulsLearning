@@ -18,7 +18,8 @@ namespace wwy
 
         [Header("Player Flags")]
         public bool isSprinting;
-
+        public bool isInAir;
+        public bool isGrounded;
 
         private void Start()
         {
@@ -39,7 +40,7 @@ namespace wwy
             inputHandler.TickInput(delta);
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
-            
+            playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
         }
 
         private void LateUpdate()
@@ -56,6 +57,11 @@ namespace wwy
             inputHandler.sprintFlag = false;
 
             isSprinting = inputHandler.b_Input;
+
+            if (isInAir)
+            {
+                playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
+            }
         }
     }
 }
