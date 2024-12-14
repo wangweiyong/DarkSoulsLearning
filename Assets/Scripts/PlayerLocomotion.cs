@@ -35,6 +35,8 @@ namespace wwy
         [SerializeField]
         float movementSpeed = 5;
         [SerializeField]
+        float walkSpeed = 1;
+        [SerializeField]
         float sprintSpeed = 7;
         [SerializeField]
         float rotationSpeed = 10;
@@ -100,12 +102,25 @@ namespace wwy
 
             float speed = movementSpeed;
 
-            if (inputHandler.sprintFlag)
+            if (inputHandler.sprintFlag && inputHandler.moveAmount > 0.5f)
             {
                 speed = sprintSpeed;
                 playerManager.isSprinting = true;
+                moveDirection *= speed;
             }
-            moveDirection *= speed;
+            else
+            {
+                if(inputHandler.moveAmount < 0.5f)
+                {
+                    moveDirection *= walkSpeed;
+                    playerManager.isSprinting = false;
+                }
+                else
+                {
+                    moveDirection *= speed;
+                    playerManager.isSprinting = false;
+                }
+            }
 
             Vector3 projectVeclocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             //moveDiretion.y = 0;

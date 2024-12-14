@@ -18,17 +18,24 @@ namespace wwy
         public bool sprintFlag;
         public bool rollFlag;
         public float rollInputTimer;
-
+        public bool rb_Input;
+        public bool rt_Input;
 
         public float durationForRoll2Sprint = 0.3f;
 
         PlayerControls inputActions;
+        PlayerAttacker playerAttacker;
+        PlayerInventory playerInventory;
 
         Vector2 movementInput;
         Vector2 cameraInput;
 
 
-
+        private void Awake()
+        {
+            playerAttacker = GetComponent<PlayerAttacker>();
+            playerInventory= GetComponent<PlayerInventory>();   
+        }
 
         private void OnEnable()
         {
@@ -52,6 +59,7 @@ namespace wwy
         {
             MoveInput(delta);
             HandleRollInput(delta);
+            HandleAttackInput(delta);
         }
 
         private void MoveInput(float delta)
@@ -83,6 +91,21 @@ namespace wwy
                     rollFlag = true;
                 }
                 rollInputTimer = 0;
+            }
+        }
+        
+        private void HandleAttackInput(float delta)
+        {
+            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
+            if (rb_Input)
+            {
+                playerAttacker.HandleLigthAttack(playerInventory.rightWeapon);
+            }
+            if (rt_Input)
+            {
+                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
         }
     }
