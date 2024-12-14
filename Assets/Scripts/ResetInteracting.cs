@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using wwy;
 
 public class ResetInteracting : StateMachineBehaviour
 {
@@ -19,7 +20,6 @@ public class ResetInteracting : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("exit");
         animator.SetBool("isInteracting", false);
     }
 

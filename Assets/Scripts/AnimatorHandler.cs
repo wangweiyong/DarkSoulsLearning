@@ -104,5 +104,10 @@ namespace wwy
             Vector3 velocity = deltaPosition / delta;
             playerLocomotion.rigidbody.velocity = velocity;
         }
+
+        public void ResetInteractingFlag()
+        {
+            anim.SetBool("isInteracting", false);
+        }
     }
 }
