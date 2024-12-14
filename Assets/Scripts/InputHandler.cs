@@ -19,28 +19,17 @@ namespace wwy
         public bool rollFlag;
         public float rollInputTimer;
 
-        public bool isInteracting;
+
+        public float durationForRoll2Sprint = 0.3f;
 
         PlayerControls inputActions;
-        CameraHandler cameraHandler;
 
         Vector2 movementInput;
         Vector2 cameraInput;
 
-        private void Start()
-        {
-            cameraHandler = CameraHandler.singleton;
-        }
 
-        private void LateUpdate()
-        {
-            float delta = Time.deltaTime;
-            if(cameraHandler != null )
-            {
-                cameraHandler.FollowTarget(delta);
-                cameraHandler.HandleCameraRotation(delta, mouseX, mouseY);
-            }
-        }
+
+
         private void OnEnable()
         {
             if(inputActions == null)
@@ -81,11 +70,14 @@ namespace wwy
             if (b_Input)
             {
                 rollInputTimer += delta;
-                sprintFlag = true;
+                if (rollInputTimer >= durationForRoll2Sprint)
+                {
+                    sprintFlag = true;
+                }
             }
             else
             {
-                if(rollInputTimer > 0 && rollInputTimer < 0.5f)
+                if(rollInputTimer > 0 && rollInputTimer < durationForRoll2Sprint)
                 {
                     sprintFlag = false;
                     rollFlag = true;

@@ -18,6 +18,8 @@ namespace wwy
         public static CameraHandler singleton;
 
         public float lookSpeed = 0.1f;
+        public float originalSpeed;
+        public float speedUpMultiplier = 1.5f;
         public float followSpeed = 0.1f;
         public float pivotSpeed = 0.03f;
 
@@ -27,9 +29,10 @@ namespace wwy
         public float minimumPivot = -35;
         public float maximumPivot = 35;
 
-        public float cameraSphereRadius = 0.4f;
-        public float cameraCollisionOffset = 0.2f;
+        public float cameraSphereRadius = 0.8f;
+        public float cameraCollisionOffset = 0.8f;
         public float minimumCollisionOffset = 0.2f;
+        public float offersetSpeed = 60f;
 
         private void Awake()
         {
@@ -37,13 +40,15 @@ namespace wwy
             myTransform = transform;
             defaultPosition = cameraTransform.localPosition.z;
             ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
+            originalSpeed = lookSpeed;
         }
 
         public void FollowTarget(float delta)
         {
             Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position, targetTransform.position, ref cameraFollowVelocity, delta * followSpeed);
             myTransform.position = targetPosition;
-            HandleCameraCollisions(delta);
+            HandleCameraCollisions(Time.deltaTime);
+
         }
 
         public void HandleCameraRotation(float delta, float mouseXInut, float mouseYInput)
@@ -70,10 +75,14 @@ namespace wwy
             direction.Normalize();
             if (Physics.SphereCast(cameraPivotTransform.position, cameraSphereRadius, direction, out hit, Mathf.Abs(targetPosition),ignoreLayers))
             {
-                Debug.DrawLine(cameraPivotTransform.position,hit.point,Color.red,0.1f);
-
+                Debug.DrawLine(cameraPivotTransform.position,hit.point,Color.red, 0.1f);
+                lookSpeed = originalSpeed * speedUpMultiplier;
                 float dis = Vector3.Distance(cameraPivotTransform.position, hit.point);
                 targetPosition = -(dis - cameraCollisionOffset);
+            }
+            else
+            {
+                lookSpeed = originalSpeed;
             }
 
             if (Mathf.Abs(targetPosition) < minimumCollisionOffset)
@@ -81,7 +90,7 @@ namespace wwy
                 targetPosition = -minimumCollisionOffset;
             }
 
-            cameraTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.4f);
+            cameraTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, offersetSpeed * delta);
             cameraTransform.localPosition = cameraTransformPosition;
         }
     }

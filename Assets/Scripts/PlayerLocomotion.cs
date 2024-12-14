@@ -8,6 +8,7 @@ namespace wwy
 {
     public class PlayerLocomotion : MonoBehaviour
     {
+        PlayerManager playerManager;
         Transform cameraObject;
         InputHandler inputHandler;
         Vector3 moveDirection;
@@ -20,34 +21,23 @@ namespace wwy
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
 
-        [Header("Stats")]
+        [Header("Movement Stats")]
         [SerializeField]
         float movementSpeed = 5;
         float sprintSpeed = 7;
         [SerializeField]
         float rotationSpeed = 10;
 
-        public bool isSprinting;
-
         // Start is called before the first frame update
         void Start()
         {
+            playerManager=GetComponent<PlayerManager>();
             rigidbody = GetComponent<Rigidbody>();
             inputHandler = GetComponent<InputHandler>();
             animatorHandler = GetComponentInChildren<AnimatorHandler>();  
             cameraObject = Camera.main.transform;
             myTransform = transform;
             animatorHandler.Initialze();
-        }
-
-        public void Update()
-        {
-            float delta = Time.deltaTime;
-
-            isSprinting = inputHandler.b_Input;
-            inputHandler.TickInput(delta);
-            HandleMovement(delta);
-            HandleRollingAndSprint(delta);
         }
 
         #region Movement
@@ -77,7 +67,7 @@ namespace wwy
             myTransform.rotation = targetRotation;
         }
 
-        private void HandleMovement(float delta)
+        public void HandleMovement(float delta)
         {
             if (inputHandler.rollFlag)
             {
@@ -92,7 +82,7 @@ namespace wwy
             if (inputHandler.sprintFlag)
             {
                 speed = sprintSpeed;
-                isSprinting = true;
+                playerManager.isSprinting = true;
             }
             moveDirection *= speed;
 
@@ -100,14 +90,14 @@ namespace wwy
             //moveDiretion.y = 0;
             rigidbody.velocity = projectVeclocity;
 
-            animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, isSprinting);
+            animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
             if (animatorHandler.canRotate)
             {
                 HandleRotation(delta);
             }
         }
         
-        private void HandleRollingAndSprint(float delta)
+        public void HandleRollingAndSprint(float delta)
         {
             if (animatorHandler.anim.GetBool("isInteracting"))
             {

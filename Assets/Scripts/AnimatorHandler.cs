@@ -6,17 +6,17 @@ namespace wwy
 {
     public class AnimatorHandler : MonoBehaviour
     {
+        private PlayerManager playerManager;
         public Animator anim;
-        public InputHandler inputHandler;
-        public PlayerLocomotion playerLocomotion;
+        private PlayerLocomotion playerLocomotion;
         int vertical;
         int horizontal;
         public bool canRotate;
 
         public void Initialze()
         {
+            playerManager = GetComponentInParent<PlayerManager>();
             anim = GetComponent<Animator>();
-            inputHandler = GetComponentInParent<InputHandler>();
             playerLocomotion = GetComponentInParent<PlayerLocomotion>();
             vertical = Animator.StringToHash("Vertical");
             horizontal = Animator.StringToHash("Horizontal");
@@ -92,7 +92,7 @@ namespace wwy
         }
         private void OnAnimatorMove()
         {
-            if(inputHandler.isInteracting == false)
+            if(playerManager.isInteracting == false)
             {
                 return;
             }
