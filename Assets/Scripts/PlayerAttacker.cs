@@ -39,14 +39,21 @@ namespace wwy
         }
         public void HandleLigthAttack(WeaponItem weapon)
         {
-            animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_1, true);
-            lastAttack = weapon.OH_Light_Attack_1;
+            if(weapon != null && !string.IsNullOrEmpty(weapon.OH_Light_Attack_1))
+            {
+                animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_1, true);
+                lastAttack = weapon.OH_Light_Attack_1;
+            }
         }
 
         public void HandleHeavyAttack(WeaponItem weapon)
         {
-            animatorHandler.PlayTargetAnimation(weapon.OH_Heavy_Attack_1, true);
-            lastAttack = weapon.OH_Heavy_Attack_1;
+            if(weapon != null && !string.IsNullOrEmpty(weapon.OH_Heavy_Attack_1))
+            {
+                animatorHandler.PlayTargetAnimation(weapon.OH_Heavy_Attack_1, true);
+                lastAttack = weapon.OH_Heavy_Attack_1;
+            }
+
         }
     }
 }

@@ -13,9 +13,11 @@ namespace wwy
         DamageCollider rightHandDamageCollider;
 
         Animator animator;
+        QuickSlotsUI quickSlotsUI;
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
             WeaponHolderSlots[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlots>();
             foreach (WeaponHolderSlots weaponSlot in weaponHolderSlots)
             {
@@ -36,7 +38,7 @@ namespace wwy
             {
                 leftHandSlot.LoadWeaponModel(weaponItem);
                 LoadLeftWeaponDamageCollider();
-
+                quickSlotsUI.UpdateWeaponQuickSlotsUI(true, weaponItem);
                 #region Handle Left Weapon Idle Animation
                 if (weaponItem != null)
                 {
@@ -52,7 +54,7 @@ namespace wwy
             {
                 rightHandSlot.LoadWeaponModel(weaponItem);
                 LoadRightWeaponDamageCollider();
-
+                quickSlotsUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
                 #region Handle Right Weapon Idle Animation
                 if (weaponItem != null)
                 {
