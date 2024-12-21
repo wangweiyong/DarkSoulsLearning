@@ -22,6 +22,11 @@ namespace wwy
         public bool rb_Input;
         public bool rt_Input;
 
+        public bool d_Pad_Up;
+        public bool d_Pad_Down;
+        public bool d_Pad_Left;
+        public bool d_Pad_Right;
+
         public float durationForRoll2Sprint = 0.3f;
 
         PlayerControls inputActions;
@@ -63,6 +68,7 @@ namespace wwy
             MoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
+            HandleQuickSlotsInput(delta);
         }
 
         private void MoveInput(float delta)
@@ -120,6 +126,22 @@ namespace wwy
             if (rt_Input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
+        private void HandleQuickSlotsInput(float delta)
+        {
+            inputActions.PlayerQuickSlots.D_Pad_Right.performed += i => { d_Pad_Right = true; };
+            inputActions.PlayerQuickSlots.D_Pad_Up.performed += i => { d_Pad_Up = true; };
+            inputActions.PlayerQuickSlots.D_Pad_Down.performed += i => { d_Pad_Down = true; };
+            inputActions.PlayerQuickSlots.D_Pad_Left.performed += i => { d_Pad_Left = true; };
+            if (d_Pad_Right)
+            {
+                playerInventory.ChangeRightWeapon();
+            }
+
+            else if(d_Pad_Left)
+            {
+                playerInventory.ChangeLeftWeapon();
             }
         }
     }

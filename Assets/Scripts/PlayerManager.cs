@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace wwy
 {
@@ -63,6 +59,10 @@ namespace wwy
             //Update InputHandler
             inputHandler.rb_Input = false;
             inputHandler.rt_Input = false;
+            inputHandler.d_Pad_Down = false;
+            inputHandler.d_Pad_Left = false;
+            inputHandler.d_Pad_Right = false;
+            inputHandler.d_Pad_Up = false;
 
             isSprinting = inputHandler.b_Input;
 

@@ -182,6 +182,94 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Player QuickSlots",
+            "id": "19131024-1c44-4ac1-9111-4170a3007a2b",
+            "actions": [
+                {
+                    "name": "D_Pad_Down",
+                    "type": "Button",
+                    "id": "4754b11c-4397-4f68-8a24-d148f3d4430a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "D_Pad_Up",
+                    "type": "Button",
+                    "id": "a2f40c14-7df9-4d97-91f8-1ab3cc27ca77",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "D_Pad_Left",
+                    "type": "Button",
+                    "id": "fef16b68-c767-4204-9469-cf3b707ce25d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "D_Pad_Right",
+                    "type": "Button",
+                    "id": "48dcacfe-6d99-4fc8-af0b-d0546efe7a70",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "200f832f-6284-46d1-a9c5-029aa3f966c3",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D_Pad_Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "092dd959-fbe7-4e99-87d3-c9c1c78d5db4",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D_Pad_Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1632f734-9476-4c33-9580-c2a2e185892f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D_Pad_Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1298b836-db9f-40c2-a25e-dc13af682614",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D_Pad_Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

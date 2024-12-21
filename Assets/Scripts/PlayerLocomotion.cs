@@ -126,8 +126,8 @@ namespace wwy
 
             Vector3 projectVeclocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             //moveDiretion.y = 0;
-            Vector3 velocity = Vector3.SmoothDamp(rigidbody.velocity, projectVeclocity, ref dampMoveCurrentSpeed, 0.2f);
-            rigidbody.velocity = velocity;
+            //Vector3 velocity = Vector3.SmoothDamp(rigidbody.velocity, projectVeclocity, ref dampMoveCurrentSpeed, 0.2f);
+            rigidbody.velocity = projectVeclocity;
 
             animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
             if (animatorHandler.canRotate)

@@ -204,6 +204,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Player QuickSlots"",
+            ""id"": ""19131024-1c44-4ac1-9111-4170a3007a2b"",
+            ""actions"": [
+                {
+                    ""name"": ""D_Pad_Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""4754b11c-4397-4f68-8a24-d148f3d4430a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D_Pad_Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2f40c14-7df9-4d97-91f8-1ab3cc27ca77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D_Pad_Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""fef16b68-c767-4204-9469-cf3b707ce25d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D_Pad_Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""48dcacfe-6d99-4fc8-af0b-d0546efe7a70"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""200f832f-6284-46d1-a9c5-029aa3f966c3"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D_Pad_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""092dd959-fbe7-4e99-87d3-c9c1c78d5db4"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D_Pad_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1632f734-9476-4c33-9580-c2a2e185892f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D_Pad_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1298b836-db9f-40c2-a25e-dc13af682614"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D_Pad_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -217,6 +305,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Roll = m_PlayerActions.FindAction("Roll", throwIfNotFound: true);
         m_PlayerActions_RB = m_PlayerActions.FindAction("RB", throwIfNotFound: true);
         m_PlayerActions_RT = m_PlayerActions.FindAction("RT", throwIfNotFound: true);
+        // Player QuickSlots
+        m_PlayerQuickSlots = asset.FindActionMap("Player QuickSlots", throwIfNotFound: true);
+        m_PlayerQuickSlots_D_Pad_Down = m_PlayerQuickSlots.FindAction("D_Pad_Down", throwIfNotFound: true);
+        m_PlayerQuickSlots_D_Pad_Up = m_PlayerQuickSlots.FindAction("D_Pad_Up", throwIfNotFound: true);
+        m_PlayerQuickSlots_D_Pad_Left = m_PlayerQuickSlots.FindAction("D_Pad_Left", throwIfNotFound: true);
+        m_PlayerQuickSlots_D_Pad_Right = m_PlayerQuickSlots.FindAction("D_Pad_Right", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -390,6 +484,76 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+    // Player QuickSlots
+    private readonly InputActionMap m_PlayerQuickSlots;
+    private List<IPlayerQuickSlotsActions> m_PlayerQuickSlotsActionsCallbackInterfaces = new List<IPlayerQuickSlotsActions>();
+    private readonly InputAction m_PlayerQuickSlots_D_Pad_Down;
+    private readonly InputAction m_PlayerQuickSlots_D_Pad_Up;
+    private readonly InputAction m_PlayerQuickSlots_D_Pad_Left;
+    private readonly InputAction m_PlayerQuickSlots_D_Pad_Right;
+    public struct PlayerQuickSlotsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerQuickSlotsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @D_Pad_Down => m_Wrapper.m_PlayerQuickSlots_D_Pad_Down;
+        public InputAction @D_Pad_Up => m_Wrapper.m_PlayerQuickSlots_D_Pad_Up;
+        public InputAction @D_Pad_Left => m_Wrapper.m_PlayerQuickSlots_D_Pad_Left;
+        public InputAction @D_Pad_Right => m_Wrapper.m_PlayerQuickSlots_D_Pad_Right;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerQuickSlots; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerQuickSlotsActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Add(instance);
+            @D_Pad_Down.started += instance.OnD_Pad_Down;
+            @D_Pad_Down.performed += instance.OnD_Pad_Down;
+            @D_Pad_Down.canceled += instance.OnD_Pad_Down;
+            @D_Pad_Up.started += instance.OnD_Pad_Up;
+            @D_Pad_Up.performed += instance.OnD_Pad_Up;
+            @D_Pad_Up.canceled += instance.OnD_Pad_Up;
+            @D_Pad_Left.started += instance.OnD_Pad_Left;
+            @D_Pad_Left.performed += instance.OnD_Pad_Left;
+            @D_Pad_Left.canceled += instance.OnD_Pad_Left;
+            @D_Pad_Right.started += instance.OnD_Pad_Right;
+            @D_Pad_Right.performed += instance.OnD_Pad_Right;
+            @D_Pad_Right.canceled += instance.OnD_Pad_Right;
+        }
+
+        private void UnregisterCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            @D_Pad_Down.started -= instance.OnD_Pad_Down;
+            @D_Pad_Down.performed -= instance.OnD_Pad_Down;
+            @D_Pad_Down.canceled -= instance.OnD_Pad_Down;
+            @D_Pad_Up.started -= instance.OnD_Pad_Up;
+            @D_Pad_Up.performed -= instance.OnD_Pad_Up;
+            @D_Pad_Up.canceled -= instance.OnD_Pad_Up;
+            @D_Pad_Left.started -= instance.OnD_Pad_Left;
+            @D_Pad_Left.performed -= instance.OnD_Pad_Left;
+            @D_Pad_Left.canceled -= instance.OnD_Pad_Left;
+            @D_Pad_Right.started -= instance.OnD_Pad_Right;
+            @D_Pad_Right.performed -= instance.OnD_Pad_Right;
+            @D_Pad_Right.canceled -= instance.OnD_Pad_Right;
+        }
+
+        public void RemoveCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            if (m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerQuickSlotsActions @PlayerQuickSlots => new PlayerQuickSlotsActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -400,5 +564,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnRB(InputAction.CallbackContext context);
         void OnRT(InputAction.CallbackContext context);
+    }
+    public interface IPlayerQuickSlotsActions
+    {
+        void OnD_Pad_Down(InputAction.CallbackContext context);
+        void OnD_Pad_Up(InputAction.CallbackContext context);
+        void OnD_Pad_Left(InputAction.CallbackContext context);
+        void OnD_Pad_Right(InputAction.CallbackContext context);
     }
 }

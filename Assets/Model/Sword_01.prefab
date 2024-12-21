@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1667216450447080812}
   - component: {fileID: 5708136015938807565}
   - component: {fileID: 8711834964596613366}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sword_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d85aa5173bddbe4caa3c753f3dc690b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentWeaponDamage: 25
 --- !u!1 &6672162930694404960
 GameObject:
   m_ObjectHideFlags: 0
