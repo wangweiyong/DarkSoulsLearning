@@ -73,8 +73,8 @@ namespace wwy
             }
             anim.SetFloat(vertical, v, 0.1f, Time.deltaTime);
             anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
-        }
 
+        }
         public void PlayTargetAnimation(string targetAnim, bool isInteracting)
         {
             anim.applyRootMotion = isInteracting;
@@ -100,8 +100,8 @@ namespace wwy
             float delta = Time.deltaTime;
             playerLocomotion.rigidbody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
-            deltaPosition.y = 0;
             Vector3 velocity = deltaPosition / delta;
+            velocity.y = Mathf.Clamp(playerLocomotion.rigidbody.velocity.y, -5f, 1f);
             playerLocomotion.rigidbody.velocity = velocity;
         }
     }

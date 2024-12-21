@@ -41,6 +41,7 @@ namespace wwy
             defaultPosition = cameraTransform.localPosition.z;
             ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
             originalSpeed = lookSpeed;
+            targetTransform = FindObjectOfType<PlayerManager>().transform;
         }
 
         public void FollowTarget(float delta)
@@ -51,21 +52,25 @@ namespace wwy
 
         }
 
+        Vector3 currentRotation;
+        Vector3 rotationSmoothVelocity;
         public void HandleCameraRotation(float delta, float mouseXInut, float mouseYInput)
         {
-            lookAngle += (mouseXInut * lookSpeed) * delta;
-            pivotAngle -= (mouseYInput * pivotSpeed) * delta;
+            lookAngle += (mouseXInut * lookSpeed) ;
+            pivotAngle -= (mouseYInput * pivotSpeed) ;
             pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
 
-            Vector3 rotation = Vector3.zero;
-            rotation.y = lookAngle;
-            Quaternion targetRotation = Quaternion.Euler(rotation);
-            myTransform.rotation = targetRotation;
+            /* Vector3 rotation = Vector3.zero;
+             rotation.y = lookAngle;
+             Quaternion targetRotation = Quaternion.Euler(rotation);
+             myTransform.rotation = targetRotation;
 
-            rotation = Vector3.zero;
-            rotation.x = pivotAngle;
-            targetRotation = Quaternion.Euler(rotation);
-            cameraPivotTransform.localRotation = targetRotation;
+             rotation = Vector3.zero;
+             rotation.x = pivotAngle;
+             targetRotation = Quaternion.Euler(rotation);
+             cameraPivotTransform.localRotation = targetRotation;*/
+            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pivotAngle, lookAngle), ref rotationSmoothVelocity, 0.2f);
+            myTransform.eulerAngles = currentRotation;
         }
         private void HandleCameraCollisions(float delta)
         {

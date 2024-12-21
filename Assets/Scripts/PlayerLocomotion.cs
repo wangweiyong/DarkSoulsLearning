@@ -167,14 +167,14 @@ namespace wwy
             origin.y += groundDetectionRayStartPoint;
 
             //this means forward has obstacles
-            if(Physics.Raycast(origin, myTransform.forward, out hit, 0.4f))
+            if (Physics.Raycast(origin, myTransform.forward, out hit, 0.4f))
             {
                 moveDirection = Vector3.zero;
             }
 
             if (playerManager.isInAir)
             {
-                rigidbody.AddForce(-Vector3.up * fallingSpeed);
+                //rigidbody.AddForce(-Vector3.up * fallingSpeed);
                 // add some directionForce in order to not stuck in walls
                 rigidbody.AddForce(moveDirection * fallingSpeed / 10f);
             }
@@ -192,10 +192,14 @@ namespace wwy
                 Vector3 tp = hit.point;
                 playerManager.isGrounded = true;
                 targetPosition.y = tp.y;
+                Vector3 velocity = rigidbody.velocity;
+                velocity.y = 0;
+                rigidbody.velocity = velocity;
 
                 if (playerManager.isInAir)
                 {
-                    if(inAirTimer > 0.5f)
+                    Debug.Log("should land");
+                    if (inAirTimer > 0.5f)
                     {
                         Debug.Log("You were in Air for " + inAirTimer);
                         animatorHandler.PlayTargetAnimation("Land", true);
@@ -203,7 +207,7 @@ namespace wwy
                     }
                     else
                     {
-                        animatorHandler.PlayTargetAnimation("Locomotion", false);
+                        animatorHandler.PlayTargetAnimation("Empty", false);
                         inAirTimer = 0;
                     }
                     playerManager.isInAir = false;
@@ -217,9 +221,9 @@ namespace wwy
                     playerManager.isGrounded = false;
                 }
 
-                if(playerManager.isInAir == false)
+                if (playerManager.isInAir == false)
                 {
-                    if(playerManager.isInteracting == false)
+                    if (playerManager.isInteracting == false)
                     {
                         animatorHandler.PlayTargetAnimation("Falling", true);
                     }
@@ -228,12 +232,13 @@ namespace wwy
                     vel.Normalize();
                     rigidbody.velocity = vel * (movementSpeed / 2);
                     playerManager.isInAir = true;
+                    rigidbody.AddForce(-Vector3.up * fallingSpeed);
                 }
             }
             //这里只是控制y轴
             if (playerManager.isGrounded)
             {
-                if(playerManager.isInteracting || inputHandler.moveAmount > 0)
+                if (playerManager.isInteracting || inputHandler.moveAmount > 0)
                 {
                     myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, 30 * Time.deltaTime);
                 }

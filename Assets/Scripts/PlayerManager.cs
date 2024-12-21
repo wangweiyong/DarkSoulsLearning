@@ -39,9 +39,16 @@ namespace wwy
             isInteracting = anim.GetBool("isInteracting");
 
             inputHandler.TickInput(delta);
-            playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
+
+        }
+
+        private void FixedUpdate()
+        {
+            float delta = Time.deltaTime;
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
+
+            playerLocomotion.HandleMovement(delta);
         }
 
         private void LateUpdate()

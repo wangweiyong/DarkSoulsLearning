@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940994132575705378}
-  m_LocalRotation: {x: -0.33585933, y: 0.00584346, z: -0.9418938, w: -0.0006846189}
-  m_LocalPosition: {x: 0.8066907, y: 1.5020941, z: -0.08699933}
-  m_LocalScale: {x: 2.1759331, y: 2.1759324, z: 2.1759322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6672162930694404975}
@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 5003789059938877302}
   - component: {fileID: 216236509063149972}
   - component: {fileID: 1667216450447080812}
+  - component: {fileID: 5708136015938807565}
+  - component: {fileID: 8711834964596613366}
   m_Layer: 0
   m_Name: Sword_01
   m_TagString: Untagged
@@ -60,7 +62,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6672162930694404975}
   m_RootOrder: 0
@@ -115,6 +117,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5708136015938807565
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4882586104871594884}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08498072, y: 0.051859565, z: 0.46241856}
+  m_Center: {x: -0.0045228116, y: 0.000812646, z: 0.37399608}
+--- !u!114 &8711834964596613366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4882586104871594884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d85aa5173bddbe4caa3c753f3dc690b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6672162930694404960
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6672162930694404960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.058, y: -0.009, z: -0.005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
