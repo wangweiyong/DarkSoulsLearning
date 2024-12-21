@@ -21,11 +21,11 @@ namespace wwy
         public bool isSprinting;
         public bool isInAir;
         public bool isGrounded;
+        public bool canDoCombo;
 
         private void Start()
         {
             cameraHandler = CameraHandler.singleton;
-
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
@@ -33,14 +33,11 @@ namespace wwy
 
         private void Update()
         {
-
             float delta = Time.deltaTime;
-
             isInteracting = anim.GetBool("isInteracting");
-
+            canDoCombo = anim.GetBool("CanDoCombo");
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
-
         }
 
         private void FixedUpdate()
