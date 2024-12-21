@@ -71,8 +71,8 @@ namespace wwy
                 v = 2f;
                 h = horizontalMovement;
             }
-            anim.SetFloat(vertical, v, 0.2f, Time.deltaTime);
-            anim.SetFloat(horizontal, h, 0.2f, Time.deltaTime);
+            anim.SetFloat(vertical, v, 0.4f, Time.deltaTime);
+            anim.SetFloat(horizontal, h, 0.4f, Time.deltaTime);
 
         }
         public void PlayTargetAnimation(string targetAnim, bool isInteracting)
@@ -109,8 +109,20 @@ namespace wwy
             playerLocomotion.rigidbody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
             Vector3 velocity = deltaPosition / delta;
+
             velocity.y = Mathf.Clamp(playerLocomotion.rigidbody.velocity.y, -5f, 1f);
             playerLocomotion.rigidbody.velocity = velocity;
+        }
+
+        public void SetIsInteracting()
+        {
+            anim.applyRootMotion = true;
+            anim.SetBool("isInteracting", true);
+        }
+        public void ResetIsInteracting()
+        {
+            anim.applyRootMotion = false;
+            anim.SetBool("isInteracting", false);
         }
     }
 }

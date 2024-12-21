@@ -278,8 +278,9 @@ MonoBehaviour:
   movementSpeed: 5
   walkSpeed: 1
   sprintSpeed: 7
-  rotationSpeed: 10
+  rotationSpeed: 3
   fallingSpeed: 300
+  lastEulerRot: {x: 0, y: 0, z: 0}
 --- !u!54 &53613568
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -997,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: ea2916736168f45479b110b080aaad2d, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7992858081277317772, guid: ea2916736168f45479b110b080aaad2d, type: 3}
       propertyPath: m_IsActive

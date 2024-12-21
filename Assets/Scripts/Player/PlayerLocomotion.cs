@@ -80,13 +80,14 @@ namespace wwy
             {
                 targetDir = myTransform.forward;
             }
-
+            
             float rs = rotationSpeed;
             Quaternion tr = Quaternion.LookRotation(targetDir);
             Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * rotationSpeed * delta);
             myTransform.rotation = targetRotation;
         }
-
+        private Vector3 lastEulerRot;
+        private float lastMoveAmount;
         public void HandleMovement(float delta)
         {
             if (inputHandler.rollFlag)
@@ -102,6 +103,11 @@ namespace wwy
             moveDirection += cameraObject.right * inputHandler.horizontal;
             moveDirection.Normalize();
 
+            Quaternion currentRotation = myTransform.rotation;
+            Vector3 currentEuler = currentRotation.eulerAngles;
+            Vector3 eulerAngleDifference = currentEuler - lastEulerRot;
+            animatorHandler.anim.SetFloat("Horizontal", WrapAngle(eulerAngleDifference.y), 0.2f, Time.deltaTime);
+            lastEulerRot = currentEuler;
             float speed = movementSpeed;
 
             if (inputHandler.sprintFlag && inputHandler.moveAmount > 0.5f)
@@ -130,12 +136,21 @@ namespace wwy
             rigidbody.velocity = projectVeclocity;
 
             animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
+
             if (animatorHandler.canRotate)
             {
                 HandleRotation(delta);
             }
         }
-        
+        float WrapAngle(float angle)
+        {
+            angle = angle % 360;
+            if (angle > 180)
+            {
+                angle -= 360;
+            }
+            return angle;
+        }
         public void HandleRollingAndSprint(float delta)
         {
             if (animatorHandler.anim.GetBool("isInteracting"))
