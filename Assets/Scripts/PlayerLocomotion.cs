@@ -43,6 +43,8 @@ namespace wwy
         [SerializeField]
         float fallingSpeed = 45;
 
+        Vector3 dampMoveCurrentSpeed;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -124,7 +126,8 @@ namespace wwy
 
             Vector3 projectVeclocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             //moveDiretion.y = 0;
-            rigidbody.velocity = projectVeclocity;
+            Vector3 velocity = Vector3.SmoothDamp(rigidbody.velocity, projectVeclocity, ref dampMoveCurrentSpeed, 0.2f);
+            rigidbody.velocity = velocity;
 
             animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
             if (animatorHandler.canRotate)

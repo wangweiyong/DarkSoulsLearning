@@ -46,8 +46,11 @@ namespace wwy
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
 
             playerLocomotion.HandleMovement(delta);
-        }
 
+
+            inputHandler.rollFlag = false;
+            inputHandler.sprintFlag = false;
+        }
         private void LateUpdate()
         {
             float delta = Time.deltaTime;
@@ -58,8 +61,6 @@ namespace wwy
             }
 
             //Update InputHandler
-            inputHandler.rollFlag = false;
-            inputHandler.sprintFlag = false;
             inputHandler.rb_Input = false;
             inputHandler.rt_Input = false;
 

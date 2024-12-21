@@ -71,8 +71,8 @@ namespace wwy
                 v = 2f;
                 h = horizontalMovement;
             }
-            anim.SetFloat(vertical, v, 0.1f, Time.deltaTime);
-            anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
+            anim.SetFloat(vertical, v, 0.2f, Time.deltaTime);
+            anim.SetFloat(horizontal, h, 0.2f, Time.deltaTime);
 
         }
         public void PlayTargetAnimation(string targetAnim, bool isInteracting)
