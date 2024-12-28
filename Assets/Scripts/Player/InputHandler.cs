@@ -18,11 +18,13 @@ namespace wwy
         public bool a_Input;
         public bool sprintFlag;
         public bool comboFlag;
+        public bool inventoryFlag;
         public bool rollFlag;
         public float rollInputTimer;
         public bool rb_Input;
         public bool rt_Input;
         public bool jump_Input;
+        public bool inventory_Input;
 
         public bool d_Pad_Up;
         public bool d_Pad_Down;
@@ -35,6 +37,7 @@ namespace wwy
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
         PlayerManager playerManager;
+        UIManager uiManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -45,6 +48,7 @@ namespace wwy
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory= GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
+            uiManager = FindObjectOfType<UIManager>();
         }
 
         private void OnEnable()
@@ -73,6 +77,7 @@ namespace wwy
             HandleQuickSlotsInput(delta);
             HandleInteractingButtonInput();
             HandleJumpInput();
+            HandleInventoryInput();
         }
 
         private void MoveInput(float delta)
@@ -157,6 +162,25 @@ namespace wwy
         private void HandleJumpInput()
         {
             inputActions.PlayerActions.Jump.performed += i => { jump_Input = true; };
+        }
+
+        private void HandleInventoryInput()
+        {
+            inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
+
+            if (inventory_Input)
+            {
+                inventoryFlag = !inventoryFlag;
+
+                if(inventoryFlag)
+                {
+                    uiManager.OpenSelectWindow();
+                }
+                else
+                {
+                    uiManager.CloseSelectWindow();
+                }
+            }
         }
     }
 }
