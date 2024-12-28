@@ -36,9 +36,10 @@ namespace wwy
             float delta = Time.deltaTime;
             isInteracting = anim.GetBool("isInteracting");
             canDoCombo = anim.GetBool("CanDoCombo");
+            anim.SetBool("isInAir", isInAir);
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
-
+            playerLocomotion.HandleJumping();
             CheckForInteractableObject();
         }
 
@@ -70,6 +71,7 @@ namespace wwy
             inputHandler.d_Pad_Right = false;
             inputHandler.d_Pad_Up = false;
             inputHandler.a_Input = false;
+            inputHandler.jump_Input = false;
 
             isSprinting = inputHandler.b_Input;
 

@@ -22,6 +22,7 @@ namespace wwy
         public float rollInputTimer;
         public bool rb_Input;
         public bool rt_Input;
+        public bool jump_Input;
 
         public bool d_Pad_Up;
         public bool d_Pad_Down;
@@ -71,6 +72,7 @@ namespace wwy
             HandleAttackInput(delta);
             HandleQuickSlotsInput(delta);
             HandleInteractingButtonInput();
+            HandleJumpInput();
         }
 
         private void MoveInput(float delta)
@@ -150,6 +152,11 @@ namespace wwy
         private void HandleInteractingButtonInput()
         {
             inputActions.PlayerActions.A.performed += i => { a_Input = true; };
+        }
+    
+        private void HandleJumpInput()
+        {
+            inputActions.PlayerActions.Jump.performed += i => { jump_Input = true; };
         }
     }
 }

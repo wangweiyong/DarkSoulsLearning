@@ -59,6 +59,26 @@ namespace wwy
             playerManager.isGrounded = true;
             ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
         }
+        public void HandleJumping()
+        {
+            if (playerManager.isInteracting)
+            {
+                return;
+            }
+            if (inputHandler.jump_Input)
+            {
+                if(inputHandler.moveAmount > 0)
+                {
+                    moveDirection = cameraObject.forward * inputHandler.vertical;
+                    moveDirection += cameraObject.right * inputHandler.horizontal;
+                    animatorHandler.PlayTargetAnimation("Jump", true);
+                    moveDirection.y = 0;
+
+                    Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
+                    myTransform.rotation = jumpRotation;
+                }
+            }
+        }
 
         #region Movement
 
@@ -103,11 +123,11 @@ namespace wwy
             moveDirection += cameraObject.right * inputHandler.horizontal;
             moveDirection.Normalize();
 
-            Quaternion currentRotation = myTransform.rotation;
-            Vector3 currentEuler = currentRotation.eulerAngles;
-            Vector3 eulerAngleDifference = currentEuler - lastEulerRot;
-            animatorHandler.anim.SetFloat("Horizontal", WrapAngle(eulerAngleDifference.y), 0.2f, Time.deltaTime);
-            lastEulerRot = currentEuler;
+            //Quaternion currentRotation = myTransform.rotation;
+            //Vector3 currentEuler = currentRotation.eulerAngles;
+            //Vector3 eulerAngleDifference = currentEuler - lastEulerRot;
+            //animatorHandler.anim.SetFloat("Horizontal", WrapAngle(eulerAngleDifference.y), 0.2f, Time.deltaTime);
+            //lastEulerRot = currentEuler;
             float speed = movementSpeed;
 
             if (inputHandler.sprintFlag && inputHandler.moveAmount > 0.5f)
