@@ -6,6 +6,9 @@ namespace wwy
     {
         InputHandler inputHandler;
         PlayerLocomotion playerLocomotion;
+        public GameObject interactableUIGameObject;
+        public GameObject itemInteractableGameObject;
+        InteractableUI interactableUI;
         Animator anim;
 
         CameraHandler cameraHandler;
@@ -25,6 +28,7 @@ namespace wwy
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
+            interactableUI = FindObjectOfType<InteractableUI>();    
         }
 
         private void Update()
@@ -81,7 +85,6 @@ namespace wwy
             
             if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers))
             {
-                Debug.Log("aaa");
                 if(hit.collider.tag == "Interactable")
                 {
                     Interactabble interactableObject = hit.collider.GetComponent<Interactabble>();
@@ -90,6 +93,8 @@ namespace wwy
                         string interactableText = interactableObject.interactableText;
                         // set the ui text to the interactable
                         //set the text pop up to true
+                        interactableUI.interactableText.text = interactableText;
+                        interactableUIGameObject.SetActive(true);
 
                         if (inputHandler.a_Input)
                         {
@@ -97,6 +102,18 @@ namespace wwy
                         }
 
                     }
+                }
+            }
+            else
+            {
+                if(interactableUIGameObject != null)
+                {
+                    interactableUIGameObject.SetActive(false);
+                }
+
+                if(itemInteractableGameObject != null && inputHandler.a_Input)
+                {
+                    itemInteractableGameObject.SetActive(false);
                 }
             }
         }
