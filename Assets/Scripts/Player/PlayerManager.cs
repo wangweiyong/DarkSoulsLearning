@@ -34,6 +34,8 @@ namespace wwy
             canDoCombo = anim.GetBool("CanDoCombo");
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
+
+            CheckForInteractableObject();
         }
 
         private void FixedUpdate()
@@ -63,12 +65,39 @@ namespace wwy
             inputHandler.d_Pad_Left = false;
             inputHandler.d_Pad_Right = false;
             inputHandler.d_Pad_Up = false;
+            inputHandler.a_Input = false;
 
             isSprinting = inputHandler.b_Input;
 
             if (isInAir)
             {
                 playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
+            }
+        }
+    
+        public void CheckForInteractableObject()
+        {
+            RaycastHit hit;
+            
+            if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers))
+            {
+                Debug.Log("aaa");
+                if(hit.collider.tag == "Interactable")
+                {
+                    Interactabble interactableObject = hit.collider.GetComponent<Interactabble>();
+                    if(interactableObject != null)
+                    {
+                        string interactableText = interactableObject.interactableText;
+                        // set the ui text to the interactable
+                        //set the text pop up to true
+
+                        if (inputHandler.a_Input)
+                        {
+                            interactableObject.Interact(this);
+                        }
+
+                    }
+                }
             }
         }
     }

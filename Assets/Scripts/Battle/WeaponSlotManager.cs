@@ -12,12 +12,18 @@ namespace wwy
         DamageCollider leftHandDamageCollider;
         DamageCollider rightHandDamageCollider;
 
+        public WeaponItem attackingWeapon;
+
         Animator animator;
         QuickSlotsUI quickSlotsUI;
+
+        PlayerStats playerStats;
         private void Awake()
         {
             animator = GetComponent<Animator>();
             quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
+            playerStats = GetComponentInParent<PlayerStats>();
+
             WeaponHolderSlots[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlots>();
             foreach (WeaponHolderSlots weaponSlot in weaponHolderSlots)
             {
@@ -67,6 +73,19 @@ namespace wwy
                 #endregion
             }
         }
+
+        #region Handle Stamina Drainage
+        public void DrainStaminaLightAttack()
+        {
+            playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.lightAttackMultiplier));
+        }
+
+        public void DrainStaminaHeavyAttack()
+        {
+            playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackMultiplier));
+        }
+        #endregion
+
         #region Handle Weapon's Damage Collider
 
         private void LoadLeftWeaponDamageCollider()

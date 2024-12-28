@@ -25,5 +25,11 @@ namespace wwy
         public string OH_Heavy_Attack_3;
         public string OH_Heavy_Attack_4;
 
+
+        [Header("Weapon Stamina")]
+        public float baseStamina;
+        public float lightAttackMultiplier;
+        public float heavyAttackMultiplier;
+
     }
 }

@@ -12,7 +12,7 @@ namespace wwy
         public Transform cameraPivotTransform;// camera会围绕pivot旋转
         private Transform myTransform;// 当前对象的位置
         private Vector3 cameraTransformPosition;
-        private LayerMask ignoreLayers;
+        public LayerMask ignoreLayers;
         private Vector3 cameraFollowVelocity = Vector3.zero;
 
         public static CameraHandler singleton;

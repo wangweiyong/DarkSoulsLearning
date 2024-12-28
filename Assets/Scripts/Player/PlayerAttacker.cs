@@ -8,10 +8,13 @@ namespace wwy
     {
         AnimatorHandler animatorHandler;
         InputHandler inputHandler;
+        WeaponSlotManager weaponSlotManger;
+
         public string lastAttack;
         private void Awake()
         {
             animatorHandler = GetComponentInChildren<AnimatorHandler>();
+            weaponSlotManger = GetComponentInChildren<WeaponSlotManager>();
             inputHandler = GetComponentInChildren<InputHandler>();
         }
 
@@ -41,6 +44,7 @@ namespace wwy
         {
             if(weapon != null && !string.IsNullOrEmpty(weapon.OH_Light_Attack_1))
             {
+                weaponSlotManger.attackingWeapon = weapon;
                 animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_1, true);
                 lastAttack = weapon.OH_Light_Attack_1;
             }
@@ -50,6 +54,7 @@ namespace wwy
         {
             if(weapon != null && !string.IsNullOrEmpty(weapon.OH_Heavy_Attack_1))
             {
+                weaponSlotManger.attackingWeapon = weapon;
                 animatorHandler.PlayTargetAnimation(weapon.OH_Heavy_Attack_1, true);
                 lastAttack = weapon.OH_Heavy_Attack_1;
             }

@@ -9,22 +9,43 @@ namespace wwy
         public int healthLevel = 10;
         public int maxHealth;
         public int currentHealth;
+
+        public int staminaLevel = 10;
+        public int maxStamina;
+        public int currentStamina;
+
         AnimatorHandler animatorHandler;
 
-        public HealthBar healthBar;
+        HealthBar healthBar;
+        StaminaBar staminaBar;
         // Start is called before the first frame update
+        private void Awake()
+        {
+            healthBar = FindObjectOfType<HealthBar>();
+            staminaBar = FindObjectOfType<StaminaBar>();
+            animatorHandler = GetComponentInChildren<AnimatorHandler>();
+        }
         void Start()
         {
-            animatorHandler = GetComponentInChildren<AnimatorHandler>();
             maxHealth = SetMaxHealthFromHealthLevel();
             currentHealth = maxHealth;
             healthBar.SetMaxHealth(maxHealth);
+
+            maxStamina = SetMaxStaminaFromStaminaLevel();
+            currentStamina = maxStamina;
+            staminaBar.SetMaxStamina(maxStamina);
         }
 
         private int SetMaxHealthFromHealthLevel()
         {
             maxHealth = healthLevel * 10;
             return maxHealth;
+        }
+
+        private int SetMaxStaminaFromStaminaLevel()
+        {
+            maxStamina = staminaLevel * 10;
+            return maxStamina;
         }
         public void TakeDamage(int damage)
         {
@@ -39,6 +60,13 @@ namespace wwy
                 currentHealth = 0;
                 animatorHandler.PlayTargetAnimation("Dead_01", true);
             }
+        }
+    
+        public void TakeStaminaDamage(int damage)
+        {
+            currentStamina = currentStamina - damage;
+            //Set Bar
+            staminaBar.SetCurrentStamina(currentStamina);
         }
     }
 }

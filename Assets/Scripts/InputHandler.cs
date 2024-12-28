@@ -15,6 +15,7 @@ namespace wwy
         public float mouseY;
 
         public bool b_Input;
+        public bool a_Input;
         public bool sprintFlag;
         public bool comboFlag;
         public bool rollFlag;
@@ -69,6 +70,7 @@ namespace wwy
             HandleRollInput(delta);
             HandleAttackInput(delta);
             HandleQuickSlotsInput(delta);
+            HandleInteractingButtonInput();
         }
 
         private void MoveInput(float delta)
@@ -143,6 +145,11 @@ namespace wwy
             {
                 playerInventory.ChangeLeftWeapon();
             }
+        }
+    
+        private void HandleInteractingButtonInput()
+        {
+            inputActions.PlayerActions.A.performed += i => { a_Input = true; };
         }
     }
 }
