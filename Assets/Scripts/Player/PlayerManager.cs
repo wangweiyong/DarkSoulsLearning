@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace wwy
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : CharacterManager
     {
         InputHandler inputHandler;
         PlayerLocomotion playerLocomotion;

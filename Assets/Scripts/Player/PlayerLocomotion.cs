@@ -216,7 +216,10 @@ namespace wwy
                 //rigidbody.AddForce(-Vector3.up * fallingSpeed);
                 // add some directionForce in order to not stuck in walls
                 if(playerManager.isJumping==false)
+                {
                     rigidbody.AddForce(moveDirection * fallingSpeed / 10f);
+                    rigidbody.AddForce(-Vector3.up * fallingSpeed);
+                }
             }
 
             Vector3 dir = moveDirection;
@@ -272,12 +275,11 @@ namespace wwy
                     {
                         animatorHandler.PlayTargetAnimation("Falling", true);
                     }
-
+                    Debug.Log("falling");
                     Vector3 vel = rigidbody.velocity;
                     vel.Normalize();
                     rigidbody.velocity = vel * (movementSpeed / 2);
                     playerManager.isInAir = true;
-                    rigidbody.AddForce(-Vector3.up * fallingSpeed);
                 }
             }
             //这里只是控制y轴

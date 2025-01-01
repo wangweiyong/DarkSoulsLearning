@@ -16,10 +16,12 @@ namespace wwy
 
         public bool b_Input;
         public bool a_Input;
+        public bool lockOnInut;
         public bool sprintFlag;
         public bool comboFlag;
         public bool inventoryFlag;
         public bool rollFlag;
+        public bool lockOnFlag;
         public float rollInputTimer;
         public bool rb_Input;
         public bool rt_Input;
@@ -30,6 +32,9 @@ namespace wwy
         public bool d_Pad_Down;
         public bool d_Pad_Left;
         public bool d_Pad_Right;
+        public bool right_Stick_Right_Input;
+        public bool left_Stick_Left_Input;
+
 
         public float durationForRoll2Sprint = 0.3f;
 
@@ -38,6 +43,7 @@ namespace wwy
         PlayerInventory playerInventory;
         PlayerManager playerManager;
         UIManager uiManager;
+        CameraHandler cameraHandler;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -49,6 +55,7 @@ namespace wwy
             playerInventory= GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
             uiManager = FindObjectOfType<UIManager>();
+            cameraHandler = FindObjectOfType<CameraHandler>();
         }
 
         private void OnEnable()
@@ -72,7 +79,10 @@ namespace wwy
                 inputActions.PlayerActions.A.performed += i => { a_Input = true; };
                 inputActions.PlayerActions.Jump.performed += i => { jump_Input = true; };
                 inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
+                inputActions.PlayerActions.LockOn.performed += i => lockOnInut = true;
 
+                inputActions.PlayerMovement.LockOnTargetRight.performed += i => right_Stick_Right_Input = true;
+                inputActions.PlayerMovement.LockOnTargetLeft.performed += i => left_Stick_Left_Input = true;
             }
             inputActions.Enable();
         }
@@ -91,6 +101,7 @@ namespace wwy
             HandleInteractingButtonInput();
             HandleJumpInput();
             HandleInventoryInput();
+            HandleLockOnInput();
         }
 
         private void MoveInput(float delta)
@@ -191,5 +202,47 @@ namespace wwy
                 }
             }
         }
+    
+        private void HandleLockOnInput()
+        {
+            if (lockOnInut &&lockOnFlag == false)
+            {
+                lockOnInut = false;
+                cameraHandler.HandleLockOn();
+                if(cameraHandler.nearestLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.nearestLockOnTarget;
+                    lockOnFlag = true;
+                }
+            }
+            else if(lockOnInut && lockOnFlag)
+            {
+                lockOnInut = false;
+                lockOnFlag = false;
+                //Clear Lock on targets
+                cameraHandler.ClearLockOnTargets();
+
+            }
+
+            if(lockOnFlag && right_Stick_Right_Input)
+            {
+                right_Stick_Right_Input = false;
+                cameraHandler.HandleLockOn();
+                if(cameraHandler.rightLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.rightLockOnTarget;
+                }
+            }
+            if(lockOnFlag && left_Stick_Left_Input)
+            {
+                left_Stick_Left_Input = false;
+                cameraHandler.HandleLockOn();
+                if (cameraHandler.leftLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.leftLockOnTarget;
+                }
+            }
+        }
+       
     }
 }

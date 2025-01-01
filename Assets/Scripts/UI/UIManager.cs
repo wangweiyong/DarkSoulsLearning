@@ -8,7 +8,7 @@ namespace wwy
     public class UIManager : MonoBehaviour
     {
         public PlayerInventory playerInventory;
-        EquipmentWindowUI equipmentWindowUI;
+        public EquipmentWindowUI equipmentWindowUI;
         [Header("UI Windows")]
         public GameObject hudWindow;
         public GameObject selectWindow;
@@ -23,7 +23,6 @@ namespace wwy
         private void Start()
         {
             weaponInventorySlots = weaponInventorySlotsParent.GetComponentsInChildren<WeaponInventorySlot>();
-            equipmentWindowUI = FindObjectOfType<EquipmentWindowUI>();
             equipmentWindowUI.LoadWeaponsOnEquipmentScreen(playerInventory);
         }
         public void UpdateUI()

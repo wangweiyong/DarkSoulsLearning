@@ -110,7 +110,7 @@ namespace wwy
             Vector3 deltaPosition = anim.deltaPosition;
             Vector3 velocity = deltaPosition / delta;
             if(!playerManager.isJumping)
-                velocity.y = Mathf.Clamp(playerLocomotion.rigidbody.velocity.y, -5f, 10f);
+                velocity.y = Mathf.Clamp(playerLocomotion.rigidbody.velocity.y, -5f, 0f);
             playerLocomotion.rigidbody.velocity = velocity;
         }
 
