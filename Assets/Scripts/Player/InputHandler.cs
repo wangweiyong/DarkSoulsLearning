@@ -60,6 +60,19 @@ namespace wwy
                 { movementInput = inputActions.ReadValue<Vector2>(); };
                 inputActions.PlayerMovement.Camera.performed += (inputActions) =>
                 { cameraInput = inputActions.ReadValue<Vector2>(); };
+
+                inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+                inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
+                inputActions.PlayerQuickSlots.D_Pad_Right.performed += i => { d_Pad_Right = true; };
+                inputActions.PlayerQuickSlots.D_Pad_Up.performed += i => { d_Pad_Up = true; };
+                inputActions.PlayerQuickSlots.D_Pad_Down.performed += i => { d_Pad_Down = true; };
+                inputActions.PlayerQuickSlots.D_Pad_Left.performed += i => { d_Pad_Left = true; };
+            
+                inputActions.PlayerActions.A.performed += i => { a_Input = true; };
+                inputActions.PlayerActions.Jump.performed += i => { jump_Input = true; };
+                inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
+
             }
             inputActions.Enable();
         }
@@ -93,6 +106,7 @@ namespace wwy
         private void HandleRollInput(float delta)
         {
             b_Input = inputActions.PlayerActions.Roll.IsPressed();
+
             if (b_Input)
             {
                 rollInputTimer += delta;
@@ -114,9 +128,6 @@ namespace wwy
         
         private void HandleAttackInput(float delta)
         {
-            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
-            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
-
             if (rb_Input)
             {
                 if (playerManager.canDoCombo)
@@ -139,10 +150,7 @@ namespace wwy
         }
         private void HandleQuickSlotsInput(float delta)
         {
-            inputActions.PlayerQuickSlots.D_Pad_Right.performed += i => { d_Pad_Right = true; };
-            inputActions.PlayerQuickSlots.D_Pad_Up.performed += i => { d_Pad_Up = true; };
-            inputActions.PlayerQuickSlots.D_Pad_Down.performed += i => { d_Pad_Down = true; };
-            inputActions.PlayerQuickSlots.D_Pad_Left.performed += i => { d_Pad_Left = true; };
+          
             if (d_Pad_Right)
             {
                 playerInventory.ChangeRightWeapon();
@@ -156,17 +164,14 @@ namespace wwy
     
         private void HandleInteractingButtonInput()
         {
-            inputActions.PlayerActions.A.performed += i => { a_Input = true; };
         }
     
         private void HandleJumpInput()
         {
-            inputActions.PlayerActions.Jump.performed += i => { jump_Input = true; };
         }
 
         private void HandleInventoryInput()
         {
-            inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
 
             if (inventory_Input)
             {
@@ -175,10 +180,14 @@ namespace wwy
                 if(inventoryFlag)
                 {
                     uiManager.OpenSelectWindow();
+                    uiManager.UpdateUI();
+                    uiManager.hudWindow.SetActive(false);
                 }
                 else
                 {
                     uiManager.CloseSelectWindow();
+                    uiManager.CloseAllInventoryWindows();
+                    uiManager.hudWindow.SetActive(true);
                 }
             }
         }

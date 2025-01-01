@@ -21,6 +21,7 @@ namespace wwy
         public bool isInAir;
         public bool isGrounded;
         public bool canDoCombo;
+        public bool isJumping;
 
         private void Start()
         {
@@ -36,6 +37,7 @@ namespace wwy
             float delta = Time.deltaTime;
             isInteracting = anim.GetBool("isInteracting");
             canDoCombo = anim.GetBool("CanDoCombo");
+            isJumping = anim.GetBool("isJumping");
             anim.SetBool("isInAir", isInAir);
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
@@ -103,7 +105,6 @@ namespace wwy
                         {
                             interactableObject.Interact(this);
                         }
-
                     }
                 }
             }

@@ -72,6 +72,7 @@ namespace wwy
                     moveDirection = cameraObject.forward * inputHandler.vertical;
                     moveDirection += cameraObject.right * inputHandler.horizontal;
                     animatorHandler.PlayTargetAnimation("Jump", true);
+                    animatorHandler.anim.SetBool("isJumping", true);
                     moveDirection.y = 0;
 
                     Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
@@ -214,7 +215,8 @@ namespace wwy
             {
                 //rigidbody.AddForce(-Vector3.up * fallingSpeed);
                 // add some directionForce in order to not stuck in walls
-                rigidbody.AddForce(moveDirection * fallingSpeed / 10f);
+                if(playerManager.isJumping==false)
+                    rigidbody.AddForce(moveDirection * fallingSpeed / 10f);
             }
 
             Vector3 dir = moveDirection;
@@ -229,10 +231,13 @@ namespace wwy
                 normalVector = hit.normal;
                 Vector3 tp = hit.point;
                 playerManager.isGrounded = true;
-                targetPosition.y = tp.y;
-                Vector3 velocity = rigidbody.velocity;
-                velocity.y = 0;
-                rigidbody.velocity = velocity;
+                if (!playerManager.isJumping)
+                {
+                    targetPosition.y = tp.y;
+                    Vector3 velocity = rigidbody.velocity;
+                    velocity.y = 0;
+                    rigidbody.velocity = velocity;
+                }
 
                 if (playerManager.isInAir)
                 {
@@ -241,11 +246,13 @@ namespace wwy
                     {
                         Debug.Log("You were in Air for " + inAirTimer);
                         animatorHandler.PlayTargetAnimation("Land", true);
+                        animatorHandler.anim.SetBool("isJumping", false);
                         inAirTimer = 0;
                     }
                     else
                     {
                         animatorHandler.PlayTargetAnimation("Empty", false);
+                        animatorHandler.anim.SetBool("isJumping", false);
                         inAirTimer = 0;
                     }
                     playerManager.isInAir = false;

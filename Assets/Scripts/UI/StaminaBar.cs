@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StaminaBar : MonoBehaviour
 {
     public Slider slider;
-    private void Start()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
     }
