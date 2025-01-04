@@ -8,6 +8,7 @@ namespace wwy
     {
         WeaponHolderSlots leftHandSlot;
         WeaponHolderSlots rightHandSlot;
+        WeaponHolderSlots backSlot;
 
         DamageCollider leftHandDamageCollider;
         DamageCollider rightHandDamageCollider;
@@ -18,11 +19,14 @@ namespace wwy
         QuickSlotsUI quickSlotsUI;
 
         PlayerStats playerStats;
+
+        InputHandler inputHandler;
         private void Awake()
         {
             animator = GetComponent<Animator>();
             quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
             playerStats = GetComponentInParent<PlayerStats>();
+            inputHandler = GetComponentInParent<InputHandler>();
 
             WeaponHolderSlots[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlots>();
             foreach (WeaponHolderSlots weaponSlot in weaponHolderSlots)
@@ -35,6 +39,10 @@ namespace wwy
                 {
                     rightHandSlot = weaponSlot;
                 }
+                else if (weaponSlot.isBackSlot)
+                {
+                    backSlot = weaponSlot;
+                }
             } 
         }
 
@@ -42,6 +50,7 @@ namespace wwy
         {
             if (isLeft)
             {
+                leftHandSlot.currentWeaponItem = weaponItem;
                 leftHandSlot.LoadWeaponModel(weaponItem);
                 LoadLeftWeaponDamageCollider();
                 quickSlotsUI.UpdateWeaponQuickSlotsUI(true, weaponItem);
@@ -58,19 +67,33 @@ namespace wwy
             }
             else if (!isLeft)
             {
-                rightHandSlot.LoadWeaponModel(weaponItem);
-                LoadRightWeaponDamageCollider();
-                quickSlotsUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
-                #region Handle Right Weapon Idle Animation
-                if (weaponItem != null)
+                if (inputHandler.twoHandFlag)
                 {
-                    animator.CrossFade(weaponItem.right_hand_idle, 0.2f);
+                    //Move current left hand weapon to the back or disable it
+                    backSlot.LoadWeaponModel(leftHandSlot.currentWeaponItem);
+                    leftHandSlot.UnloadWeaponAndDestroy();
+                    animator.CrossFade(weaponItem.th_idle, 0.2f);
                 }
                 else
                 {
-                    animator.CrossFade("Right_Arm_Empty", 0.2f);
+                    #region Handle Right Weapon Idle Animation
+                    animator.CrossFade("Both_Arm_Empty", 0.2f);
+
+                    backSlot.UnloadWeaponAndDestroy();
+                    if (weaponItem != null)
+                    {
+                        animator.CrossFade(weaponItem.right_hand_idle, 0.2f);
+                    }
+                    else
+                    {
+                        animator.CrossFade("Right_Arm_Empty", 0.2f);
+                    }
+                    #endregion
                 }
-                #endregion
+                rightHandSlot.currentWeaponItem = weaponItem;
+                rightHandSlot.LoadWeaponModel(weaponItem);
+                LoadRightWeaponDamageCollider();
+                quickSlotsUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
             }
         }
 

@@ -18,6 +18,7 @@ MonoBehaviour:
   isUnarmed: 1
   right_hand_idle: Right_Arm_Empty
   left_hand_idle: Left_Arm_Empty
+  th_idle: Both_Arm_Empty
   OH_Light_Attack_1: 
   OH_Light_Attack_2: 
   OH_Light_Attack_3: 
@@ -26,3 +27,6 @@ MonoBehaviour:
   OH_Heavy_Attack_2: 
   OH_Heavy_Attack_3: 
   OH_Heavy_Attack_4: 
+  baseStamina: 0
+  lightAttackMultiplier: 0
+  heavyAttackMultiplier: 0

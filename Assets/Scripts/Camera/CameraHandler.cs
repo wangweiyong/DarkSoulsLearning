@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ProjectWindowCallback;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,9 @@ namespace wwy
         private Vector3 cameraTransformPosition;
         public LayerMask ignoreLayers;
         private Vector3 cameraFollowVelocity = Vector3.zero;
+        private LayerMask environmentLayer;
+        PlayerManager playerManager;
+
 
         public static CameraHandler singleton;
 
@@ -34,6 +38,8 @@ namespace wwy
         public float cameraCollisionOffset = 0.8f;
         public float minimumCollisionOffset = 0.2f;
         public float offersetSpeed = 60f;
+        public float lockedPivotPosition = 2.25f;
+        public float unlockedPivtoPosition = 1.65f;
 
         public float maxmumLockOnDistance = 30;
         List<CharacterManager> availableTargets = new List<CharacterManager>();
@@ -47,9 +53,11 @@ namespace wwy
             myTransform = transform;
             defaultPosition = cameraTransform.localPosition.z;
             ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
+            environmentLayer = LayerMask.NameToLayer("Environment");
             originalSpeed = lookSpeed;
             targetTransform = FindObjectOfType<PlayerManager>().transform;
             inputHandler = FindObjectOfType<InputHandler>();
+            playerManager = FindObjectOfType<PlayerManager>();
         }
 
         public void FollowTarget(float delta)
@@ -86,22 +94,23 @@ namespace wwy
             {
                 float velocity = 0;
 
-                Vector3 dir = currentLockOnTarget.position - transform.position;
+                 Vector3 dir = currentLockOnTarget.position - transform.position;
 
-                dir.Normalize();
-                dir.y = 0;
+                 dir.Normalize();
+                 dir.y = 0;
 
-                Quaternion targetRotation = Quaternion.LookRotation(dir);
-                transform.rotation = targetRotation;
+                 Quaternion targetRotation = Quaternion.LookRotation(dir);
+                 transform.rotation = targetRotation;
 
-                dir = currentLockOnTarget.position - cameraPivotTransform.position;
-                dir.Normalize();
-                targetRotation = Quaternion.LookRotation(dir);
-                Vector3 eulerAngles = targetRotation.eulerAngles;
-                eulerAngles.y = 0;
-                cameraPivotTransform.localEulerAngles = eulerAngles;
+                 dir = currentLockOnTarget.position - cameraPivotTransform.position;
+                 dir.Normalize();
+                 targetRotation = Quaternion.LookRotation(dir);
+                 Vector3 eulerAngles = targetRotation.eulerAngles;
+                 eulerAngles.y = 0;
+                 cameraPivotTransform.localEulerAngles = eulerAngles;
             }
         }
+
         private void HandleCameraCollisions(float delta)
         {
             float targetPosition = defaultPosition;
@@ -146,9 +155,23 @@ namespace wwy
                     float distanceFromTarget = Vector3.Distance(targetTransform.position, character.transform.position);
                     float viewableAngle = Vector3.Angle(lockTargetDirection, cameraTransform.forward);
 
+                    RaycastHit hit;
                     if(character.transform.root != targetTransform.transform.root && viewableAngle < 50 && viewableAngle > -50 && distanceFromTarget <= maxmumLockOnDistance)
                     {
-                        availableTargets.Add(character);
+                        if(Physics.Linecast(playerManager.lockOnTransform.position, character.lockOnTransform.position, out hit))
+                        {
+                            Debug.DrawLine(playerManager.lockOnTransform.position, character.lockOnTransform.position);
+                        
+                            if(hit.transform.gameObject.layer == environmentLayer)
+                            {
+                                //cannot lock on
+                            }
+                            else
+                            {
+                                availableTargets.Add(character);
+
+                            }
+                        }
                     }
                         
                 }
@@ -187,6 +210,23 @@ namespace wwy
             availableTargets.Clear();
             nearestLockOnTarget = null;
             currentLockOnTarget = null;
+        }
+    
+        public void SetCameraHeight()
+        {
+            Vector3 velocity = Vector3.zero;
+            Vector3 newLockedPosition = new Vector3(0, lockedPivotPosition);
+            Vector3 newunLockedPosition = new Vector3(0, unlockedPivtoPosition);
+
+            if(currentLockOnTarget != null)
+            {
+                cameraPivotTransform.transform.localPosition = Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedPosition, ref velocity, Time.deltaTime);
+            }
+            else
+            {
+                cameraPivotTransform.transform.localPosition = Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newunLockedPosition, ref velocity, Time.deltaTime);
+
+            }
         }
     }
 

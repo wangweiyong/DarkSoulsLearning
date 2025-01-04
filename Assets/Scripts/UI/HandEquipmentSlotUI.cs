@@ -6,6 +6,7 @@ namespace wwy
 {
     public class HandEquipmentSlotUI : MonoBehaviour
     {
+        UIManager uiManager;
         public Image icon;
         WeaponItem weapon;
         public bool rightHandSlot01;
@@ -13,6 +14,10 @@ namespace wwy
         public bool leftHandSlot01;
         public bool leftHandSlot02;
 
+        private void Awake()
+        {
+            uiManager = FindObjectOfType<UIManager>();
+        }
         public void AddItem(WeaponItem newItem)
         {
             weapon = newItem;
@@ -27,6 +32,26 @@ namespace wwy
             icon.sprite = null;
             icon.enabled = false;
             gameObject.SetActive(false);
+        }
+
+        public void SelectThisSlot()
+        {
+            if (rightHandSlot01)
+            {
+                uiManager.rightHandSlot01Selected = true;
+            }
+            else if(rightHandSlot02)
+            {
+                uiManager.rightHandSlot02Selected = true;
+            }
+            else if (leftHandSlot01)
+            {
+                uiManager.leftHandSlot01Selected = true;
+            }
+            else
+            {
+                uiManager.leftHandSlot02Selected = true;
+            }
         }
     }
 }

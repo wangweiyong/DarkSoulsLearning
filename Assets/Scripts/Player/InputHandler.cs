@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace wwy
@@ -16,12 +17,14 @@ namespace wwy
 
         public bool b_Input;
         public bool a_Input;
+        public bool y_Input;
         public bool lockOnInut;
         public bool sprintFlag;
         public bool comboFlag;
         public bool inventoryFlag;
         public bool rollFlag;
         public bool lockOnFlag;
+        public bool twoHandFlag;
         public float rollInputTimer;
         public bool rb_Input;
         public bool rt_Input;
@@ -45,6 +48,9 @@ namespace wwy
         UIManager uiManager;
         CameraHandler cameraHandler;
 
+
+        WeaponSlotManager weaponSlotManager;
+
         Vector2 movementInput;
         Vector2 cameraInput;
 
@@ -54,6 +60,7 @@ namespace wwy
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory= GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
+            weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
         }
@@ -83,6 +90,8 @@ namespace wwy
 
                 inputActions.PlayerMovement.LockOnTargetRight.performed += i => right_Stick_Right_Input = true;
                 inputActions.PlayerMovement.LockOnTargetLeft.performed += i => left_Stick_Left_Input = true;
+
+                inputActions.PlayerActions.Y.performed += i => y_Input = true;
             }
             inputActions.Enable();
         }
@@ -94,7 +103,7 @@ namespace wwy
 
         public void TickInput(float delta)
         {
-            MoveInput(delta);
+            HandleMoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
             HandleQuickSlotsInput(delta);
@@ -102,9 +111,10 @@ namespace wwy
             HandleJumpInput();
             HandleInventoryInput();
             HandleLockOnInput();
+            HandleTwoHandFlagInput();
         }
 
-        private void MoveInput(float delta)
+        private void HandleMoveInput(float delta)
         {
             horizontal = movementInput.x;
             vertical = movementInput.y;
@@ -242,7 +252,28 @@ namespace wwy
                     cameraHandler.currentLockOnTarget = cameraHandler.leftLockOnTarget;
                 }
             }
+            cameraHandler.SetCameraHeight();
         }
        
+        private void HandleTwoHandFlagInput()
+        {
+            if (y_Input)
+            {
+                y_Input = false;
+                twoHandFlag = !twoHandFlag;
+                if (twoHandFlag)
+                {
+                    //Enable two handing
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+                }
+                else
+                {
+                    //disable two handing
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
+
+                }
+            }
+        }
     }
 }

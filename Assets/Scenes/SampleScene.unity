@@ -334,6 +334,8 @@ MonoBehaviour:
   parentOverride: {fileID: 579199506}
   isLeftHandSlot: 1
   isRightHandSlot: 0
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &50422215
 GameObject:
@@ -470,6 +472,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1336593775}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 191790725}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 50422220}
+        m_TargetAssemblyTypeName: wwy.HandEquipmentSlotUI, Assembly-CSharp
+        m_MethodName: SelectThisSlot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &50422220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +542,7 @@ GameObject:
   - component: {fileID: 53613571}
   - component: {fileID: 53613572}
   - component: {fileID: 53613573}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53613564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -548,12 +586,14 @@ MonoBehaviour:
   mouseY: 0
   b_Input: 0
   a_Input: 0
+  y_Input: 0
   lockOnInut: 0
   sprintFlag: 0
   comboFlag: 0
   inventoryFlag: 0
   rollFlag: 0
   lockOnFlag: 0
+  twoHandFlag: 0
   rollInputTimer: 0
   rb_Input: 0
   rt_Input: 0
@@ -911,6 +951,11 @@ MonoBehaviour:
   rightHandSlot02Selected: 0
   leftHandSlot01Selected: 0
   leftHandSlot02Selected: 0
+  handEquipmentSlotUI:
+  - {fileID: 958061724}
+  - {fileID: 1388273898}
+  - {fileID: 1929543377}
+  - {fileID: 50422220}
 --- !u!1 &191790725
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,7 +966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 191790726}
   m_Layer: 5
-  m_Name: Equipment Window
+  m_Name: Equipment Scren Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,6 +993,56 @@ RectTransform:
   m_AnchoredPosition: {x: 1035, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &199261699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 199261700}
+  - component: {fileID: 199261701}
+  m_Layer: 0
+  m_Name: Back Weapon Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &199261700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199261699}
+  m_LocalRotation: {x: 0.02546725, y: 0.6812177, z: -0.60933846, w: 0.40496987}
+  m_LocalPosition: {x: -0.00163, y: 0.00226, z: -0.00186}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1281320648}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 58.3, y: 82.28, z: -60.83}
+--- !u!114 &199261701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199261699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90275240f441a6479bc7af2d71a6ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentOverride: {fileID: 199261700}
+  isLeftHandSlot: 0
+  isRightHandSlot: 0
+  isBackSlot: 1
+  currentWeaponItem: {fileID: 0}
+  currentWeaponModel: {fileID: 0}
 --- !u!1 &220818076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1106,8 @@ MonoBehaviour:
   parentOverride: {fileID: 478216292}
   isLeftHandSlot: 0
   isRightHandSlot: 1
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &259147933
 GameObject:
@@ -1817,6 +1914,8 @@ MonoBehaviour:
   cameraCollisionOffset: 0.2
   minimumCollisionOffset: 0.2
   offersetSpeed: 60
+  lockedPivotPosition: 2.25
+  unlockedPivtoPosition: 1.65
   maxmumLockOnDistance: 30
   currentLockOnTarget: {fileID: 0}
   nearestLockOnTarget: {fileID: 0}
@@ -2103,6 +2202,8 @@ MonoBehaviour:
   parentOverride: {fileID: 1950969421}
   isLeftHandSlot: 1
   isRightHandSlot: 0
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &649578175
 GameObject:
@@ -2583,7 +2684,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 864186264}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 191790725}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 270036704}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &864186264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2980,6 +3105,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1336593775}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 191790725}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 958061724}
+        m_TargetAssemblyTypeName: wwy.HandEquipmentSlotUI, Assembly-CSharp
+        m_MethodName: SelectThisSlot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &958061724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3335,6 +3496,8 @@ MonoBehaviour:
   parentOverride: {fileID: 1964362330}
   isLeftHandSlot: 1
   isRightHandSlot: 0
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &1025451325
 GameObject:
@@ -3380,6 +3543,7 @@ GameObject:
   - component: {fileID: 1037817316}
   - component: {fileID: 1037817315}
   - component: {fileID: 1037817314}
+  - component: {fileID: 1037817319}
   m_Layer: 0
   m_Name: Enemy (2)
   m_TagString: Enemy
@@ -3400,6 +3564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 329367850}
+  detectionRadius: 20
+  maximumDetectionAngle: 50
+  minimumDetectionAngle: -50
 --- !u!54 &1037817315
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3445,6 +3612,9 @@ MonoBehaviour:
   healthLevel: 10
   maxHealth: 0
   currentHealth: 0
+  staminaLevel: 10
+  maxStamina: 0
+  currentStamina: 0
 --- !u!4 &1037817318
 Transform:
   m_ObjectHideFlags: 0
@@ -3462,6 +3632,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1037817319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037817313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecbe8cd25e02224ca30f412a450ac89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &1096356437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3723,6 +3909,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225226395}
   m_CullTransparentMesh: 1
+--- !u!4 &1281320648 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7839386046294060213, guid: ea2916736168f45479b110b080aaad2d, type: 3}
+  m_PrefabInstance: {fileID: 640671126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1318135826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3736,6 +3927,7 @@ GameObject:
   - component: {fileID: 1318135828}
   - component: {fileID: 1318135830}
   - component: {fileID: 1318135831}
+  - component: {fileID: 1318135832}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -3750,7 +3942,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318135826}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2.591}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3759,7 +3951,7 @@ Transform:
   - {fileID: 1380522747}
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1318135828
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3789,6 +3981,9 @@ MonoBehaviour:
   healthLevel: 10
   maxHealth: 0
   currentHealth: 0
+  staminaLevel: 10
+  maxStamina: 0
+  currentStamina: 0
 --- !u!54 &1318135830
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3818,6 +4013,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 1380522747}
+  detectionRadius: 20
+  maximumDetectionAngle: 50
+  minimumDetectionAngle: -50
+--- !u!114 &1318135832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318135826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecbe8cd25e02224ca30f412a450ac89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &1336593775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,6 +4317,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1336593775}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 191790725}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1388273898}
+        m_TargetAssemblyTypeName: wwy.HandEquipmentSlotUI, Assembly-CSharp
+        m_MethodName: SelectThisSlot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1388273898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4169,7 +4419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1518747948
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4273,6 +4523,8 @@ MonoBehaviour:
   parentOverride: {fileID: 1025451326}
   isLeftHandSlot: 1
   isRightHandSlot: 0
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &1539856888 stripped
 GameObject:
@@ -4299,6 +4551,8 @@ MonoBehaviour:
   parentOverride: {fileID: 1659222620}
   isLeftHandSlot: 0
   isRightHandSlot: 1
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &1591863231
 GameObject:
@@ -4382,6 +4636,8 @@ MonoBehaviour:
   parentOverride: {fileID: 301456558}
   isLeftHandSlot: 0
   isRightHandSlot: 1
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &1622310620 stripped
 GameObject:
@@ -4408,6 +4664,8 @@ MonoBehaviour:
   parentOverride: {fileID: 1420752808}
   isLeftHandSlot: 0
   isRightHandSlot: 1
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &1659222619
 GameObject:
@@ -4599,7 +4857,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1772454513}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3580884291466824361}
+        m_TargetAssemblyTypeName: wwy.WeaponInventorySlot, Assembly-CSharp
+        m_MethodName: EquipThisItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1336593775}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1815480032
 GameObject:
   m_ObjectHideFlags: 0
@@ -4644,6 +4926,7 @@ GameObject:
   - component: {fileID: 1889735033}
   - component: {fileID: 1889735032}
   - component: {fileID: 1889735031}
+  - component: {fileID: 1889735036}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Enemy
@@ -4664,6 +4947,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 1815480033}
+  detectionRadius: 20
+  maximumDetectionAngle: 50
+  minimumDetectionAngle: -50
 --- !u!54 &1889735032
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4709,6 +4995,9 @@ MonoBehaviour:
   healthLevel: 10
   maxHealth: 0
   currentHealth: 0
+  staminaLevel: 10
+  maxStamina: 0
+  currentStamina: 0
 --- !u!4 &1889735035
 Transform:
   m_ObjectHideFlags: 0
@@ -4726,6 +5015,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1889735036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889735030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecbe8cd25e02224ca30f412a450ac89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &1929543372
 GameObject:
   m_ObjectHideFlags: 0
@@ -4852,6 +5157,42 @@ MonoBehaviour:
       - m_Target: {fileID: 160779645}
         m_TargetAssemblyTypeName: wwy.EquipmentUI, Assembly-CSharp
         m_MethodName: SelectRightHandSlot01
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1336593775}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 191790725}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1929543377}
+        m_TargetAssemblyTypeName: wwy.HandEquipmentSlotUI, Assembly-CSharp
+        m_MethodName: SelectThisSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5303,6 +5644,8 @@ MonoBehaviour:
   parentOverride: {fileID: 312827254}
   isLeftHandSlot: 0
   isRightHandSlot: 1
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!114 &2085205065
 MonoBehaviour:
@@ -5319,6 +5662,8 @@ MonoBehaviour:
   parentOverride: {fileID: 1096356438}
   isLeftHandSlot: 1
   isRightHandSlot: 0
+  isBackSlot: 0
+  currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
 --- !u!1 &2118757330
 GameObject:
@@ -6383,6 +6728,11 @@ MonoBehaviour:
   hudWindow: {fileID: 867532125}
   selectWindow: {fileID: 270036704}
   weaponInventoryWindow: {fileID: 1336593775}
+  equipmentScreenWindow: {fileID: 191790725}
+  rightHandSlot01Selected: 0
+  rightHandSlot02Selected: 0
+  leftHandSlot01Selected: 0
+  leftHandSlot02Selected: 0
   weaponInventorySlotsParent: {fileID: 1591863232}
   weaponInventorySlotPrefab: {fileID: 6317700236063860507, guid: 447983a6136b26041b32f6ae47f1f6bf, type: 3}
 --- !u!114 &7342929670070651174

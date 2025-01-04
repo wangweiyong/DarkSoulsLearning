@@ -9,6 +9,8 @@ namespace wwy
         public Transform parentOverride;
         public bool isLeftHandSlot;
         public bool isRightHandSlot;
+        public bool isBackSlot;
+        public WeaponItem currentWeaponItem;
 
         public GameObject currentWeaponModel;
 
