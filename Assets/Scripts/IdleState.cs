@@ -37,7 +37,7 @@ namespace wwy
 
             #region handle switch to next state
 
-            if (enemyManager.currentState != null)
+            if (enemyManager.currentTarget != null)
             {
                 return pursueTargetState;
             }

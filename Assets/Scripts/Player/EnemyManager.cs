@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace wwy
 {
@@ -11,11 +12,19 @@ namespace wwy
         EnemyStats enemyStats;
 
         public CharacterStats currentTarget;
+        public NavMeshAgent navMeshAgent;
+        public Rigidbody enemyRigidbody;
 
 
         public bool isPerfomingAction;
 
         public State currentState;
+
+
+        public float distanceFromTarget;
+
+        public float rotationSpeed = 15;
+        public float maximumAttackRange = 1.5f;
 
         [Header("AI Settings")]
         public float detectionRadius = 20;
@@ -23,6 +32,7 @@ namespace wwy
         //basically like eye sight)
         public float maximumDetectionAngle = 50;
         public float minimumDetectionAngle = -50;
+        public float viewableAnagle;
 
         public float currentRecoveryTime = 0;
         private void Awake()
@@ -30,11 +40,17 @@ namespace wwy
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
             enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
             enemyStats = GetComponent<EnemyStats>();
+            navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+            enemyRigidbody = GetComponent<Rigidbody>();
+
+            navMeshAgent.enabled = false;
+            enemyRigidbody.isKinematic = false;
+
         }
 
         private void Update()
         {
-            //HandleRecoveryTime();
+            HandleRecoveryTime();
         }
         private void FixedUpdate()
         {
@@ -58,90 +74,20 @@ namespace wwy
             currentState = state;
         }
 
-/*        #region Attacks
-        private void GetNewAttack()
-        {
-            Vector3 targetDirection = enemyLocomotionManager.currentTarget.transform.position - transform.position;
-            float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
-            enemyLocomotionManager.distanceFromTarget = Vector3.Distance(enemyLocomotionManager.currentTarget.transform.position, transform.position);
-
-            int maxScore = 0;
-            for(int i = 0; i < enemyAttacks.Length; ++i)
-            {
-                EnemyAttackAction enemyAttackAction = enemyAttacks[i];
-
-                if(enemyLocomotionManager.distanceFromTarget <= enemyAttackAction.maximumDistanceNeededToAttack
-                    && enemyLocomotionManager.distanceFromTarget >= enemyAttackAction.minimumAttackAngle)
-                {
-                    if(viewableAngle <= enemyAttackAction.maximumAttackAngle &&
-                        viewableAngle >= enemyAttackAction.minimumAttackAngle)
-                    {
-                        maxScore += enemyAttackAction.attackScore;
-                    }
-                }
-            }
-
-            int randomValue = Random.Range(0, maxScore);
-            int temporaryScore = 0;
-            for(int i = 0; i < enemyAttacks.Length; ++i)
-            {
-                EnemyAttackAction enemyAttackAction = enemyAttacks[i];
-
-                if (enemyLocomotionManager.distanceFromTarget <= enemyAttackAction.maximumDistanceNeededToAttack
-                    && enemyLocomotionManager.distanceFromTarget >= enemyAttackAction.minimumAttackAngle)
-                {
-                    if (viewableAngle <= enemyAttackAction.maximumAttackAngle &&
-                        viewableAngle >= enemyAttackAction.minimumAttackAngle)
-                    {
-                        if(currentAttack != null)
-                        {
-                            return;
-                        }
-                        temporaryScore += enemyAttackAction.attackScore;
-                        if(temporaryScore > randomValue)
-                        {
-                            currentAttack = enemyAttackAction;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void AttackTarget()
-        {
-            if (isPerfomingAction)
-            {
-                return;
-            }
-            
-            if(currentAttack == null)
-            {
-                GetNewAttack();
-            }
-            else
-            {
-                isPerfomingAction = true;
-                currentRecoveryTime = currentAttack.recoveryTime;
-                enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
-                currentAttack = null;
-            }
-        }
-
         private void HandleRecoveryTime()
         {
-            if(currentRecoveryTime >0)
+            if (currentRecoveryTime > 0)
             {
                 currentRecoveryTime -= Time.deltaTime;
             }
 
             if (isPerfomingAction)
             {
-                if(currentRecoveryTime <= 0)
+                if (currentRecoveryTime <= 0)
                 {
                     isPerfomingAction = false;
                 }
             }
         }
-        #endregion*/
     }
 }
