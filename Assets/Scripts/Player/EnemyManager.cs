@@ -8,12 +8,14 @@ namespace wwy
     {
         EnemyLocomotionManager enemyLocomotionManager;
         EnemyAnimatorManager enemyAnimatorManager;
+        EnemyStats enemyStats;
+
+        public CharacterStats currentTarget;
+
+
         public bool isPerfomingAction;
 
-        public EnemyAttackAction[] enemyAttacks;
-
-
-        public EnemyAttackAction currentAttack;
+        public State currentState;
 
         [Header("AI Settings")]
         public float detectionRadius = 20;
@@ -26,41 +28,37 @@ namespace wwy
         private void Awake()
         {
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
-            enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();  
+            enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
+            enemyStats = GetComponent<EnemyStats>();
         }
 
         private void Update()
         {
-            HandleRecoveryTime();
+            //HandleRecoveryTime();
         }
         private void FixedUpdate()
         {
-            HandleCurrentAction();
+            HandleStateMachine();
         }
 
-        private void HandleCurrentAction()
+        private void HandleStateMachine()
         {
-            if(enemyLocomotionManager.currentTarget != null)
+            if(currentState != null)
             {
-                enemyLocomotionManager.distanceFromTarget = Vector3.Distance(enemyLocomotionManager.currentTarget.transform.position, transform.position);
-            }
-            if (enemyLocomotionManager.currentTarget == null)
-            {
-                enemyLocomotionManager.HandleDetection();
-            }
-            else if(enemyLocomotionManager.distanceFromTarget > enemyLocomotionManager.stoppingDistance)
-            {
-                enemyLocomotionManager.HandleMoveToTarget();
-            }
-            else if(enemyLocomotionManager.distanceFromTarget <= enemyLocomotionManager.stoppingDistance)
-            {
-                //Handle attack
-                AttackTarget();
-
+                State nextState = currentState.Tick(this, enemyStats, enemyAnimatorManager);
+                if(nextState != null)
+                {
+                    SwitchToNextState(nextState);
+                }
             }
         }
 
-        #region Attacks
+        private void SwitchToNextState(State state)
+        {
+            currentState = state;
+        }
+
+/*        #region Attacks
         private void GetNewAttack()
         {
             Vector3 targetDirection = enemyLocomotionManager.currentTarget.transform.position - transform.position;
@@ -144,6 +142,6 @@ namespace wwy
                 }
             }
         }
-        #endregion
+        #endregion*/
     }
 }

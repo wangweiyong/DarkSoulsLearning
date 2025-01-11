@@ -13,8 +13,6 @@ namespace wwy
 
         NavMeshAgent navMeshAgent;
         public Rigidbody enemyRigidbody;
-        public CharacterStats currentTarget;
-        public LayerMask detectionLayers;
 
         public float distanceFromTarget;
         public float stoppingDistance = 1f;
@@ -33,32 +31,12 @@ namespace wwy
             navMeshAgent.enabled = false;
             enemyRigidbody.isKinematic = false; 
         }
-        public void HandleDetection()
-        {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, enemyManager.detectionRadius, detectionLayers);
-        
-            for(int i = 0; i < colliders.Length; ++i)
-            {
-                CharacterStats characterStats = colliders[i].transform.GetComponent<CharacterStats>();
-                if(characterStats != null )
-                {
-                    //CHECK FOR TEAM ID
-                    Vector3 targetDirection = characterStats.transform.position - transform.position;
-                    float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 
-                    if(viewableAngle > enemyManager.minimumDetectionAngle && viewableAngle < enemyManager.maximumDetectionAngle)
-                    {
-                        currentTarget = characterStats;
-                    }
-                }
-            }
-        }
-    
         public void HandleMoveToTarget()
         {
             if (enemyManager.isPerfomingAction) return;
-            Vector3 targetDirection = currentTarget.transform.position - transform.position;
-            distanceFromTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+            Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;
+            distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, transform.position);
             float viewableAnge = Vector3.Angle(targetDirection, transform.forward);
 
             //if we are performing an action, stop our movement
@@ -91,7 +69,7 @@ namespace wwy
             //Rotate manually，攻击时的旋转，我们自己处理
             if (enemyManager.isPerfomingAction)
             {
-                Vector3 direction = currentTarget.transform.position - transform.position;
+                Vector3 direction = enemyManager.currentTarget.transform.position - transform.position;
                 direction.y = 0;
                 direction.Normalize();
 
@@ -109,7 +87,7 @@ namespace wwy
                 Vector3 targetVelocity = enemyRigidbody.velocity;
 
                 navMeshAgent.enabled = true;
-                navMeshAgent.SetDestination(currentTarget.transform.position);
+                navMeshAgent.SetDestination(enemyManager.currentTarget.transform.position);
                 enemyRigidbody.velocity = targetVelocity;
                 transform.rotation = Quaternion.Slerp(transform.rotation, navMeshAgent.transform.rotation, rotationSpeed/Time.deltaTime);
             }
