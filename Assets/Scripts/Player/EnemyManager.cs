@@ -7,7 +7,7 @@ namespace wwy
     public class EnemyManager : CharacterManager
     {
         EnemyLocomotionManager enemyLocomotionManager;
-        bool isPerfomingAction;
+        public bool isPerfomingAction;
 
         [Header("AI Settings")]
         public float detectionRadius = 20;
@@ -20,7 +20,7 @@ namespace wwy
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             HandleCurrentAction();
         }
@@ -31,6 +31,20 @@ namespace wwy
             {
                 enemyLocomotionManager.HandleDetection();
             }
+            else if(enemyLocomotionManager.distanceFromTarget > enemyLocomotionManager.stoppingDistance)
+            {
+                enemyLocomotionManager.HandleMoveToTarget();
+            }
+            else if(enemyLocomotionManager.distanceFromTarget <= enemyLocomotionManager.stoppingDistance)
+            {
+                //Handle attack
+
+            }
         }
+
+        #region Attacks
+
+
+        #endregion
     }
 }
