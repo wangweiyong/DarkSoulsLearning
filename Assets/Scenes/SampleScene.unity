@@ -3565,9 +3565,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 329367850}
   isPerfomingAction: 0
+  enemyAttacks: []
+  currentAttack: {fileID: 0}
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
+  currentRecoveryTime: 0
 --- !u!54 &1037817315
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4020,9 +4023,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 1380522747}
   isPerfomingAction: 0
+  enemyAttacks:
+  - {fileID: 11400000, guid: 7c73d5380e8887745af4fb86f2bbb246, type: 2}
+  - {fileID: 11400000, guid: d4d5a13814f78eb4fae126f57851568b, type: 2}
+  currentAttack: {fileID: 0}
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
+  currentRecoveryTime: 0
 --- !u!114 &1318135832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4977,9 +4985,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 1815480033}
   isPerfomingAction: 0
+  enemyAttacks: []
+  currentAttack: {fileID: 0}
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
+  currentRecoveryTime: 0
 --- !u!54 &1889735032
 Rigidbody:
   m_ObjectHideFlags: 0

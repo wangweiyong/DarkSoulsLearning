@@ -56,6 +56,7 @@ namespace wwy
     
         public void HandleMoveToTarget()
         {
+            if (enemyManager.isPerfomingAction) return;
             Vector3 targetDirection = currentTarget.transform.position - transform.position;
             distanceFromTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
             float viewableAnge = Vector3.Angle(targetDirection, transform.forward);
