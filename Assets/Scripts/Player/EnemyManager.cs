@@ -17,6 +17,7 @@ namespace wwy
 
 
         public bool isPerfomingAction;
+        public bool isInteracting;
 
         public State currentState;
 
@@ -51,6 +52,7 @@ namespace wwy
         private void Update()
         {
             HandleRecoveryTime();
+            isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
         }
         private void FixedUpdate()
         {
