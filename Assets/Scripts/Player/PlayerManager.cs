@@ -6,6 +6,7 @@ namespace wwy
     {
         InputHandler inputHandler;
         PlayerLocomotion playerLocomotion;
+        PlayerStats playerStats;
         public GameObject interactableUIGameObject;
         public GameObject itemInteractableGameObject;
         InteractableUI interactableUI;
@@ -24,12 +25,13 @@ namespace wwy
         public bool isJumping;
         public bool isUsingRightHand;
         public bool isUsingLeftHand;
-
+        public bool isInvulerable;
         private void Start()
         {
             cameraHandler = CameraHandler.singleton;
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
+            playerStats = GetComponent<PlayerStats>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
             interactableUI = FindObjectOfType<InteractableUI>();    
         }
@@ -43,10 +45,14 @@ namespace wwy
             anim.SetBool("isInAir", isInAir);
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
+            isInvulerable = anim.GetBool("isInvulnerable");
 
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
             playerLocomotion.HandleJumping();
+
+            playerStats.RegenerateStamina();
+
             CheckForInteractableObject();
         }
 

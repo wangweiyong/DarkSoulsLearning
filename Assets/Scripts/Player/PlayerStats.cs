@@ -6,7 +6,9 @@ namespace wwy
 {
     public class PlayerStats : CharacterStats
     {
-
+        public float statiminaRenerationAmount = 30f;
+        float staminaRegenerationTimer = 0;
+        PlayerManager playerManager;
 
         AnimatorHandler animatorHandler;
 
@@ -15,6 +17,7 @@ namespace wwy
         // Start is called before the first frame update
         private void Awake()
         {
+            playerManager= GetComponent<PlayerManager>();
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindObjectOfType<StaminaBar>();
             animatorHandler = GetComponentInChildren<AnimatorHandler>();
@@ -36,13 +39,14 @@ namespace wwy
             return maxHealth;
         }
 
-        private int SetMaxStaminaFromStaminaLevel()
+        private float SetMaxStaminaFromStaminaLevel()
         {
             maxStamina = staminaLevel * 10;
             return maxStamina;
         }
         public void TakeDamage(int damage)
         {
+            if (playerManager.isInvulerable) return;
             if (isDead)
             {
                 return;
@@ -67,6 +71,23 @@ namespace wwy
             currentStamina = currentStamina - damage;
             //Set Bar
             staminaBar.SetCurrentStamina(currentStamina);
+        }
+        
+        public void RegenerateStamina()
+        {
+            if (playerManager.isInteracting)
+            {
+                staminaRegenerationTimer = 0;
+            }
+            else
+            {
+                staminaRegenerationTimer += Time.deltaTime;
+                if (currentStamina < maxStamina && staminaRegenerationTimer > 1f)
+                {
+                    currentStamina += statiminaRenerationAmount * Time.deltaTime;
+                    staminaBar.SetCurrentStamina(Mathf.RoundToInt(currentStamina));
+                }
+            }
         }
     }
 }
