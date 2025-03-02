@@ -21,8 +21,11 @@ namespace wwy
             //set our recovery timer to the attacks revoery time;
             //return the combat stance state
             Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;
+            float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
+            float viewableAnagle = Vector3.Angle(targetDirection, transform.forward);
 
-            enemyManager.viewableAnagle = Vector3.Angle(targetDirection, transform.forward);
+            HandleRotateTowardsTarget(enemyManager);
+
 
             if (enemyManager.isPerfomingAction)
             {
@@ -31,15 +34,15 @@ namespace wwy
             if(currentAttack != null)
             {
                 //if we are too close to the enemy to perform current attack, get a new attack
-                if(enemyManager.distanceFromTarget < currentAttack.minimumDistanceNeededToAttack)
+                if(distanceFromTarget < currentAttack.minimumDistanceNeededToAttack)
                 {
                     return this;
                 }
-                else if(enemyManager.distanceFromTarget < currentAttack.maximumDistanceNeededToAttack)
+                else if(distanceFromTarget < currentAttack.maximumDistanceNeededToAttack)
                 {
                     //if our enemy is whinin our attacks viewable
-                    if(enemyManager.viewableAnagle <= currentAttack.maximumAttackAngle
-                        && enemyManager.viewableAnagle >= currentAttack.minimumAttackAngle)
+                    if(viewableAnagle <= currentAttack.maximumAttackAngle
+                        && viewableAnagle >= currentAttack.minimumAttackAngle)
                     {
                         if(enemyManager.currentRecoveryTime <=0 
                             && enemyManager.isPerfomingAction == false)
@@ -79,15 +82,15 @@ namespace wwy
         {
             Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;
             float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
-            enemyManager.distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, transform.position);
+            float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, transform.position);
 
             int maxScore = 0;
             for (int i = 0; i < enemyAttacks.Length; ++i)
             {
                 EnemyAttackAction enemyAttackAction = enemyAttacks[i];
 
-                if (enemyManager.distanceFromTarget <= enemyAttackAction.maximumDistanceNeededToAttack
-                    && enemyManager.distanceFromTarget >= enemyAttackAction.minimumAttackAngle)
+                if (distanceFromTarget <= enemyAttackAction.maximumDistanceNeededToAttack
+                    && distanceFromTarget >= enemyAttackAction.minimumAttackAngle)
                 {
                     if (viewableAngle <= enemyAttackAction.maximumAttackAngle &&
                         viewableAngle >= enemyAttackAction.minimumAttackAngle)
@@ -103,8 +106,8 @@ namespace wwy
             {
                 EnemyAttackAction enemyAttackAction = enemyAttacks[i];
 
-                if (enemyManager.distanceFromTarget <= enemyAttackAction.maximumDistanceNeededToAttack
-                    && enemyManager.distanceFromTarget >= enemyAttackAction.minimumAttackAngle)
+                if (distanceFromTarget <= enemyAttackAction.maximumDistanceNeededToAttack
+                    && distanceFromTarget >= enemyAttackAction.minimumAttackAngle)
                 {
                     if (viewableAngle <= enemyAttackAction.maximumAttackAngle &&
                         viewableAngle >= enemyAttackAction.minimumAttackAngle)
@@ -122,7 +125,34 @@ namespace wwy
                 }
             }
         }
+        private void HandleRotateTowardsTarget(EnemyManager enemyManager)
+        {
+            //Rotate manually，攻击时的旋转，我们自己处理
+            if (enemyManager.isPerfomingAction)
+            {
+                Vector3 direction = enemyManager.currentTarget.transform.position - transform.position;
+                direction.y = 0;
+                direction.Normalize();
 
+                if (direction == Vector3.zero)
+                {
+                    direction = transform.forward;
+                }
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, enemyManager.rotationSpeed / Time.deltaTime);
+            }
+            //Rotate with pathfinding (navmesh)寻路中的旋转
+            else
+            {
+                Vector3 relativeDirection = transform.InverseTransformDirection(enemyManager.navMeshAgent.desiredVelocity);
+                Vector3 targetVelocity = enemyManager.enemyRigidbody.velocity;
+
+                enemyManager.navMeshAgent.enabled = true;
+                enemyManager.navMeshAgent.SetDestination(enemyManager.currentTarget.transform.position);
+                enemyManager.enemyRigidbody.velocity = targetVelocity;
+                enemyManager.transform.rotation = Quaternion.Slerp(enemyManager.transform.rotation, enemyManager.navMeshAgent.transform.rotation, enemyManager.rotationSpeed / Time.deltaTime);
+            }
+        }
     }
 
 }

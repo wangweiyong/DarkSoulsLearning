@@ -22,6 +22,8 @@ namespace wwy
         public bool isGrounded;
         public bool canDoCombo;
         public bool isJumping;
+        public bool isUsingRightHand;
+        public bool isUsingLeftHand;
 
         private void Start()
         {
@@ -39,6 +41,9 @@ namespace wwy
             canDoCombo = anim.GetBool("CanDoCombo");
             isJumping = anim.GetBool("isJumping");
             anim.SetBool("isInAir", isInAir);
+            isUsingLeftHand = anim.GetBool("isUsingLeftHand");
+            isUsingRightHand = anim.GetBool("isUsingRightHand");
+
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
             playerLocomotion.HandleJumping();

@@ -14,6 +14,9 @@ namespace wwy
         InputHandler inputHandler;
         public Vector3 moveDirection;
 
+        public CapsuleCollider characterCollider;
+        public CapsuleCollider characterCollisionBlockerCollider;
+
         [HideInInspector]
         public Transform myTransform;
         [HideInInspector]
@@ -60,6 +63,7 @@ namespace wwy
 
             playerManager.isGrounded = true;
             ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
+            Physics.IgnoreCollision(characterCollider, characterCollisionBlockerCollider);
         }
         public void HandleJumping()
         {

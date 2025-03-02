@@ -21,9 +21,6 @@ namespace wwy
 
         public State currentState;
 
-
-        public float distanceFromTarget;
-
         public float rotationSpeed = 15;
         public float maximumAttackRange = 1.5f;
 
@@ -33,7 +30,6 @@ namespace wwy
         //basically like eye sight)
         public float maximumDetectionAngle = 50;
         public float minimumDetectionAngle = -50;
-        public float viewableAnagle;
 
         public float currentRecoveryTime = 0;
         private void Awake()

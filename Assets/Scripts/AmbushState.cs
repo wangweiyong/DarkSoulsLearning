@@ -31,10 +31,10 @@ namespace wwy
                 if(characterStats != null)
                 {
                     Vector3 targetDirection = characterStats.transform.position - enemyManager.transform.position;
-                    enemyManager.viewableAnagle = Vector3.Angle(targetDirection, enemyManager.transform.forward);
+                    float viewableAnagle = Vector3.Angle(targetDirection, enemyManager.transform.forward);
 
-                    if(enemyManager.viewableAnagle > enemyManager.minimumDetectionAngle
-                        && enemyManager.viewableAnagle < enemyManager.maximumDetectionAngle)
+                    if(viewableAnagle > enemyManager.minimumDetectionAngle
+                        && viewableAnagle < enemyManager.maximumDetectionAngle)
                     {
                         enemyManager.currentTarget = characterStats;
                         isSleeping = false;

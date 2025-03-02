@@ -41,13 +41,17 @@ namespace wwy
             //chase the target
             //if within attack range, switch to combat stance state
             // if target is out of range, return this state and continuous to chase target
-            
-            if (enemyManager.isPerfomingAction) return this;
-            Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;
-            enemyManager.distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, transform.position);
-            float viewableAnge = Vector3.Angle(targetDirection, transform.forward);
 
-            if (enemyManager.distanceFromTarget > enemyManager.maximumAttackRange)
+            if (enemyManager.isPerfomingAction) 
+            {
+                enemyAnimatorManager.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
+                return this;
+            }
+            Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
+            float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
+            float viewableAnge = Vector3.Angle(targetDirection, enemyManager.transform.forward);
+
+            if (distanceFromTarget > enemyManager.maximumAttackRange)
             {
                 enemyAnimatorManager.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
             }
@@ -58,7 +62,7 @@ namespace wwy
             enemyManager.navMeshAgent.transform.localRotation = Quaternion.identity;
 
 
-            if(enemyManager.distanceFromTarget <= enemyManager.maximumAttackRange)
+            if(distanceFromTarget <= enemyManager.maximumAttackRange)
             {
                 return combatStanceState;
             }

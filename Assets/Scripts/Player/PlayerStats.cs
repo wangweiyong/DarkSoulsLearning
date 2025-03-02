@@ -43,6 +43,10 @@ namespace wwy
         }
         public void TakeDamage(int damage)
         {
+            if (isDead)
+            {
+                return;
+            }
             currentHealth = currentHealth - damage;
 
             healthBar.SetCurrentHealth(currentHealth);
@@ -53,11 +57,13 @@ namespace wwy
             {
                 currentHealth = 0;
                 animatorHandler.PlayTargetAnimation("Dead_01", true);
+                isDead = true;
             }
         }
     
         public void TakeStaminaDamage(int damage)
         {
+
             currentStamina = currentStamina - damage;
             //Set Bar
             staminaBar.SetCurrentStamina(currentStamina);

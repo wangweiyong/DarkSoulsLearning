@@ -542,9 +542,9 @@ GameObject:
   - component: {fileID: 53613571}
   - component: {fileID: 53613572}
   - component: {fileID: 53613573}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -564,6 +564,7 @@ Transform:
   - {fileID: 611204006}
   - {fileID: 26845597}
   - {fileID: 955778547}
+  - {fileID: 220162538}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -619,6 +620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: 0}
+  characterCollider: {fileID: 53613569}
+  characterCollisionBlockerCollider: {fileID: 1449059306}
   myTransform: {fileID: 0}
   animatorHandler: {fileID: 0}
   rigidbody: {fileID: 0}
@@ -683,6 +686,8 @@ MonoBehaviour:
   isGrounded: 0
   canDoCombo: 0
   isJumping: 0
+  isUsingRightHand: 0
+  isUsingLeftHand: 0
 --- !u!114 &53613571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,6 +1048,38 @@ MonoBehaviour:
   isBackSlot: 1
   currentWeaponItem: {fileID: 0}
   currentWeaponModel: {fileID: 0}
+--- !u!1 &220162537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 220162538}
+  m_Layer: 9
+  m_Name: Combat Colliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &220162538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220162537}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1449059304}
+  m_Father: {fileID: 53613565}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &220818076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,8 +1384,8 @@ Transform:
   m_GameObject: {fileID: 312827253}
   m_LocalRotation: {x: -0.9820115, y: 0.0011192288, z: 0.0116341775, w: 0.18845919}
   m_LocalPosition: {x: 0.135, y: -0.0064, z: 0.0413}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2085205060}
   m_RootOrder: 6
@@ -2837,7 +2874,7 @@ MonoBehaviour:
   awakingAnimation: Awake
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4096
   pursueTargetState: {fileID: 977170483}
 --- !u!1 &942444339
 GameObject:
@@ -3415,6 +3452,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatStanceState: {fileID: 1457306967}
+--- !u!1 &984096641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984096642}
+  m_Layer: 0
+  m_Name: Combat Colliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &984096642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984096641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1553837392}
+  m_Father: {fileID: 1318135827}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &987020498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3667,13 +3736,11 @@ MonoBehaviour:
   isPerfomingAction: 0
   isInteracting: 0
   currentState: {fileID: 0}
-  distanceFromTarget: 0
   rotationSpeed: 15
   maximumAttackRange: 1.5
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
-  viewableAnagle: 0
   currentRecoveryTime: 0
 --- !u!54 &1037817315
 Rigidbody:
@@ -3752,6 +3819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecbe8cd25e02224ca30f412a450ac89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterCollider: {fileID: 0}
+  characterCollisionBlockerCollider: {fileID: 0}
 --- !u!1 &1096356437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,6 +3929,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153086089}
   m_CullTransparentMesh: 1
+--- !u!114 &1207776133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848402493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea1b63db433da72498045a56000e0a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandWeapon: {fileID: 11400000, guid: 9b1f55e17002d3648873bacaa8a9486c, type: 2}
+  leftHandWeapon: {fileID: 0}
 --- !u!1 &1218731697
 GameObject:
   m_ObjectHideFlags: 0
@@ -4068,7 +4151,7 @@ GameObject:
   - component: {fileID: 1318135830}
   - component: {fileID: 1318135831}
   - component: {fileID: 1318135832}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4091,6 +4174,7 @@ Transform:
   - {fileID: 1380522747}
   - {fileID: 2001886323}
   - {fileID: 1304215361}
+  - {fileID: 984096642}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4161,13 +4245,11 @@ MonoBehaviour:
   isPerfomingAction: 0
   isInteracting: 0
   currentState: {fileID: 924504851}
-  distanceFromTarget: 0
   rotationSpeed: 15
   maximumAttackRange: 1.5
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
-  viewableAnagle: 0
   currentRecoveryTime: 0
 --- !u!114 &1318135832
 MonoBehaviour:
@@ -4181,6 +4263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecbe8cd25e02224ca30f412a450ac89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterCollider: {fileID: 1318135828}
+  characterCollisionBlockerCollider: {fileID: 1553837393}
 --- !u!1 &1336593775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4550,6 +4634,69 @@ Transform:
   m_Father: {fileID: 1622310621}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -21.726, y: -178.617, z: 179.865}
+--- !u!1 &1449059303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1449059304}
+  - component: {fileID: 1449059306}
+  - component: {fileID: 1449059305}
+  m_Layer: 9
+  m_Name: Character Collider Blocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1449059304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449059303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 220162538}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1449059305
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449059303}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1449059306
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449059303}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1457306965
 GameObject:
   m_ObjectHideFlags: 0
@@ -4762,6 +4909,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+--- !u!1 &1553837391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1553837392}
+  - component: {fileID: 1553837394}
+  - component: {fileID: 1553837393}
+  m_Layer: 11
+  m_Name: Character Collider Blocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1553837392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553837391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984096642}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1553837393
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553837391}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &1553837394
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553837391}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1591863231
 GameObject:
   m_ObjectHideFlags: 0
@@ -5002,7 +5212,7 @@ MonoBehaviour:
   pursueTargetState: {fileID: 977170483}
   detectionLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4096
 --- !u!1 &1690187586
 GameObject:
   m_ObjectHideFlags: 0
@@ -5263,13 +5473,11 @@ MonoBehaviour:
   isPerfomingAction: 0
   isInteracting: 0
   currentState: {fileID: 0}
-  distanceFromTarget: 0
   rotationSpeed: 15
   maximumAttackRange: 1.5
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
-  viewableAnagle: 0
   currentRecoveryTime: 0
 --- !u!54 &1889735032
 Rigidbody:
@@ -5348,6 +5556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecbe8cd25e02224ca30f412a450ac89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterCollider: {fileID: 0}
+  characterCollisionBlockerCollider: {fileID: 0}
 --- !u!1 &1929543372
 GameObject:
   m_ObjectHideFlags: 0

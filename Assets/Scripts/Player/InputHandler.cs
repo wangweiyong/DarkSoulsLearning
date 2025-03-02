@@ -48,7 +48,7 @@ namespace wwy
         UIManager uiManager;
         CameraHandler cameraHandler;
 
-
+        AnimatorHandler animatorHandler;
         WeaponSlotManager weaponSlotManager;
 
         Vector2 movementInput;
@@ -63,6 +63,7 @@ namespace wwy
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
+            animatorHandler = GetComponentInChildren<AnimatorHandler>();
         }
 
         private void OnEnable()
@@ -161,6 +162,7 @@ namespace wwy
                 {
                     if (playerManager.isInteracting) return;
                     if (playerManager.canDoCombo) return;
+                    animatorHandler.anim.SetBool("isUsingRightHand", true);
                     playerAttacker.HandleLigthAttack(playerInventory.rightWeapon);
                 }
             }

@@ -6,6 +6,7 @@ namespace wwy
 {
     public class WeaponSlotManager : MonoBehaviour
     {
+        PlayerManager playerManager;
         WeaponHolderSlots leftHandSlot;
         WeaponHolderSlots rightHandSlot;
         WeaponHolderSlots backSlot;
@@ -23,6 +24,7 @@ namespace wwy
         InputHandler inputHandler;
         private void Awake()
         {
+            playerManager = GetComponentInParent<PlayerManager>();
             animator = GetComponent<Animator>();
             quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
             playerStats = GetComponentInParent<PlayerStats>();
@@ -119,22 +121,24 @@ namespace wwy
         {
             rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
         }
-        public void OpenLeftDamageCollider()
+        public void OpenDamageCollider()
         {
-            leftHandDamageCollider.EnableDamageCollider();
+            if (playerManager.isUsingLeftHand)
+            {
+                leftHandDamageCollider.EnableDamageCollider();
+            }
+            else if(playerManager.isUsingRightHand)
+            {
+                rightHandDamageCollider.EnableDamageCollider();
+            }
         }
-        public void OpenRightDamageCollider()
-        {
-            rightHandDamageCollider.EnableDamageCollider();
-        }
-        public void CloseLeftDamageCollider()
-        {
-            leftHandDamageCollider.DisableDamageCollider();
-        }
-        public void CloseRightDamageCollider()
+
+        public void CloseDamageCollider()
         {
             rightHandDamageCollider.DisableDamageCollider();
+            leftHandDamageCollider.DisableDamageCollider();
         }
+
         #endregion
     }
 }

@@ -23,6 +23,7 @@ namespace wwy
         }
         public void TakeDamage(int damage)
         {
+            if (isDead) return;
             currentHealth = currentHealth - damage;
 
             animator.Play("Damage_01");
@@ -31,6 +32,7 @@ namespace wwy
             {
                 currentHealth = 0;
                 animator.Play("Dead_01");
+                isDead = true;
             }
         }
     }

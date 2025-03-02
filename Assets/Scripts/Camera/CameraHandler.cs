@@ -52,7 +52,7 @@ namespace wwy
             singleton = this;
             myTransform = transform;
             defaultPosition = cameraTransform.localPosition.z;
-            ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
+            ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10 |1 << 12);
             environmentLayer = LayerMask.NameToLayer("Environment");
             originalSpeed = lookSpeed;
             targetTransform = FindObjectOfType<PlayerManager>().transform;
