@@ -27,6 +27,13 @@ MonoBehaviour:
   OH_Heavy_Attack_2: 
   OH_Heavy_Attack_3: 
   OH_Heavy_Attack_4: 
+  TH_Light_Attack_1: 
+  TH_Light_Attack_2: 
+  TH_Heavy_Attack_1: 
   baseStamina: 0
   lightAttackMultiplier: 0
   heavyAttackMultiplier: 0
+  isSpellCaster: 0
+  isFaithCaster: 0
+  isPyroCaster: 0
+  isMeleeWeapon: 1

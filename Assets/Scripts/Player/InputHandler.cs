@@ -57,7 +57,7 @@ namespace wwy
 
         private void Awake()
         {
-            playerAttacker = GetComponent<PlayerAttacker>();
+            playerAttacker = GetComponentInChildren<PlayerAttacker>();
             playerInventory= GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
@@ -152,7 +152,8 @@ namespace wwy
         {
             if (rb_Input)
             {
-                if (playerManager.canDoCombo)
+                playerAttacker.HandleRBAction();
+              /*  if (playerManager.canDoCombo)
                 {
                     comboFlag = true;
                     playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
@@ -164,7 +165,7 @@ namespace wwy
                     if (playerManager.canDoCombo) return;
                     animatorHandler.anim.SetBool("isUsingRightHand", true);
                     playerAttacker.HandleLigthAttack(playerInventory.rightWeapon);
-                }
+                }*/
             }
             if (rt_Input)
             {
