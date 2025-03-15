@@ -28,6 +28,7 @@ namespace wwy
         public bool isInvulerable;
         private void Start()
         {
+            backStabCollider = GetComponentInChildren<BackStabCollider>();
             cameraHandler = CameraHandler.singleton;
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();

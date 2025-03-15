@@ -28,6 +28,7 @@ namespace wwy
         public float rollInputTimer;
         public bool rb_Input;
         public bool rt_Input;
+        public bool critical_Attack_Input;
         public bool jump_Input;
         public bool inventory_Input;
 
@@ -41,6 +42,7 @@ namespace wwy
 
         public float durationForRoll2Sprint = 0.3f;
 
+        public Transform criticalAttackRayCastStartPoint;
         PlayerControls inputActions;
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
@@ -93,6 +95,8 @@ namespace wwy
                 inputActions.PlayerMovement.LockOnTargetLeft.performed += i => left_Stick_Left_Input = true;
 
                 inputActions.PlayerActions.Y.performed += i => y_Input = true;
+
+                inputActions.PlayerActions.CriticalAttack.performed += i => critical_Attack_Input = true;
             }
             inputActions.Enable();
         }
@@ -113,6 +117,7 @@ namespace wwy
             HandleInventoryInput();
             HandleLockOnInput();
             HandleTwoHandFlagInput();
+            HandleCriticalAttackInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -276,6 +281,15 @@ namespace wwy
                     weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
 
                 }
+            }
+        }
+    
+        private void HandleCriticalAttackInput()
+        {
+            if (critical_Attack_Input)
+            {
+                critical_Attack_Input = false;
+                playerAttacker.AttemptBackStabOrRiposte();
             }
         }
     }

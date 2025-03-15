@@ -14,6 +14,8 @@ namespace wwy
         WeaponSlotManager weaponSlotManger;
 
         public string lastAttack;
+
+        LayerMask backStabLayer = 1 << 13;
         private void Awake()
         {
             playerManager = GetComponentInParent<PlayerManager>();
@@ -153,5 +155,39 @@ namespace wwy
             playerInventory.currentSpell.SuccessfullyCastSpell(animatorHandler, playerStats);
         }
         #endregion
+
+        public void AttemptBackStabOrRiposte()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStabLayer)){
+                CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponent<CharacterManager>();
+                if(enemyCharacterManager != null)
+                {
+                    //Check for team id so you cannot back stab friends or yourself
+                    //pull is into a transform behind the enemy so the backstab looks clean
+                    //rotate us towards that transform
+
+                    //play animation
+                    //make enemy play animation
+                    //do damage
+                    playerManager.transform.position = enemyCharacterManager.backStabCollider.backStabberStandPoint.position;
+                    Vector3 rotationDirection = playerManager.transform.eulerAngles;
+                    rotationDirection = hit.transform.position - playerManager.transform.position;
+                    rotationDirection.y = 0;
+                    rotationDirection.Normalize();
+                    Quaternion tr = Quaternion.LookRotation(rotationDirection);
+                    Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 800 * Time.deltaTime);
+                    playerManager.transform.rotation = targetRotation;
+
+                    animatorHandler.PlayTargetAnimation("Back Stab", true);
+                    enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);
+
+
+
+                }
+            }
+
+            
+        }
     }
 }

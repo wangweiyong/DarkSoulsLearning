@@ -43,6 +43,8 @@ namespace wwy
             navMeshAgent.enabled = false;
             enemyRigidbody.isKinematic = false;
 
+            backStabCollider = GetComponentInChildren<BackStabCollider>();
+
         }
 
         private void Update()
