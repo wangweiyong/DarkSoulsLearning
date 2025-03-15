@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.Processors;
 
 namespace wwy
 {
@@ -51,6 +52,8 @@ namespace wwy
         {
             HandleRecoveryTime();
             isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
+
+            enemyAnimatorManager.anim.SetBool("isDead", enemyStats.isDead);
         }
         private void FixedUpdate()
         {

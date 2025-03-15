@@ -6,7 +6,7 @@ namespace wwy
 {
     public class PlayerAttacker : MonoBehaviour
     {
-        AnimatorHandler animatorHandler;
+        PlayerAnimatorManager animatorHandler;
         PlayerInventory playerInventory;
         PlayerStats playerStats;
         PlayerManager playerManager;
@@ -21,7 +21,7 @@ namespace wwy
             playerManager = GetComponentInParent<PlayerManager>();
             playerInventory = GetComponentInParent<PlayerInventory>();
             playerStats = GetComponentInParent<PlayerStats>();
-            animatorHandler = GetComponent<AnimatorHandler>();
+            animatorHandler = GetComponent<PlayerAnimatorManager>();
             weaponSlotManger = GetComponent<WeaponSlotManager>();
             inputHandler = GetComponentInParent<InputHandler>();
         }
@@ -161,6 +161,7 @@ namespace wwy
             RaycastHit hit;
             if (Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStabLayer)){
                 CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponent<CharacterManager>();
+                DamageCollider rightWeapon = weaponSlotManger.rightHandDamageCollider;
                 if(enemyCharacterManager != null)
                 {
                     //Check for team id so you cannot back stab friends or yourself
@@ -179,6 +180,9 @@ namespace wwy
                     Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 800 * Time.deltaTime);
                     playerManager.transform.rotation = targetRotation;
 
+                    int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
+                    enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+                    
                     animatorHandler.PlayTargetAnimation("Back Stab", true);
                     enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);
 

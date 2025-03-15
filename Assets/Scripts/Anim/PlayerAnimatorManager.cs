@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace wwy
 {
-    public class AnimatorHandler : AnimatorManager
+    public class PlayerAnimatorManager : AnimatorManager
     {
         private PlayerManager playerManager;
+        PlayerStats playerStats;
         private PlayerLocomotion playerLocomotion;
         int vertical;
         int horizontal;
@@ -15,6 +16,7 @@ namespace wwy
         public void Initialze()
         {
             playerManager = GetComponentInParent<PlayerManager>();
+            playerStats = GetComponentInParent<PlayerStats>();
             anim = GetComponent<Animator>();
             playerLocomotion = GetComponentInParent<PlayerLocomotion>();
             vertical = Animator.StringToHash("Vertical");
@@ -118,6 +120,11 @@ namespace wwy
             playerLocomotion.rigidbody.velocity = velocity;
         }
 
+        public override void TakeCriticalDamage()
+        {
+            playerStats.TakeDamageNoAnimation(playerManager.pendingCriticalDamage);
+            playerManager.pendingCriticalDamage = 0;
+        }
         public void SetIsInteracting()
         {
             anim.applyRootMotion = true;

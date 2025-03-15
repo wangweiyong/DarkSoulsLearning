@@ -10,7 +10,7 @@ namespace wwy
         float staminaRegenerationTimer = 0;
         PlayerManager playerManager;
 
-        AnimatorHandler animatorHandler;
+        PlayerAnimatorManager animatorHandler;
 
         HealthBar healthBar;
         StaminaBar staminaBar;
@@ -22,7 +22,7 @@ namespace wwy
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindObjectOfType<StaminaBar>();
             focusPointBar = FindAnyObjectByType<FocusPointBar>();
-            animatorHandler = GetComponentInChildren<AnimatorHandler>();
+            animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
         }
         void Start()
         {
@@ -65,6 +65,23 @@ namespace wwy
         {
             maxFocusPoints = focusLevel * 10;
             return maxFocusPoints;
+        }
+
+        public void TakeDamageNoAnimation(int damage)
+        {
+
+            if (playerManager.isInvulerable) return;
+            if (isDead)
+            {
+                return;
+            }
+            currentHealth = currentHealth - damage;
+            healthBar.SetCurrentHealth(currentHealth);
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                isDead = true;
+            }
         }
         public void TakeDamage(int damage)
         {

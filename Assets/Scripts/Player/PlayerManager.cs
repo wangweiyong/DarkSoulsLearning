@@ -47,7 +47,7 @@ namespace wwy
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
             isInvulerable = anim.GetBool("isInvulnerable");
-
+            anim.SetBool("isDead", playerStats.isDead);
             inputHandler.TickInput(delta);
             playerLocomotion.HandleRollingAndSprint(delta);
             playerLocomotion.HandleJumping();

@@ -8,7 +8,7 @@ namespace wwy
     {
         public int healAmount;
 
-        public override void AttempToCastSepll(AnimatorHandler animatorHandler, PlayerStats playerStats)
+        public override void AttempToCastSepll(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
         {
             base.AttempToCastSepll (animatorHandler, playerStats);
             if (spellWarmUpFX != null)
@@ -19,7 +19,7 @@ namespace wwy
             Debug.Log("Attempting to cast spell...");
         }
 
-        public override void SuccessfullyCastSpell(AnimatorHandler animatorHandler, PlayerStats playerStats)
+        public override void SuccessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
         {
             base.SuccessfullyCastSpell (animatorHandler, playerStats);
             if(spellCastFX != null)

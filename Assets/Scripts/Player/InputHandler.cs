@@ -50,7 +50,7 @@ namespace wwy
         UIManager uiManager;
         CameraHandler cameraHandler;
 
-        AnimatorHandler animatorHandler;
+        PlayerAnimatorManager animatorHandler;
         WeaponSlotManager weaponSlotManager;
 
         Vector2 movementInput;
@@ -65,7 +65,7 @@ namespace wwy
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
-            animatorHandler = GetComponentInChildren<AnimatorHandler>();
+            animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
         }
 
         private void OnEnable()
