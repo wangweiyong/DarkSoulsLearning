@@ -10,6 +10,7 @@ namespace wwy
     {
         CameraHandler cameraHandler;
         PlayerManager playerManager;
+        PlayerStats playerStats;
         Transform cameraObject;
         InputHandler inputHandler;
         public Vector3 moveDirection;
@@ -47,12 +48,19 @@ namespace wwy
         [SerializeField]
         float fallingSpeed = 45;
 
+        [Header("Roll Costs")]
+        [SerializeField]
+        int rollStaminaCost = 15;
+        int backstepStaminaCost = 12;
+        int sprintStaminaCost = 1;
+
         Vector3 dampMoveCurrentSpeed;
 
         // Start is called before the first frame update
         void Start()
         {
-            playerManager=GetComponent<PlayerManager>();
+            playerManager = GetComponent<PlayerManager>();
+            playerStats = GetComponent<PlayerStats>();
             rigidbody = GetComponent<Rigidbody>();
             inputHandler = GetComponent<InputHandler>();
             animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();  
@@ -68,6 +76,10 @@ namespace wwy
         public void HandleJumping()
         {
             if (playerManager.isInteracting)
+            {
+                return;
+            }
+            if (playerStats.currentStamina <= 0)
             {
                 return;
             }
@@ -183,6 +195,7 @@ namespace wwy
                 speed = sprintSpeed;
                 playerManager.isSprinting = true;
                 moveDirection *= speed;
+                playerStats.TakeStaminaDamage(sprintStaminaCost);
             }
             else
             {
@@ -228,6 +241,13 @@ namespace wwy
             {
                 return;
             }
+
+            //check if we have stamina, if we do not, return
+            if(playerStats.currentStamina <= 0)
+            {
+                return;
+            }
+
             if (inputHandler.rollFlag)
             {
                 moveDirection = cameraObject.forward * inputHandler.vertical;
@@ -239,10 +259,12 @@ namespace wwy
                     moveDirection.y = 0;
                     Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = rollRotation;
+                    playerStats.TakeStaminaDamage(rollStaminaCost);
                 }
                 else
                 {
                     animatorHandler.PlayTargetAnimation("Backstep", true);
+                    playerStats.TakeStaminaDamage(backstepStaminaCost);
                 }
             }
         }

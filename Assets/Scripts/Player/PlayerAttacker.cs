@@ -28,6 +28,10 @@ namespace wwy
 
         public void HandleWeaponCombo(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+            {
+                return;
+            }
             if (inputHandler.comboFlag)
             {
                 animatorHandler.anim.SetBool("CanDoCombo", false);
@@ -55,6 +59,10 @@ namespace wwy
         }
         public void HandleLigthAttack(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+            {
+                return;
+            }
             if (weapon != null && !string.IsNullOrEmpty(weapon.OH_Light_Attack_1))
             {
                 weaponSlotManger.attackingWeapon = weapon;
@@ -75,6 +83,10 @@ namespace wwy
 
         public void HandleHeavyAttack(WeaponItem weapon)
         {
+            if (playerStats.currentStamina <= 0)
+            {
+                return;
+            }
             if (weapon != null && !string.IsNullOrEmpty(weapon.OH_Heavy_Attack_1))
             {
                 weaponSlotManger.attackingWeapon = weapon;
@@ -158,6 +170,10 @@ namespace wwy
 
         public void AttemptBackStabOrRiposte()
         {
+            if (playerStats.currentStamina <= 0)
+            {
+                return;
+            }
             RaycastHit hit;
             if (Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStabLayer)){
                 CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponent<CharacterManager>();

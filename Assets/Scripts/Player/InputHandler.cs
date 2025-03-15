@@ -51,6 +51,7 @@ namespace wwy
         CameraHandler cameraHandler;
 
         PlayerAnimatorManager animatorHandler;
+        PlayerStats playerStats;
         WeaponSlotManager weaponSlotManager;
 
         Vector2 movementInput;
@@ -62,6 +63,7 @@ namespace wwy
             playerAttacker = GetComponentInChildren<PlayerAttacker>();
             playerInventory= GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
+            playerStats = GetComponent<PlayerStats>();
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
@@ -80,6 +82,8 @@ namespace wwy
 
                 inputActions.PlayerActions.RB.performed += i => rb_Input = true;
                 inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+                inputActions.PlayerActions.Roll.canceled += i => b_Input = false;
+                inputActions.PlayerActions.Roll.performed += i => b_Input = true;
 
                 inputActions.PlayerQuickSlots.D_Pad_Right.performed += i => { d_Pad_Right = true; };
                 inputActions.PlayerQuickSlots.D_Pad_Up.performed += i => { d_Pad_Up = true; };
@@ -132,21 +136,25 @@ namespace wwy
         }
         private void HandleRollInput(float delta)
         {
-            b_Input = inputActions.PlayerActions.Roll.IsPressed();
 
             if (b_Input)
             {
                 rollInputTimer += delta;
-                if (rollInputTimer >= durationForRoll2Sprint)
+                if(playerStats.currentStamina <= 0)
+                {
+                    sprintFlag = false;
+                    b_Input = false;
+                }
+                if (moveAmount > 0.5f && playerStats.currentStamina > 0)
                 {
                     sprintFlag = true;
                 }
             }
             else
             {
+                sprintFlag = false;
                 if(rollInputTimer > 0 && rollInputTimer < durationForRoll2Sprint)
                 {
-                    sprintFlag = false;
                     rollFlag = true;
                 }
                 rollInputTimer = 0;
