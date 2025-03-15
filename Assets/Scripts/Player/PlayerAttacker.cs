@@ -8,6 +8,7 @@ namespace wwy
     {
         AnimatorHandler animatorHandler;
         PlayerInventory playerInventory;
+        PlayerStats playerStats;
         PlayerManager playerManager;
         InputHandler inputHandler;
         WeaponSlotManager weaponSlotManger;
@@ -17,6 +18,7 @@ namespace wwy
         {
             playerManager = GetComponentInParent<PlayerManager>();
             playerInventory = GetComponentInParent<PlayerInventory>();
+            playerStats = GetComponentInParent<PlayerStats>();
             animatorHandler = GetComponent<AnimatorHandler>();
             weaponSlotManger = GetComponent<WeaponSlotManager>();
             inputHandler = GetComponentInParent<InputHandler>();
@@ -125,14 +127,30 @@ namespace wwy
         }
         private void PerformRBMagicAction(WeaponItem weapon)
         {
+            if (playerManager.isInteracting)
+            {
+                return;
+            }
             if (weapon.isFaithCaster)
             {
                 if(playerInventory.currentSpell !=null && playerInventory.currentSpell.isFaithSpell)
                 {
                     //check for fp
-                    //attempt to cast spell
+                    if(playerStats.currentFocusPoints >= playerInventory.currentSpell.focusPointCost)
+                    {
+                        playerInventory.currentSpell.AttempToCastSepll(animatorHandler, playerStats);
+                    }
+                    else
+                    {
+                        animatorHandler.PlayTargetAnimation("Shrug", true);
+                    }
                 }
             }
+        }
+        
+        private void SuccessfullyCastSpell()
+        {
+            playerInventory.currentSpell.SuccessfullyCastSpell(animatorHandler, playerStats);
         }
         #endregion
     }

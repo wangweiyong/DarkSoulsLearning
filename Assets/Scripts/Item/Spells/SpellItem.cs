@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace wwy
 {
-    public class SpellItem : MonoBehaviour
+    public class SpellItem : Item
     {
         public GameObject spellWarmUpFX;
         public GameObject spellCastFX;
         public string spellAnimation;
+        [Header("Spell Cost")]
+        public int focusPointCost;
 
         [Header("Spell Type")]
         public bool isFaithSpell;
@@ -18,13 +20,14 @@ namespace wwy
         [TextArea]
         public string spellDescription;
 
-        public virtual void AttempToCastSepll()
+        public virtual void AttempToCastSepll(AnimatorHandler animatorHandler, PlayerStats playerStats)
         {
             Debug.Log("you attempt to cast a spell");
         }
-        public virtual void SuccessfullyCastSpell()
+        public virtual void SuccessfullyCastSpell(AnimatorHandler animatorHandler, PlayerStats playerStats)
         {
             Debug.Log("you cast a spell successfully");
+            playerStats.DeductFocusPoints(focusPointCost);
         }
     }
 }
