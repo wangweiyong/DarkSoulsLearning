@@ -11,7 +11,6 @@ namespace wwy
         private PlayerLocomotion playerLocomotion;
         int vertical;
         int horizontal;
-        public bool canRotate;
 
         public void Initialze()
         {
@@ -79,12 +78,13 @@ namespace wwy
 
         public void CanRotate()
         {
-            canRotate = true;
+            anim.SetBool("canRotate", true);
         }
 
         public void StopRotate()
         {
-            canRotate = false;
+            anim.SetBool("canRotate", false);
+
         }
         public void EnableCombo()
         {

@@ -11,7 +11,7 @@ namespace wwy
         public GameObject itemInteractableGameObject;
         InteractableUI interactableUI;
         Animator anim;
-
+        PlayerAnimatorManager playerAnimatorManager;
         CameraHandler cameraHandler;
 
 
@@ -34,7 +34,8 @@ namespace wwy
             anim = GetComponentInChildren<Animator>();
             playerStats = GetComponent<PlayerStats>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
-            interactableUI = FindObjectOfType<InteractableUI>();    
+            interactableUI = FindObjectOfType<InteractableUI>();
+            playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
         }
 
         private void Update()
@@ -49,6 +50,7 @@ namespace wwy
             isInvulerable = anim.GetBool("isInvulnerable");
             anim.SetBool("isDead", playerStats.isDead);
             inputHandler.TickInput(delta);
+            playerAnimatorManager.canRotate = anim.GetBool("canRotate");
             playerLocomotion.HandleRollingAndSprint(delta);
             playerLocomotion.HandleJumping();
 
@@ -61,9 +63,8 @@ namespace wwy
         {
             float delta = Time.deltaTime;
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
-
             playerLocomotion.HandleMovement(delta);
-
+            playerLocomotion.HandleRotation(delta);
 
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
