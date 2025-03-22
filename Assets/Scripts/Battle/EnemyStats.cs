@@ -6,12 +6,13 @@ namespace wwy
 {
     public class EnemyStats : CharacterStats
     {
-        Animator animator;
+        public int soulsAwardedOnDeath = 50;
+        EnemyAnimatorManager enemyAnimatorManager;
 
         // Start is called before the first frame update
         void Start()
         {
-            animator = GetComponentInChildren<Animator>();
+            enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
             maxHealth = SetMaxHealthFromHealthLevel();
             currentHealth = maxHealth;
         }
@@ -37,14 +38,20 @@ namespace wwy
             if (isDead) return;
             currentHealth = currentHealth - damage;
 
-            animator.Play("Damage_01");
+            enemyAnimatorManager.PlayTargetAnimation("Damage_01", true);
 
             if (currentHealth <= 0)
             {
-                currentHealth = 0;
-                animator.Play("Dead_01");
-                isDead = true;
+                HandleDeath();
             }
+        }
+        public void HandleDeath()
+        {
+            currentHealth = 0;
+            enemyAnimatorManager.PlayTargetAnimation("Dead_01", true);
+            isDead = true;
+            //Scan for every player in the scene, award the souls
+
         }
     }
 }

@@ -135,5 +135,7 @@ namespace wwy
             anim.applyRootMotion = false;
             anim.SetBool("isInteracting", false);
         }
+        
+
     }
 }

@@ -138,5 +138,11 @@ namespace wwy
             }
             focusPointBar.SetCurrentFocusPoint(currentFocusPoints);
         }
+
+
+        public void AddSoulds(int souls)
+        {
+            soulCount = soulCount + souls;
+        }
     }
 }
