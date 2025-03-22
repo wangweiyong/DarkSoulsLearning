@@ -136,6 +136,23 @@ namespace wwy
             anim.SetBool("isInteracting", false);
         }
         
+        public void EnableIsParring()
+        {
+            playerManager.isParrying = true;
+        }
+        public void DisableIsParring()
+        {
+            playerManager.isParrying = false;
+        }
 
+        public void EnableCanBeRiposted()
+        {
+            playerManager.canBeRiposte = true; 
+        }
+        public void DisableCanBeRiposted()
+        {
+            playerManager.canBeRiposte = false;
+
+        }
     }
 }

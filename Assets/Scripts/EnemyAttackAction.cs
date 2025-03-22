@@ -7,6 +7,9 @@ namespace wwy
     [CreateAssetMenu(menuName = "AI/Enemy Actions/Attack Action")]
     public class EnemyAttackAction : EnemyAction
     {
+        public bool canCombo;
+
+        public EnemyAttackAction comboAction;
         // the higher the more likely to use this attack
         public int attackScore = 3;
         public float recoveryTime = 2;

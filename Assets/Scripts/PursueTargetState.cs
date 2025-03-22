@@ -38,6 +38,7 @@ namespace wwy
 
         public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
+            if (enemyManager.isInteracting) return this;
             //chase the target
             //if within attack range, switch to combat stance state
             // if target is out of range, return this state and continuous to chase target
@@ -57,10 +58,6 @@ namespace wwy
             }
 
             HandleRotateTowardsTarget(enemyManager);
-
-            enemyManager.navMeshAgent.transform.localPosition = Vector3.zero;
-            enemyManager.navMeshAgent.transform.localRotation = Quaternion.identity;
-
 
             if(distanceFromTarget <= enemyManager.maximumAttackRange)
             {

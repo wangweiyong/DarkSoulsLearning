@@ -41,11 +41,14 @@ namespace wwy
         public float lightAttackMultiplier;
         public float heavyAttackMultiplier;
 
+        [Header("Weapon Art")]
+        public string weapon_art;
 
         [Header("Weapon Type")]
         public bool isSpellCaster;
         public bool isFaithCaster;
         public bool isPyroCaster;
         public bool isMeleeWeapon;
+        public bool isShield;
     }
 }

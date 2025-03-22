@@ -32,6 +32,54 @@ namespace wwy
                 soulCountBar.SetSoulCountText(playerStats.soulCount);
             }
         }
+
+        public void EnableIsParring()
+        {
+            enemyManager.isParrying = true;
+        }
+        public void DisableIsParring()
+        {
+            enemyManager.isParrying = false;
+        }
+
+        public void EnableCanBeRiposted()
+        {
+            enemyManager.canBeRiposte = true;
+        }
+        public void DisableCanBeRiposted()
+        {
+            enemyManager.canBeRiposte = false;
+
+        }
+
+        public void CanRotate()
+        {
+            anim.SetBool("canRotate", true);
+        }
+
+        public void StopRotate()
+        {
+            anim.SetBool("canRotate", false);
+
+        }
+        public void EnableCombo()
+        {
+            anim.SetBool("CanDoCombo", true);
+        }
+        public void DisableCombo()
+        {
+            anim.SetBool("CanDoCombo", false);
+        }
+
+        public void EnableIsInvulnerable()
+        {
+            anim.SetBool("isInvulnerable", true);
+        }
+        public void DisableIsInvulnerable()
+        {
+            anim.SetBool("isInvulnerable", false);
+
+        }
         private void OnAnimatorMove()
         {
             float delta = Time.deltaTime;

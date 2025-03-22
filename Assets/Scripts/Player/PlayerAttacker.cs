@@ -16,6 +16,7 @@ namespace wwy
         public string lastAttack;
 
         LayerMask backStabLayer = 1 << 13;
+        LayerMask riposteLayer = 1 << 14;
         private void Awake()
         {
             playerManager = GetComponentInParent<PlayerManager>();
@@ -120,6 +121,33 @@ namespace wwy
                 PerformRBMagicAction(playerInventory.rightWeapon);
             }
         }
+
+        public void HandleLTAction()
+        {
+            if (playerInventory.leftWeapon.isShield)
+            {
+                PerformLTeaponArt(inputHandler.twoHandFlag);
+            }
+            else if (playerInventory.leftWeapon.isMeleeWeapon)
+            {
+                //do a light attack
+            }
+        }
+
+        private void PerformLTeaponArt(bool isTwoHanding)
+        {
+            if (playerManager.isInteracting) return;
+
+            //if we are two handing perform right weapon
+            //else perform weapon art for left weapon
+            if (isTwoHanding)
+            {
+            }
+            else
+            {
+                animatorHandler.PlayTargetAnimation(playerInventory.leftWeapon.weapon_art, true);
+            }
+        }
         #endregion
 
         #region Attack Actions
@@ -175,10 +203,11 @@ namespace wwy
                 return;
             }
             RaycastHit hit;
-            if (Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStabLayer)){
+            if (Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStabLayer))
+            {
                 CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponent<CharacterManager>();
                 DamageCollider rightWeapon = weaponSlotManger.rightHandDamageCollider;
-                if(enemyCharacterManager != null)
+                if (enemyCharacterManager != null)
                 {
                     //Check for team id so you cannot back stab friends or yourself
                     //pull is into a transform behind the enemy so the backstab looks clean
@@ -187,7 +216,7 @@ namespace wwy
                     //play animation
                     //make enemy play animation
                     //do damage
-                    playerManager.transform.position = enemyCharacterManager.backStabCollider.backStabberStandPoint.position;
+                    playerManager.transform.position = enemyCharacterManager.backStabCollider.criticalDamageStandPoint.position;
                     Vector3 rotationDirection = playerManager.transform.eulerAngles;
                     rotationDirection = hit.transform.position - playerManager.transform.position;
                     rotationDirection.y = 0;
@@ -198,7 +227,7 @@ namespace wwy
 
                     int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
                     enemyCharacterManager.pendingCriticalDamage = criticalDamage;
-                    
+
                     animatorHandler.PlayTargetAnimation("Back Stab", true);
                     enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Back Stabbed", true);
 
@@ -206,8 +235,29 @@ namespace wwy
 
                 }
             }
+            else if (Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.7f, riposteLayer))
+            {
+                CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponent<CharacterManager>();
+                DamageCollider rightWeapon = weaponSlotManger.rightHandDamageCollider;
+                if(enemyCharacterManager!=null && enemyCharacterManager.canBeRiposte)
+                {
+                    playerManager.transform.position = enemyCharacterManager.transform.position;
 
-            
+                    Vector3 rotationDirection = playerManager.transform.eulerAngles;
+                    rotationDirection = hit.transform.position - playerManager.transform.position;
+                    rotationDirection.y = 0;
+                    rotationDirection.Normalize();
+                    Quaternion tr = Quaternion.LookRotation(rotationDirection);
+                    Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 800 * Time.deltaTime);
+                    playerManager.transform.rotation = targetRotation;
+
+                    int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightWeapon.currentWeaponDamage;
+                    enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+
+                    animatorHandler.PlayTargetAnimation("Riposte", true);
+                    enemyCharacterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Riposted", true);
+                }
+            }
         }
     }
 }

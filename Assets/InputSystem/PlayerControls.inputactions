@@ -185,6 +185,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "LT",
+                    "type": "Button",
+                    "id": "b1b78c4f-9ec5-4a08-94a4-7b5679163e54",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "A",
                     "type": "Button",
                     "id": "1d08e613-3b94-4e7c-9ccf-6d575f118a95",
@@ -338,6 +347,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Critical Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec2a056a-3140-4d42-b200-2320b39edced",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LT",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

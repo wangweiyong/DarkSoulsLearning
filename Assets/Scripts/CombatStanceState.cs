@@ -10,6 +10,8 @@ namespace wwy
         public PursueTargetState pursueTargetState;
         public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
+            if (enemyManager.isInteracting) return this;
+
             //check for attack range,
             //potential circle player or walk aroung them
             //if in attack range return attack state

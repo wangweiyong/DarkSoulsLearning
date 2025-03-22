@@ -6,6 +6,7 @@ namespace wwy
 {
     public class DamageCollider : MonoBehaviour
     {
+        public CharacterManager characterManager;
         Collider damageCollider;
         public int currentWeaponDamage = 25;
         private void Awake()
@@ -29,17 +30,39 @@ namespace wwy
             if(collision.tag == "Player")
             {
                 PlayerStats playerStats = collision.GetComponent<PlayerStats>();
+
+                CharacterManager enemyCharacterManager = collision.GetComponent<CharacterManager>();
+                if(enemyCharacterManager != null)
+                {
+                    if (enemyCharacterManager.isParrying)
+                    {
+                        //check here if you are parriable
+                        characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
+                        return;
+                    }
+                }
+                
                 if(playerStats != null )
                 {
                     playerStats.TakeDamage(currentWeaponDamage);
-
 
                 }
             }
             else if (collision.tag == "Enemy")
             {
                 EnemyStats enemyStats = collision.GetComponent<EnemyStats>();
-                if(enemyStats != null )
+                
+                CharacterManager enemyCharacterManager = collision.GetComponent<CharacterManager>();
+                if (enemyCharacterManager != null)
+                {
+                    if (enemyCharacterManager.isParrying)
+                    {
+                        //check here if you are parriable
+                        characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
+                        return;
+                    }
+                }
+                if (enemyStats != null )
                 {
                     enemyStats.TakeDamage(currentWeaponDamage);
                 }

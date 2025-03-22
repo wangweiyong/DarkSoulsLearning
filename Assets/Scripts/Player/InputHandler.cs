@@ -28,6 +28,7 @@ namespace wwy
         public float rollInputTimer;
         public bool rb_Input;
         public bool rt_Input;
+        public bool lt_Input;
         public bool critical_Attack_Input;
         public bool jump_Input;
         public bool inventory_Input;
@@ -82,6 +83,7 @@ namespace wwy
 
                 inputActions.PlayerActions.RB.performed += i => rb_Input = true;
                 inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+                inputActions.PlayerActions.LT.performed += i => lt_Input = true;
                 inputActions.PlayerActions.Roll.canceled += i => b_Input = false;
                 inputActions.PlayerActions.Roll.performed += i => b_Input = true;
 
@@ -183,6 +185,21 @@ namespace wwy
             if (rt_Input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+
+            if (lt_Input)
+            {
+                //if two handing handle weapon art
+                //else handle light attack if melee weapon
+                //handle weapon art if shield
+                if (twoHandFlag)
+                {
+
+                }
+                else
+                {
+                    playerAttacker.HandleLTAction();
+                }
             }
         }
         private void HandleQuickSlotsInput(float delta)

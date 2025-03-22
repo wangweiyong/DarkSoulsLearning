@@ -24,6 +24,8 @@ namespace wwy
 
         public float rotationSpeed = 15;
         public float maximumAttackRange = 1.5f;
+        [Header("Combat Flags")]
+        public bool canDoCombo;
 
         [Header("AI Settings")]
         public float detectionRadius = 20;
@@ -44,20 +46,22 @@ namespace wwy
             navMeshAgent.enabled = false;
             enemyRigidbody.isKinematic = false;
 
-            backStabCollider = GetComponentInChildren<BackStabCollider>();
+            backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
 
         }
 
         private void Update()
         {
             HandleRecoveryTime();
+            HandleStateMachine();
             isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
-
+            canDoCombo = enemyAnimatorManager.anim.GetBool("canDoCombo");
             enemyAnimatorManager.anim.SetBool("isDead", enemyStats.isDead);
         }
         private void FixedUpdate()
         {
-            HandleStateMachine();
+            navMeshAgent.transform.localPosition = Vector3.zero;
+            navMeshAgent.transform.localRotation = Quaternion.identity;
         }
 
         private void HandleStateMachine()

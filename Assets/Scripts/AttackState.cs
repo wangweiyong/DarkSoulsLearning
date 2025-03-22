@@ -11,10 +11,22 @@ namespace wwy
 
         public EnemyAttackAction[] enemyAttacks;
 
-
+        bool isComboing = false;
         public EnemyAttackAction currentAttack;
         public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
+            if (enemyManager.isInteracting && enemyManager.canDoCombo == false)
+            {
+                return this;
+            }
+            else if(enemyManager.isInteracting && enemyManager.canDoCombo)
+            {
+                if (isComboing)
+                {
+                    enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
+                    isComboing = false;
+                }
+            }
             //select one of our many attacks based on attack scores
             //if the selected attack is not able to be used because of bad angles or distance, select a new attack
             //if the attack is visible, stop our movement and attack our target
@@ -31,7 +43,8 @@ namespace wwy
             {
                 return combatStanceState;
             }
-            if(currentAttack != null)
+
+            if (currentAttack != null)
             {
                 //if we are too close to the enemy to perform current attack, get a new attack
                 if(distanceFromTarget < currentAttack.minimumDistanceNeededToAttack)
@@ -51,9 +64,18 @@ namespace wwy
                             enemyAnimatorManager.anim.SetFloat("Horizontal", 0, 0.1f, Time.deltaTime);
                             enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
                             enemyManager.isPerfomingAction = true;
-                            enemyManager.currentRecoveryTime = currentAttack.recoveryTime;
-                            currentAttack = null;
-                            return combatStanceState;
+
+                            if (currentAttack.canCombo)
+                            {
+                                currentAttack = currentAttack.comboAction;
+                                return this;
+                            }
+                            else
+                            {
+                                enemyManager.currentRecoveryTime = currentAttack.recoveryTime;
+                                currentAttack = null;
+                                return combatStanceState;
+                            }
                         }
                     }
                 }

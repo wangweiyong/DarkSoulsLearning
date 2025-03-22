@@ -28,7 +28,7 @@ namespace wwy
         public bool isInvulerable;
         private void Start()
         {
-            backStabCollider = GetComponentInChildren<BackStabCollider>();
+            backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
             cameraHandler = CameraHandler.singleton;
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
@@ -88,7 +88,7 @@ namespace wwy
             inputHandler.a_Input = false;
             inputHandler.jump_Input = false;
             inputHandler.inventory_Input = false;
-
+            inputHandler.lt_Input = false;  
             isSprinting = inputHandler.b_Input;
 
             if (isInAir)
