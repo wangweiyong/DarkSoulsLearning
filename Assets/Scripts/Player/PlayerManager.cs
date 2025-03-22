@@ -96,7 +96,8 @@ namespace wwy
                 playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
             }
         }
-    
+
+        #region Player Interactons
         public void CheckForInteractableObject()
         {
             RaycastHit hit;
@@ -134,5 +135,14 @@ namespace wwy
                 }
             }
         }
+        
+        public void OpenChestInteraction(Transform playerStandsHereWithOpeningChest)
+        {
+            playerLocomotion.rigidbody.velocity = Vector3.zero;
+            transform.position = playerStandsHereWithOpeningChest.position;
+            playerAnimatorManager.PlayTargetAnimation("Open Chest", true);
+        }
+        #endregion
+
     }
 }
