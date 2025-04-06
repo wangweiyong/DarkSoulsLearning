@@ -126,15 +126,18 @@ namespace wwy
         {
             if (playerInventory.leftWeapon.isShield)
             {
-                PerformLTeaponArt(inputHandler.twoHandFlag);
+                PerformLTWeaponArt(inputHandler.twoHandFlag);
             }
             else if (playerInventory.leftWeapon.isMeleeWeapon)
             {
                 //do a light attack
             }
         }
-
-        private void PerformLTeaponArt(bool isTwoHanding)
+        public void HandleLBAction()
+        {
+            PerformLBBlockingAction();
+        }
+        private void PerformLTWeaponArt(bool isTwoHanding)
         {
             if (playerManager.isInteracting) return;
 
@@ -196,6 +199,20 @@ namespace wwy
         }
         #endregion
 
+        #region Defense Actions
+        public void PerformLBBlockingAction()
+        {
+            if (playerManager.isInteracting)
+            {
+                return;
+            }
+            if (playerManager.isBlocking) return;
+
+            animatorHandler.PlayTargetAnimation("Block Start", false, true);
+            playerManager.isBlocking = true;
+
+        }
+        #endregion
         public void AttemptBackStabOrRiposte()
         {
             if (playerStats.currentStamina <= 0)

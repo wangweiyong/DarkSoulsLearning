@@ -26,6 +26,7 @@ namespace wwy
         public bool isUsingRightHand;
         public bool isUsingLeftHand;
         public bool isInvulerable;
+        public bool isBlocking;
         private void Start()
         {
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
@@ -45,6 +46,7 @@ namespace wwy
             canDoCombo = anim.GetBool("CanDoCombo");
             isJumping = anim.GetBool("isJumping");
             anim.SetBool("isInAir", isInAir);
+            anim.SetBool("isBlocking", isBlocking);
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
             isInvulerable = anim.GetBool("isInvulnerable");

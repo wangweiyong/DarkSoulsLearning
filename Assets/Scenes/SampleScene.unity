@@ -615,6 +615,7 @@ MonoBehaviour:
   rb_Input: 0
   rt_Input: 0
   lt_Input: 0
+  lb_Input: 0
   critical_Attack_Input: 0
   jump_Input: 0
   inventory_Input: 0
@@ -702,6 +703,7 @@ MonoBehaviour:
   backStabCollider: {fileID: 963011622}
   riposteCollider: {fileID: 266877477}
   canBeRiposte: 0
+  canBeParried: 0
   isParrying: 0
   pendingCriticalDamage: 0
   interactableUIGameObject: {fileID: 8395231060974552804}
@@ -715,6 +717,7 @@ MonoBehaviour:
   isUsingRightHand: 0
   isUsingLeftHand: 0
   isInvulerable: 0
+  isBlocking: 0
 --- !u!114 &53613571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4427,6 +4430,7 @@ MonoBehaviour:
   backStabCollider: {fileID: 0}
   riposteCollider: {fileID: 0}
   canBeRiposte: 0
+  canBeParried: 0
   isParrying: 0
   pendingCriticalDamage: 0
   currentTarget: {fileID: 0}
@@ -4437,6 +4441,7 @@ MonoBehaviour:
   currentState: {fileID: 0}
   rotationSpeed: 15
   maximumAttackRange: 1.5
+  canDoCombo: 0
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
@@ -5059,6 +5064,7 @@ MonoBehaviour:
   backStabCollider: {fileID: 852533024}
   riposteCollider: {fileID: 2044643297}
   canBeRiposte: 1
+  canBeParried: 0
   isParrying: 0
   pendingCriticalDamage: 0
   currentTarget: {fileID: 0}
@@ -5069,6 +5075,7 @@ MonoBehaviour:
   currentState: {fileID: 1684881898}
   rotationSpeed: 15
   maximumAttackRange: 1.5
+  canDoCombo: 0
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
@@ -6578,6 +6585,7 @@ MonoBehaviour:
   backStabCollider: {fileID: 0}
   riposteCollider: {fileID: 0}
   canBeRiposte: 0
+  canBeParried: 0
   isParrying: 0
   pendingCriticalDamage: 0
   currentTarget: {fileID: 0}
@@ -6588,6 +6596,7 @@ MonoBehaviour:
   currentState: {fileID: 0}
   rotationSpeed: 15
   maximumAttackRange: 1.5
+  canDoCombo: 0
   detectionRadius: 20
   maximumDetectionAngle: 50
   minimumDetectionAngle: -50
@@ -9943,63 +9952,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 76}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &6615866310186767904
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3274820588220548053, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_Name
-      value: Cube (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.544622
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.38594356
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.3359742
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4838559033622120880, guid: 04626c078e756894db71173c385a4098, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 04626c078e756894db71173c385a4098, type: 3}
 --- !u!114 &7083746516817292728
 MonoBehaviour:
   m_ObjectHideFlags: 0

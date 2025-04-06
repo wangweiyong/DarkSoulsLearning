@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 0}
   itemName: Shield
-  modelPrefab: {fileID: 3274820588220548053, guid: 04626c078e756894db71173c385a4098, type: 3}
+  modelPrefab: {fileID: 6790445771605925687, guid: 0d7eb14c867da8c488163e110949c637, type: 3}
   isUnarmed: 0
   baseDamage: 25
   criticalDamageMultiplier: 4

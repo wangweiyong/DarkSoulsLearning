@@ -32,9 +32,9 @@ namespace wwy
             //if the attack is visible, stop our movement and attack our target
             //set our recovery timer to the attacks revoery time;
             //return the combat stance state
-            Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;
+            Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
             float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
-            float viewableAnagle = Vector3.Angle(targetDirection, transform.forward);
+            float viewableAnagle = Vector3.Angle(targetDirection, enemyManager.transform.forward);
 
             HandleRotateTowardsTarget(enemyManager);
 

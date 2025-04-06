@@ -29,6 +29,7 @@ namespace wwy
         public bool rb_Input;
         public bool rt_Input;
         public bool lt_Input;
+        public bool lb_Input;
         public bool critical_Attack_Input;
         public bool jump_Input;
         public bool inventory_Input;
@@ -84,6 +85,8 @@ namespace wwy
                 inputActions.PlayerActions.RB.performed += i => rb_Input = true;
                 inputActions.PlayerActions.RT.performed += i => rt_Input = true;
                 inputActions.PlayerActions.LT.performed += i => lt_Input = true;
+                inputActions.PlayerActions.LB.performed += i => lb_Input = true;
+                inputActions.PlayerActions.LB.canceled += i => lb_Input = false;
                 inputActions.PlayerActions.Roll.canceled += i => b_Input = false;
                 inputActions.PlayerActions.Roll.performed += i => b_Input = true;
 
@@ -116,7 +119,7 @@ namespace wwy
         {
             HandleMoveInput(delta);
             HandleRollInput(delta);
-            HandleAttackInput(delta);
+            HandleCombatInput(delta);
             HandleQuickSlotsInput(delta);
             HandleInteractingButtonInput();
             HandleJumpInput();
@@ -163,7 +166,7 @@ namespace wwy
             }
         }
         
-        private void HandleAttackInput(float delta)
+        private void HandleCombatInput(float delta)
         {
             if (rb_Input)
             {
@@ -186,7 +189,15 @@ namespace wwy
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
-
+            if (lb_Input)
+            {
+                //do a block
+                playerAttacker.HandleLBAction();
+            }
+            else
+            {
+                playerManager.isBlocking = false;
+            }
             if (lt_Input)
             {
                 //if two handing handle weapon art
