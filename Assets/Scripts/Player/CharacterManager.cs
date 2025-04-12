@@ -18,7 +18,11 @@ namespace wwy
         public bool canBeRiposte;
         public bool canBeParried;
         public bool isParrying;
+        public bool isBlocking;
 
+
+        [Header("Spells")]
+        public bool isFiringSpell;
 
         //Damage will be inflicted during an animation event
         //Used in backstab or riposte animations

@@ -83,7 +83,7 @@ namespace wwy
                 isDead = true;
             }
         }
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
         {
             if (playerManager.isInvulerable) return;
             if (isDead)
@@ -94,7 +94,7 @@ namespace wwy
 
             healthBar.SetCurrentHealth(currentHealth);
 
-            animatorHandler.PlayTargetAnimation("Damage_01", true);
+            animatorHandler.PlayTargetAnimation(damageAnimation, true);
         
             if(currentHealth <= 0)
             {

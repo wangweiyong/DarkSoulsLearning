@@ -6,8 +6,10 @@ namespace wwy
 {
     public class PlayerAttacker : MonoBehaviour
     {
+        CameraHandler cameraHandler;
         PlayerAnimatorManager animatorHandler;
         PlayerInventory playerInventory;
+        PlayerEquipmentManager playerEquipmentManager;
         PlayerStats playerStats;
         PlayerManager playerManager;
         InputHandler inputHandler;
@@ -19,6 +21,8 @@ namespace wwy
         LayerMask riposteLayer = 1 << 14;
         private void Awake()
         {
+            cameraHandler = FindObjectOfType<CameraHandler>();
+            playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
             playerManager = GetComponentInParent<PlayerManager>();
             playerInventory = GetComponentInParent<PlayerInventory>();
             playerStats = GetComponentInParent<PlayerStats>();
@@ -183,7 +187,22 @@ namespace wwy
                     //check for fp
                     if(playerStats.currentFocusPoints >= playerInventory.currentSpell.focusPointCost)
                     {
-                        playerInventory.currentSpell.AttempToCastSepll(animatorHandler, playerStats);
+                        playerInventory.currentSpell.AttempToCastSepll(animatorHandler, playerStats, weaponSlotManger);
+                    }
+                    else
+                    {
+                        animatorHandler.PlayTargetAnimation("Shrug", true);
+                    }
+                }
+            }
+            else if(weapon.isPyroCaster)
+            {
+                if (playerInventory.currentSpell != null && playerInventory.currentSpell.isPyroSpell)
+                {
+                    //check for fp
+                    if (playerStats.currentFocusPoints >= playerInventory.currentSpell.focusPointCost)
+                    {
+                        playerInventory.currentSpell.AttempToCastSepll(animatorHandler, playerStats, weaponSlotManger);
                     }
                     else
                     {
@@ -195,7 +214,8 @@ namespace wwy
         
         private void SuccessfullyCastSpell()
         {
-            playerInventory.currentSpell.SuccessfullyCastSpell(animatorHandler, playerStats);
+            playerInventory.currentSpell.SuccessfullyCastSpell(animatorHandler, playerStats, cameraHandler, weaponSlotManger);
+            animatorHandler.anim.SetBool("isFiringSpell", true);
         }
         #endregion
 
@@ -208,7 +228,8 @@ namespace wwy
             }
             if (playerManager.isBlocking) return;
 
-            animatorHandler.PlayTargetAnimation("Block Start", false, true);
+            animatorHandler.PlayTargetAnimation("Blocking Start", false, true);
+            playerEquipmentManager.OpenBlockingCollider();
             playerManager.isBlocking = true;
 
         }

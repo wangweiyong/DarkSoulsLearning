@@ -20,11 +20,11 @@ namespace wwy
         [TextArea]
         public string spellDescription;
 
-        public virtual void AttempToCastSepll(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
+        public virtual void AttempToCastSepll(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, WeaponSlotManager weaponSlotManager)
         {
             Debug.Log("you attempt to cast a spell");
         }
-        public virtual void SuccessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
+        public virtual void SuccessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, CameraHandler cameraHandler, WeaponSlotManager weaponSlotManager)
         {
             Debug.Log("you cast a spell successfully");
             playerStats.DeductFocusPoints(focusPointCost);

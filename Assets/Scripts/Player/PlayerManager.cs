@@ -26,7 +26,6 @@ namespace wwy
         public bool isUsingRightHand;
         public bool isUsingLeftHand;
         public bool isInvulerable;
-        public bool isBlocking;
         private void Start()
         {
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
@@ -50,6 +49,7 @@ namespace wwy
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
             isInvulerable = anim.GetBool("isInvulnerable");
+            isFiringSpell = anim.GetBool("isFiringSpell");
             anim.SetBool("isDead", playerStats.isDead);
             inputHandler.TickInput(delta);
             playerAnimatorManager.canRotate = anim.GetBool("canRotate");

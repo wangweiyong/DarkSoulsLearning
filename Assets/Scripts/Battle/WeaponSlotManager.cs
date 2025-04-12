@@ -8,8 +8,8 @@ namespace wwy
     {
         PlayerManager playerManager;
         PlayerInventory playerInventory;
-        WeaponHolderSlots leftHandSlot;
-        WeaponHolderSlots rightHandSlot;
+        public WeaponHolderSlots leftHandSlot;
+        public WeaponHolderSlots rightHandSlot;
         WeaponHolderSlots backSlot;
 
         public DamageCollider leftHandDamageCollider;
@@ -49,7 +49,11 @@ namespace wwy
                 }
             } 
         }
-
+        public void LoadBothWeaponsOnSlot()
+        {
+            LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+            LoadWeaponOnSlot(playerInventory.leftWeapon, true);
+        }
         public void LoadWeaponOnSlot(WeaponItem weaponItem, bool isLeft)
         {
             if (isLeft)

@@ -9,12 +9,15 @@ namespace wwy
         public int soulsAwardedOnDeath = 50;
         EnemyAnimatorManager enemyAnimatorManager;
 
+        public UIEnemyHealthBar enemyHealthBar;
+
         // Start is called before the first frame update
         void Start()
         {
             enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
             maxHealth = SetMaxHealthFromHealthLevel();
             currentHealth = maxHealth;
+            enemyHealthBar.SetMaxHealth(maxHealth);
         }
 
         private int SetMaxHealthFromHealthLevel()
@@ -27,18 +30,21 @@ namespace wwy
         {
             if (isDead) return;
             currentHealth = currentHealth - damage;
+            enemyHealthBar.SetHealth(currentHealth);
+
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
                 isDead = true;
             }
         }
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
         {
             if (isDead) return;
             currentHealth = currentHealth - damage;
+            enemyHealthBar.SetHealth(currentHealth);
 
-            enemyAnimatorManager.PlayTargetAnimation("Damage_01", true);
+            enemyAnimatorManager.PlayTargetAnimation(damageAnimation, true);
 
             if (currentHealth <= 0)
             {

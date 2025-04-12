@@ -33,8 +33,11 @@ namespace wwy
         //basically like eye sight)
         public float maximumDetectionAngle = 50;
         public float minimumDetectionAngle = -50;
-
         public float currentRecoveryTime = 0;
+
+        [Header("AI Combat Settings")]
+        public float comboLikelyHodd = 50;
+        public bool allowAIToPerformCombos;
         private void Awake()
         {
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
@@ -55,7 +58,7 @@ namespace wwy
             HandleRecoveryTime();
             HandleStateMachine();
             isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
-            canDoCombo = enemyAnimatorManager.anim.GetBool("canDoCombo");
+            canDoCombo = enemyAnimatorManager.anim.GetBool("CanDoCombo");
             enemyAnimatorManager.anim.SetBool("isDead", enemyStats.isDead);
         }
         private void FixedUpdate()

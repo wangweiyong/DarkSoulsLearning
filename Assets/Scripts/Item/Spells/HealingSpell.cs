@@ -8,9 +8,9 @@ namespace wwy
     {
         public int healAmount;
 
-        public override void AttempToCastSepll(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
+        public override void AttempToCastSepll(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, WeaponSlotManager weaponSlotManager)
         {
-            base.AttempToCastSepll (animatorHandler, playerStats);
+            base.AttempToCastSepll (animatorHandler, playerStats, weaponSlotManager);
             if (spellWarmUpFX != null)
             {
                 GameObject instantiatedWarmUpSpellFX = Instantiate(spellWarmUpFX, animatorHandler.transform);
@@ -19,9 +19,9 @@ namespace wwy
             Debug.Log("Attempting to cast spell...");
         }
 
-        public override void SuccessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
+        public override void SuccessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, CameraHandler cameraHandler, WeaponSlotManager weaponSlotManager)
         {
-            base.SuccessfullyCastSpell (animatorHandler, playerStats);
+            base.SuccessfullyCastSpell (animatorHandler, playerStats, cameraHandler, weaponSlotManager);
             if(spellCastFX != null)
             {
                 GameObject instantiatedSpellFX = Instantiate(spellCastFX, animatorHandler.transform);

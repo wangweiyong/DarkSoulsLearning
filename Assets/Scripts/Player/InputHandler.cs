@@ -18,6 +18,7 @@ namespace wwy
         public bool b_Input;
         public bool a_Input;
         public bool y_Input;
+        public bool x_Input;
         public bool lockOnInut;
         public bool sprintFlag;
         public bool comboFlag;
@@ -51,7 +52,8 @@ namespace wwy
         PlayerManager playerManager;
         UIManager uiManager;
         CameraHandler cameraHandler;
-
+        BlockingCollider blockingCollider;
+        PlayerEffectsManager playerEffectsManager;
         PlayerAnimatorManager animatorHandler;
         PlayerStats playerStats;
         WeaponSlotManager weaponSlotManager;
@@ -67,9 +69,11 @@ namespace wwy
             playerManager = GetComponent<PlayerManager>();
             playerStats = GetComponent<PlayerStats>();
             weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
+            blockingCollider = GetComponentInChildren<BlockingCollider>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
             animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
+            playerEffectsManager = GetComponentInChildren<PlayerEffectsManager>();
         }
 
         private void OnEnable()
@@ -96,6 +100,7 @@ namespace wwy
                 inputActions.PlayerQuickSlots.D_Pad_Left.performed += i => { d_Pad_Left = true; };
             
                 inputActions.PlayerActions.A.performed += i => { a_Input = true; };
+                inputActions.PlayerActions.X.performed += i => { x_Input = true; };
                 inputActions.PlayerActions.Jump.performed += i => { jump_Input = true; };
                 inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
                 inputActions.PlayerActions.LockOn.performed += i => lockOnInut = true;
@@ -127,6 +132,7 @@ namespace wwy
             HandleLockOnInput();
             HandleTwoHandFlagInput();
             HandleCriticalAttackInput();
+            HandleUseConsumableInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -197,6 +203,10 @@ namespace wwy
             else
             {
                 playerManager.isBlocking = false;
+                if (blockingCollider.blockingCollider.enabled)
+                {
+                    blockingCollider.DisableBlockingCollider();
+                }
             }
             if (lt_Input)
             {
@@ -326,6 +336,15 @@ namespace wwy
             {
                 critical_Attack_Input = false;
                 playerAttacker.AttemptBackStabOrRiposte();
+            }
+        }
+    
+        private void HandleUseConsumableInput()
+        {
+            if (x_Input)
+            {
+                x_Input = false;
+                playerInventory.currentConsumableItem.AttempToConsumeItem(animatorHandler, weaponSlotManager, playerEffectsManager);
             }
         }
     }

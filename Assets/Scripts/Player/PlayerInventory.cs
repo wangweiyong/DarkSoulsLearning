@@ -6,7 +6,14 @@ namespace wwy
 {
     public class PlayerInventory : MonoBehaviour
     {
+        [Header("Current Equipment")]
+        public HelmetEquipment currentHelmetEquipment;
+        public TorsoEquipment currentTorsoEquipment;
+
+
         WeaponSlotManager weaponSlotManager;
+        public ConsumableItem currentConsumableItem;
+        [Header("Quick Slot Items")]
         public SpellItem currentSpell;
         public WeaponItem rightWeapon;
         public WeaponItem leftWeapon;
