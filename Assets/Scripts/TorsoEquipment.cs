@@ -7,5 +7,7 @@ namespace wwy
     public class TorsoEquipment : EquipmentItem
     {
         public string torsoModelName;
+        public string leftArmModelName;
+        public string rightArmModelName;
     }
 }

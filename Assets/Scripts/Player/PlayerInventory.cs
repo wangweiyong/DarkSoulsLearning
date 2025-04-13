@@ -9,7 +9,7 @@ namespace wwy
         [Header("Current Equipment")]
         public HelmetEquipment currentHelmetEquipment;
         public TorsoEquipment currentTorsoEquipment;
-
+        public LegEquipment currentLegEquipment;
 
         WeaponSlotManager weaponSlotManager;
         public ConsumableItem currentConsumableItem;
