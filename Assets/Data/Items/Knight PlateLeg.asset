@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 0}
   itemName: 
-  physicalDefense: 0
+  physicalDefense: 10
   hipModelName: Hip01
   leftLegModelName: LeftLeg01
   rightLegModelName: RightLeg01

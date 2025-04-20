@@ -89,6 +89,11 @@ namespace wwy
                     enemyStats.TakeDamage(currentWeaponDamage);
                 }
             }
+            else if (collision.tag == "Illusionary Wall")
+            {
+                IllusionaryWall illusionaryWall = collision.GetComponent<IllusionaryWall>();
+                illusionaryWall.wallHasBeenHit = true;
+            }
         }
     }
 }

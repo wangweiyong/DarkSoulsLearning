@@ -86,11 +86,8 @@ namespace wwy
         public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
         {
             if (playerManager.isInvulerable) return;
-            if (isDead)
-            {
-                return;
-            }
-            currentHealth = currentHealth - damage;
+            
+            base.TakeDamage(damage, damageAnimation);
 
             healthBar.SetCurrentHealth(currentHealth);
 

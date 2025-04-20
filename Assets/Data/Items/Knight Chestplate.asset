@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 0}
   itemName: Knight Chestplate
-  physicalDefense: 0
+  physicalDefense: 10
   torsoModelName: Torso01
+  leftArmModelName: 
+  rightArmModelName: 
