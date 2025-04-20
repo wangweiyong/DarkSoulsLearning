@@ -23,7 +23,7 @@ namespace wwy
         public State currentState;
 
         public float rotationSpeed = 15;
-        public float maximumAttackRange = 1.5f;
+        public float maximumAggroRadius = 1.5f;
         [Header("Combat Flags")]
         public bool canDoCombo;
 
@@ -58,8 +58,10 @@ namespace wwy
             HandleRecoveryTime();
             HandleStateMachine();
             isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
+            isRotateingWithRootMotion = enemyAnimatorManager.anim.GetBool("isRotatingWithRootMotion");
             canDoCombo = enemyAnimatorManager.anim.GetBool("CanDoCombo");
             enemyAnimatorManager.anim.SetBool("isDead", enemyStats.isDead);
+            canRotate = enemyAnimatorManager.anim.GetBool("canRotate");
         }
         private void FixedUpdate()
         {

@@ -88,6 +88,11 @@ namespace wwy
             deltaPosition.y = 0;
             Vector3 velocity = deltaPosition / delta;
             enemyManager.enemyRigidbody.velocity = velocity;
+            
+            if(enemyManager.isRotateingWithRootMotion)
+            {
+                enemyManager.transform.rotation *= anim.deltaRotation;
+            }
         }
     }
 }

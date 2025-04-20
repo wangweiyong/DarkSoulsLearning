@@ -13,12 +13,16 @@ public class ResetAnimatorBool : StateMachineBehaviour
 
     public string canRotateBool = "canRotate";
     public bool canRotateStatus = true;
+
+    public string isRotatingWithRootMotion = "isRotatingWithRootMotion";
+    public bool isRotatingWithRootMotionStatus = false;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool(isInteractingBool, isInteractingStatus);
         animator.SetBool(isFiringSpellBool, isFiringSpellStatus);
         animator.SetBool(canRotateBool, canRotateStatus);
+        animator.SetBool(isRotatingWithRootMotion, isRotatingWithRootMotionStatus);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

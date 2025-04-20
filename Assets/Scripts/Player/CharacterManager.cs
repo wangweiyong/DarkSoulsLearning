@@ -20,6 +20,9 @@ namespace wwy
         public bool isParrying;
         public bool isBlocking;
 
+        [Header("Movement Flgas")]
+        public bool isRotateingWithRootMotion;
+        public bool canRotate;
 
         [Header("Spells")]
         public bool isFiringSpell;

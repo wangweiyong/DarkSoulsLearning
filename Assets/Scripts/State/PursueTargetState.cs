@@ -7,6 +7,7 @@ namespace wwy
     public class PursueTargetState : State
     {
         public CombatStanceState combatStanceState;
+        public RotateTowardsTargetState rotateTowardsTargetState;
         private void HandleRotateTowardsTarget(EnemyManager enemyManager)
         {
             //Rotate manually，攻击时的旋转，我们自己处理
@@ -38,6 +39,11 @@ namespace wwy
 
         public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
+            Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
+            float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
+            float viewableAngle = Vector3.SignedAngle(targetDirection, enemyManager.transform.forward,Vector3.up);
+            HandleRotateTowardsTarget(enemyManager);
+
             if (enemyManager.isInteracting) return this;
             //chase the target
             //if within attack range, switch to combat stance state
@@ -48,18 +54,13 @@ namespace wwy
                 enemyAnimatorManager.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
                 return this;
             }
-            Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
-            float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
-            float viewableAnge = Vector3.Angle(targetDirection, enemyManager.transform.forward);
-
-            if (distanceFromTarget > enemyManager.maximumAttackRange)
+            if (distanceFromTarget > enemyManager.maximumAggroRadius)
             {
                 enemyAnimatorManager.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
             }
 
-            HandleRotateTowardsTarget(enemyManager);
 
-            if(distanceFromTarget <= enemyManager.maximumAttackRange)
+            if(distanceFromTarget <= enemyManager.maximumAggroRadius)
             {
                 return combatStanceState;
             }

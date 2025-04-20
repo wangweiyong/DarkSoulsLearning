@@ -10,13 +10,15 @@ namespace wwy
         EnemyAnimatorManager enemyAnimatorManager;
 
         public UIEnemyHealthBar enemyHealthBar;
-
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
             maxHealth = SetMaxHealthFromHealthLevel();
             currentHealth = maxHealth;
+        }
+        // Start is called before the first frame update
+        void Start()
+        {
             enemyHealthBar.SetMaxHealth(maxHealth);
         }
 
