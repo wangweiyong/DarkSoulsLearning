@@ -19,6 +19,8 @@ namespace wwy
         public bool canBeParried;
         public bool isParrying;
         public bool isBlocking;
+        public bool isInvulnerable;
+
 
         [Header("Movement Flgas")]
         public bool isRotateingWithRootMotion;

@@ -10,9 +10,9 @@ namespace wwy
         public PursueTargetState pursueTargetState;
         public EnemyAttackAction[] enemyAttacks;
 
-        bool randomDestinationSet = false;
-        float verticalMovementValue = 0;
-        float horizontalMovementValue = 0;
+        protected bool randomDestinationSet = false;
+        protected float verticalMovementValue = 0;
+        protected float horizontalMovementValue = 0;
         public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
             float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
@@ -112,7 +112,7 @@ namespace wwy
             }
         }
 
-        private void GetNewAttack(EnemyManager enemyManager)
+        protected virtual void GetNewAttack(EnemyManager enemyManager)
         {
             Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
             float viewableAngle = Vector3.Angle(targetDirection, enemyManager.transform.forward);

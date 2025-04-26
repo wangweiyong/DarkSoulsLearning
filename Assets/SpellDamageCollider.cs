@@ -33,9 +33,17 @@ namespace wwy
             {
                 spellTarget = other.transform.GetComponent<CharacterStats>();
 
-                if(spellTarget !=null)
+                if(spellTarget != null)
                 {
-                    spellTarget.TakeDamage(currentWeaponDamage);
+                    if(spellTarget is EnemyStats && (spellTarget as EnemyStats).isBoss)
+                    {
+                        (spellTarget as EnemyStats).TakeDamageNoAnimation(currentWeaponDamage);
+
+                    }
+                    else
+                    {
+                        spellTarget.TakeDamage(currentWeaponDamage);
+                    }
                 }
                 hasCollided = true;
                 impactParticles = Instantiate(impactParticles, transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal));

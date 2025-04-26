@@ -25,7 +25,6 @@ namespace wwy
         public bool isJumping;
         public bool isUsingRightHand;
         public bool isUsingLeftHand;
-        public bool isInvulerable;
         private void Start()
         {
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
@@ -48,7 +47,7 @@ namespace wwy
             anim.SetBool("isBlocking", isBlocking);
             isUsingLeftHand = anim.GetBool("isUsingLeftHand");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
-            isInvulerable = anim.GetBool("isInvulnerable");
+            isInvulnerable = anim.GetBool("isInvulnerable");
             isFiringSpell = anim.GetBool("isFiringSpell");
             anim.SetBool("isDead", playerStats.isDead);
             inputHandler.TickInput(delta);
@@ -143,6 +142,20 @@ namespace wwy
             playerLocomotion.rigidbody.velocity = Vector3.zero;
             transform.position = playerStandsHereWithOpeningChest.position;
             playerAnimatorManager.PlayTargetAnimation("Open Chest", true);
+        }
+
+        public void PassThroughForWallInteraction(Transform fogwallEntrance)
+        {
+            //wanna make sure we face the fog wall first
+            playerLocomotion.rigidbody.velocity = Vector3.zero;
+
+            Vector3 rotationDirection = fogwallEntrance.transform.forward;
+            Quaternion turnRotation = Quaternion.LookRotation(rotationDirection);
+            transform.rotation = turnRotation;
+            //rotate over time so it does not llok as rigid
+
+            playerAnimatorManager.PlayTargetAnimation("Pass Throught Fog", true);
+            
         }
         #endregion
 

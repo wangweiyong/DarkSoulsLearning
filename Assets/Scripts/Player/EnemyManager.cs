@@ -37,6 +37,7 @@ namespace wwy
 
         [Header("AI Combat Settings")]
         public float comboLikelyHodd = 50;
+        public bool isPhaseShifting;
         public bool allowAIToPerformCombos;
         private void Awake()
         {
@@ -59,6 +60,8 @@ namespace wwy
             HandleStateMachine();
             isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
             isRotateingWithRootMotion = enemyAnimatorManager.anim.GetBool("isRotatingWithRootMotion");
+            isPhaseShifting = enemyAnimatorManager.anim.GetBool("isPhaseShifting");
+            isInvulnerable = enemyAnimatorManager.anim.GetBool("isInvulnerable");
             canDoCombo = enemyAnimatorManager.anim.GetBool("CanDoCombo");
             enemyAnimatorManager.anim.SetBool("isDead", enemyStats.isDead);
             canRotate = enemyAnimatorManager.anim.GetBool("canRotate");

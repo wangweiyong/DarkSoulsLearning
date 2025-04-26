@@ -8,11 +8,13 @@ namespace wwy
     {
         EnemyManager enemyManager;
         EnemyStats enemyStats;
+        EnemyBossManager enemyBossManager;
         private void Awake()
         {
             anim = GetComponent<Animator>();
             enemyManager = GetComponentInParent<EnemyManager>();
             enemyStats = GetComponentInParent<EnemyStats>();
+            enemyBossManager = GetComponentInParent<EnemyBossManager>();
         }
         public override void TakeCriticalDamage()
         {
@@ -79,6 +81,13 @@ namespace wwy
         {
             anim.SetBool("isInvulnerable", false);
 
+        }
+
+        public void InstantiateBossParticleFX()
+        {
+            BossFXTransform bossFxTranform = GetComponentInChildren<BossFXTransform>();
+
+            GameObject phaseFX = Instantiate(enemyBossManager.particalFX, bossFxTranform.transform);
         }
         private void OnAnimatorMove()
         {

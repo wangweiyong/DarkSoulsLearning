@@ -70,7 +70,7 @@ namespace wwy
         public void TakeDamageNoAnimation(int damage)
         {
 
-            if (playerManager.isInvulerable) return;
+            if (playerManager.isInvulnerable) return;
             if (isDead)
             {
                 return;
@@ -85,7 +85,7 @@ namespace wwy
         }
         public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
         {
-            if (playerManager.isInvulerable) return;
+            if (playerManager.isInvulnerable) return;
             
             base.TakeDamage(damage, damageAnimation);
 

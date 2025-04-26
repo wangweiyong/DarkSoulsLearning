@@ -5,6 +5,9 @@ using wwy;
 
 public class ResetAnimatorBool : StateMachineBehaviour
 {
+    public string isInvulnerable = "isInvulnerable";
+    public bool isInvulnerableStatus = false;
+
     public string isInteractingBool = "isInteracting";
     public bool isInteractingStatus = false;
 
@@ -19,6 +22,7 @@ public class ResetAnimatorBool : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        animator.SetBool(isInvulnerable, isInvulnerableStatus);
         animator.SetBool(isInteractingBool, isInteractingStatus);
         animator.SetBool(isFiringSpellBool, isFiringSpellStatus);
         animator.SetBool(canRotateBool, canRotateStatus);
