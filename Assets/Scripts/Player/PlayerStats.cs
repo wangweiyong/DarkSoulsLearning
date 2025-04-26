@@ -141,5 +141,17 @@ namespace wwy
         {
             soulCount = soulCount + souls;
         }
+
+        public override void HandlePoiseResetTimer()
+        {
+            if(poiseResetTimer > 0)
+            {
+                poiseResetTimer = poiseResetTimer - Time.deltaTime;
+            }
+            else if(poiseResetTimer <= 0 && !playerManager.isInteracting)
+            {
+                totalPoiseDefense = armorPoiseBonus;
+            }
+        }
     }
 }

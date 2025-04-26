@@ -9,7 +9,14 @@ namespace wwy
         public CharacterManager characterManager;
         Collider damageCollider;
         public bool enableDamageColliderOnStartUp = false;
+
+        [Header("Damage")]
         public int currentWeaponDamage = 25;
+
+        [Header("Poise")]
+        public float poiseBreak;
+        public float offensivePoiseBonus;
+
         private void Awake()
         {
             damageCollider = GetComponent<Collider>();
@@ -55,7 +62,18 @@ namespace wwy
                 
                 if(playerStats != null )
                 {
-                    playerStats.TakeDamage(currentWeaponDamage);
+                    playerStats.poiseResetTimer = playerStats.totalPoiseResettime;
+                    playerStats.totalPoiseDefense = playerStats.totalPoiseDefense - poiseBreak;
+
+                    Debug.Log("Player's Poise is currently" + playerStats.totalPoiseDefense);
+                    if (playerStats.totalPoiseDefense > poiseBreak)
+                    {
+                        playerStats.TakeDamageNoAnimation(currentWeaponDamage);
+                    }
+                    else
+                    {
+                        playerStats.TakeDamage(currentWeaponDamage);
+                    }
 
                 }
             }
@@ -65,6 +83,7 @@ namespace wwy
                 
                 CharacterManager enemyCharacterManager = collision.GetComponent<CharacterManager>();
                 BlockingCollider shield = collision.transform.GetComponentInChildren<BlockingCollider>();
+                Debug.Log("Enemy's Poise is currently" + enemyStats.totalPoiseDefense);
 
                 if (enemyCharacterManager != null)
                 {
@@ -86,14 +105,33 @@ namespace wwy
                 }
                 if (enemyStats != null )
                 {
+                    enemyStats.poiseResetTimer = enemyStats.totalPoiseResettime;
+                    enemyStats.totalPoiseDefense = enemyStats.totalPoiseDefense - poiseBreak;
+
                     if (enemyStats.isBoss)
                     {
-                        enemyStats.TakeDamageNoAnimation(currentWeaponDamage);
+                        if (enemyStats.totalPoiseDefense > poiseBreak)
+                        {
+                            enemyStats.TakeDamageNoAnimation(currentWeaponDamage);
+                        }
+                        else
+                        {
+                            enemyStats.TakeDamageNoAnimation(currentWeaponDamage);
+                            enemyStats.BreakGuard();
+                        }
                     }
                     else
                     {
-                        enemyStats.TakeDamage(currentWeaponDamage);
+                        if (enemyStats.totalPoiseDefense > poiseBreak)
+                        {
+                            enemyStats.TakeDamageNoAnimation(currentWeaponDamage);
+                        }
+                        else
+                        {
+                            enemyStats.TakeDamage(currentWeaponDamage);
+                        }
                     }
+
                 }
             }
             else if (collision.tag == "Illusionary Wall")

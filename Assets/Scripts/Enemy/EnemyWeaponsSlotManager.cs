@@ -14,7 +14,19 @@ namespace wwy
 
         DamageCollider leftHandDamageCollider;
         DamageCollider rightHandDamageCollider;
+
+        EnemyStats enemyStats;
         private void Awake()
+        {
+            enemyStats = GetComponentInParent<EnemyStats>();
+            LoadWeaponHolderSlots();
+        }
+        private void Start()
+        {
+            LoadWeaponsOnBothHands();
+        }
+        
+        private void LoadWeaponHolderSlots()
         {
             WeaponHolderSlots[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlots>();
             foreach (WeaponHolderSlots weaponSlot in weaponHolderSlots)
@@ -28,10 +40,6 @@ namespace wwy
                     rightHandSlot = weaponSlot;
                 }
             }
-        }
-        private void Start()
-        {
-            LoadWeaponsOnBothHands();
         }
         public void LoadWeaponOnSlot(WeaponItem weapon, bool isLeft)
         {
@@ -100,5 +108,17 @@ namespace wwy
         {
 
         }
+
+        #region Handle Weapon's Poise Bonus
+        public void GrantWeaponAttackingPoiseBonus()
+        {
+            enemyStats.totalPoiseDefense += enemyStats.offensivePoiseBonus;
+        }
+
+        public void ResetWeaponAttackingPoiseBonus()
+        {
+            enemyStats.totalPoiseDefense = enemyStats.armorPoiseBonus;
+        }
+        #endregion
     }
 }

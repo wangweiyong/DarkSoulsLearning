@@ -14,6 +14,7 @@ namespace wwy
         Vector3 impactNormal;//Used to rotate the impact particles
         private void Start()
         {
+            poiseBreak = 25;
             if (projectileParticles != null)
             {
                 projectileParticles = Instantiate(projectileParticles, transform.position, transform.rotation);
@@ -35,14 +36,20 @@ namespace wwy
 
                 if(spellTarget != null)
                 {
-                    if(spellTarget is EnemyStats && (spellTarget as EnemyStats).isBoss)
+                    EnemyStats enemyStats = spellTarget as EnemyStats;
+                    if(enemyStats != null)
                     {
-                        (spellTarget as EnemyStats).TakeDamageNoAnimation(currentWeaponDamage);
-
-                    }
-                    else
-                    {
-                        spellTarget.TakeDamage(currentWeaponDamage);
+                        enemyStats.poiseResetTimer = enemyStats.totalPoiseResettime;
+                        enemyStats.totalPoiseDefense = enemyStats.totalPoiseDefense - poiseBreak;
+                        if (enemyStats.totalPoiseDefense > poiseBreak)
+                        {
+                            enemyStats.TakeDamageNoAnimation(currentWeaponDamage);
+                            Debug.Log("Enemy poise is current" + enemyStats.totalPoiseDefense);
+                        }
+                        else
+                        {
+                            enemyStats.TakeDamage(currentWeaponDamage);
+                        }
                     }
                 }
                 hasCollided = true;

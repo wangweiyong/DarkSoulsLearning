@@ -72,6 +72,10 @@ namespace wwy
                 HandleDeath();
             }
         }
+        public void BreakGuard()
+        {
+            enemyAnimatorManager.PlayTargetAnimation("Break Guard", true);
+        }
         public void HandleDeath()
         {
             currentHealth = 0;
@@ -79,6 +83,11 @@ namespace wwy
             isDead = true;
             //Scan for every player in the scene, award the souls
 
+        }
+
+        public override void HandlePoiseResetTimer()
+        {
+            base.HandlePoiseResetTimer();
         }
     }
 }
