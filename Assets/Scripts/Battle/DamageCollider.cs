@@ -39,17 +39,18 @@ namespace wwy
             {
                 PlayerStatsManager playerStats = collision.GetComponent<PlayerStatsManager>();
 
-                CharacterManager enemyCharacterManager = collision.GetComponent<CharacterManager>();
+                CharacterManager playerCharacterManager = collision.GetComponent<CharacterManager>();
+                CharacterEffectsManager playerEffectManager = collision.GetComponent<CharacterEffectsManager>();
                 BlockingCollider shield = collision.transform.GetComponentInChildren<BlockingCollider>();
-                if(enemyCharacterManager != null)
+                if(playerCharacterManager != null)
                 {
-                    if (enemyCharacterManager.isParrying)
+                    if (playerCharacterManager.isParrying)
                     {
                         //check here if you are parriable
                         characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
                         return;
                     }
-                    else if(shield != null && enemyCharacterManager.isBlocking)
+                    else if(shield != null && playerCharacterManager.isBlocking)
                     {
                         float physicalDamageAfterBlock = currentWeaponDamage - (currentWeaponDamage * shield.blockingPhysicalDamageAbsorption) / 100;
                         if(playerStats != null)
@@ -65,7 +66,8 @@ namespace wwy
                     playerStats.poiseResetTimer = playerStats.totalPoiseResettime;
                     playerStats.totalPoiseDefense = playerStats.totalPoiseDefense - poiseBreak;
 
-                    Debug.Log("Player's Poise is currently" + playerStats.totalPoiseDefense);
+                    Vector3 contactPoint = collision.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);// detect our weapons where on the collider first contact
+                    playerEffectManager.PlayBlookdSplatterFX(contactPoint);
                     if (playerStats.totalPoiseDefense > poiseBreak)
                     {
                         playerStats.TakeDamageNoAnimation(currentWeaponDamage);
@@ -82,6 +84,8 @@ namespace wwy
                 EnemyStatsManager enemyStats = collision.GetComponent<EnemyStatsManager>();
                 
                 CharacterManager enemyCharacterManager = collision.GetComponent<CharacterManager>();
+                CharacterEffectsManager enemyEffectManager = collision.GetComponent<CharacterEffectsManager>();
+
                 BlockingCollider shield = collision.transform.GetComponentInChildren<BlockingCollider>();
                 Debug.Log("Enemy's Poise is currently" + enemyStats.totalPoiseDefense);
 
@@ -107,7 +111,8 @@ namespace wwy
                 {
                     enemyStats.poiseResetTimer = enemyStats.totalPoiseResettime;
                     enemyStats.totalPoiseDefense = enemyStats.totalPoiseDefense - poiseBreak;
-
+                    Vector3 contactPoint = collision.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);// detect our weapons where on the collider first contact
+                    enemyEffectManager.PlayBlookdSplatterFX(contactPoint);
                     if (enemyStats.isBoss)
                     {
                         if (enemyStats.totalPoiseDefense > poiseBreak)

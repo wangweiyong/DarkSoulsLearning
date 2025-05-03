@@ -64,6 +64,27 @@ namespace wwy
                 HandleDeath();
             }
         }
+        public override void TakePoisonDamage(int damage)
+        {
+            if (isDead) return;
+
+            base.TakePoisonDamage(damage);
+            if (!isBoss)
+            {
+                enemyHealthBar.SetHealth(currentHealth);
+            }
+            else if (isBoss && enemyBossManager != null)
+            {
+                enemyBossManager.UpdateBossHealthBar(currentHealth, maxHealth);
+            }
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                enemyAnimatorManager.PlayTargetAnimation("Dead_01", true);
+                isDead = true;
+            }
+        }
         public void BreakGuard()
         {
             enemyAnimatorManager.PlayTargetAnimation("Break Guard", true);

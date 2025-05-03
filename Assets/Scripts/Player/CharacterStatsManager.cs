@@ -68,6 +68,15 @@ namespace wwy {
                 isDead = true;
             }
         }
+        public virtual void TakePoisonDamage(int damage)
+        {
+            currentHealth = currentHealth - damage;
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                isDead = true;
+            }
+        }
         private void Start()
         {
             totalPoiseDefense = armorPoiseBonus;

@@ -11,7 +11,7 @@ namespace wwy
         EnemyLocomotionManager enemyLocomotionManager;
         EnemyAnimatorManager enemyAnimatorManager;
         EnemyStatsManager enemyStatsManager;
-
+        EnemyEffectsManager enemyEffectsManager;
         public CharacterStatsManager currentTarget;
         public NavMeshAgent navMeshAgent;
         public Rigidbody enemyRigidbody;
@@ -44,7 +44,7 @@ namespace wwy
             enemyStatsManager = GetComponent<EnemyStatsManager>();
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
             enemyRigidbody = GetComponent<Rigidbody>();
-
+            enemyEffectsManager = GetComponent<EnemyEffectsManager>();
             navMeshAgent.enabled = false;
             enemyRigidbody.isKinematic = false;
 
@@ -66,6 +66,7 @@ namespace wwy
         }
         private void FixedUpdate()
         {
+            enemyEffectsManager.HandleAllBuildUpEffects();
             navMeshAgent.transform.localPosition = Vector3.zero;
             navMeshAgent.transform.localRotation = Quaternion.identity;
         }

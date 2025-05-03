@@ -11,8 +11,9 @@ namespace wwy
         // the particles that will play of the current effect that is effecting player
         public int amountToHeal;
         public GameObject instantiatedFXModel;
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             playerStatsManager = GetComponent<PlayerStatsManager>();
             playerWeaponSlotManager = GetComponent<PlayerWeaponSlotManager>();  
         }

@@ -7,6 +7,7 @@ namespace wwy
         InputHandler inputHandler;
         PlayerLocomotionManager playerLocomotion;
         PlayerStatsManager playerStatsManager;
+        PlayerEffectsManager playerEffectsManager;
         public GameObject interactableUIGameObject;
         public GameObject itemInteractableGameObject;
         InteractableUI interactableUI;
@@ -17,7 +18,7 @@ namespace wwy
 
 
 
-        private void Start()
+        private void Awake()
         {
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
             cameraHandler = CameraHandler.singleton;
@@ -27,6 +28,7 @@ namespace wwy
             playerLocomotion = GetComponent<PlayerLocomotionManager>();
             interactableUI = FindObjectOfType<InteractableUI>();
             playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+            playerEffectsManager = GetComponent<PlayerEffectsManager>();
         }
 
         private void Update()
@@ -58,7 +60,7 @@ namespace wwy
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleRotation(delta);
-
+            playerEffectsManager.HandleAllBuildUpEffects();
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
         }

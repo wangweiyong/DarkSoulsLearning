@@ -96,7 +96,20 @@ namespace wwy
                 isDead = true;
             }
         }
-    
+        public override void TakePoisonDamage(int damage)
+        {
+            if (isDead) return;
+
+            base.TakePoisonDamage(damage);
+            healthBar.SetCurrentHealth(currentHealth);
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                playerAnimationManager.PlayTargetAnimation("Dead_01", true);
+                isDead = true;
+            }
+        }
         public void TakeStaminaDamage(int damage)
         {
 
