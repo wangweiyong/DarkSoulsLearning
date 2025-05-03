@@ -20,12 +20,12 @@ namespace wwy
 
         private void PickupItem(PlayerManager playerManager)
         {
-            PlayerInventory playerInventory;
-            PlayerLocomotion playerLocomotion;
+            PlayerInventoryManager playerInventory;
+            PlayerLocomotionManager playerLocomotion;
             PlayerAnimatorManager animatorHandler;
 
-            playerInventory = playerManager.GetComponent<PlayerInventory>();
-            playerLocomotion = playerManager.GetComponent<PlayerLocomotion>();
+            playerInventory = playerManager.GetComponent<PlayerInventoryManager>();
+            playerLocomotion = playerManager.GetComponent<PlayerLocomotionManager>();
             animatorHandler = playerManager.GetComponentInChildren<PlayerAnimatorManager>();
             
             playerLocomotion.rigidbody.velocity = Vector3.zero; // stop players moving whilst pick up item

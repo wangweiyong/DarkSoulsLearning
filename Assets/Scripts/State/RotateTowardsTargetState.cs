@@ -6,10 +6,10 @@ namespace wwy
     public class RotateTowardsTargetState : State
     {
         public CombatStanceState combatStanceState;
-        public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
+        public override State Tick(EnemyManager enemyManager, EnemyStatsManager enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
-            enemyAnimatorManager.anim.SetFloat("Vertical", 0);
-            enemyAnimatorManager.anim.SetFloat("Horizontal", 0);
+            enemyAnimatorManager.animator.SetFloat("Vertical", 0);
+            enemyAnimatorManager.animator.SetFloat("Horizontal", 0);
 
             Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
             float viewableAngle = Vector3.SignedAngle(targetDirection, enemyManager.transform.forward, Vector3.up);

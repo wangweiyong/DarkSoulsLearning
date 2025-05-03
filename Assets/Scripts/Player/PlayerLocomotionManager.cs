@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 
 namespace wwy
 {
-    public class PlayerLocomotion : MonoBehaviour
+    public class PlayerLocomotionManager : MonoBehaviour
     {
         CameraHandler cameraHandler;
         PlayerManager playerManager;
-        PlayerStats playerStats;
+        PlayerStatsManager playerStatsManager;
         Transform cameraObject;
         InputHandler inputHandler;
         public Vector3 moveDirection;
@@ -21,7 +21,7 @@ namespace wwy
         [HideInInspector]
         public Transform myTransform;
         [HideInInspector]
-        public PlayerAnimatorManager animatorHandler;
+        public PlayerAnimatorManager playerAnimationManager;
 
         public new Rigidbody rigidbody;
         public GameObject normalCamera;
@@ -60,13 +60,12 @@ namespace wwy
         void Start()
         {
             playerManager = GetComponent<PlayerManager>();
-            playerStats = GetComponent<PlayerStats>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
             rigidbody = GetComponent<Rigidbody>();
             inputHandler = GetComponent<InputHandler>();
-            animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();  
+            playerAnimationManager = GetComponent<PlayerAnimatorManager>();  
             cameraObject = Camera.main.transform;
             myTransform = transform;
-            animatorHandler.Initialze();
             cameraHandler = FindObjectOfType<CameraHandler>();
 
             playerManager.isGrounded = true;
@@ -79,7 +78,7 @@ namespace wwy
             {
                 return;
             }
-            if (playerStats.currentStamina <= 0)
+            if (playerStatsManager.currentStamina <= 0)
             {
                 return;
             }
@@ -89,8 +88,8 @@ namespace wwy
                 {
                     moveDirection = cameraObject.forward * inputHandler.vertical;
                     moveDirection += cameraObject.right * inputHandler.horizontal;
-                    animatorHandler.PlayTargetAnimation("Jump", true);
-                    animatorHandler.anim.SetBool("isJumping", true);
+                    playerAnimationManager.PlayTargetAnimation("Jump", true);
+                    playerAnimationManager.animator.SetBool("isJumping", true);
                     moveDirection.y = 0;
 
                     Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
@@ -106,7 +105,7 @@ namespace wwy
 
         public void HandleRotation(float delta)
         {
-            if (animatorHandler.canRotate)
+            if (playerAnimationManager.canRotate)
             {
                 if (inputHandler.lockOnFlag)
                 {
@@ -195,7 +194,7 @@ namespace wwy
                 speed = sprintSpeed;
                 playerManager.isSprinting = true;
                 moveDirection *= speed;
-                playerStats.TakeStaminaDamage(sprintStaminaCost);
+                playerStatsManager.TakeStaminaDamage(sprintStaminaCost);
             }
             else
             {
@@ -218,11 +217,11 @@ namespace wwy
 
             if (inputHandler.lockOnFlag && inputHandler.sprintFlag == false)
             {
-                animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, inputHandler.horizontal, playerManager.isSprinting);
+                playerAnimationManager.UpdateAnimatorValues(inputHandler.moveAmount, inputHandler.horizontal, playerManager.isSprinting);
             }
             else
             {
-                animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
+                playerAnimationManager.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
             }
 
         }
@@ -237,13 +236,13 @@ namespace wwy
         }
         public void HandleRollingAndSprint(float delta)
         {
-            if (animatorHandler.anim.GetBool("isInteracting"))
+            if (playerAnimationManager.animator.GetBool("isInteracting"))
             {
                 return;
             }
 
             //check if we have stamina, if we do not, return
-            if(playerStats.currentStamina <= 0)
+            if(playerStatsManager.currentStamina <= 0)
             {
                 return;
             }
@@ -255,16 +254,16 @@ namespace wwy
 
                 if(inputHandler.moveAmount > 0)
                 {
-                    animatorHandler.PlayTargetAnimation("Rolling", true);
+                    playerAnimationManager.PlayTargetAnimation("Rolling", true);
                     moveDirection.y = 0;
                     Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = rollRotation;
-                    playerStats.TakeStaminaDamage(rollStaminaCost);
+                    playerStatsManager.TakeStaminaDamage(rollStaminaCost);
                 }
                 else
                 {
-                    animatorHandler.PlayTargetAnimation("Backstep", true);
-                    playerStats.TakeStaminaDamage(backstepStaminaCost);
+                    playerAnimationManager.PlayTargetAnimation("Backstep", true);
+                    playerStatsManager.TakeStaminaDamage(backstepStaminaCost);
                 }
             }
         }
@@ -320,14 +319,14 @@ namespace wwy
                     if (inAirTimer > 0.5f)
                     {
                         Debug.Log("You were in Air for " + inAirTimer);
-                        animatorHandler.PlayTargetAnimation("Land", true);
-                        animatorHandler.anim.SetBool("isJumping", false);
+                        playerAnimationManager.PlayTargetAnimation("Land", true);
+                        playerAnimationManager.animator.SetBool("isJumping", false);
                         inAirTimer = 0;
                     }
                     else
                     {
-                        animatorHandler.PlayTargetAnimation("Empty", false);
-                        animatorHandler.anim.SetBool("isJumping", false);
+                        playerAnimationManager.PlayTargetAnimation("Empty", false);
+                        playerAnimationManager.animator.SetBool("isJumping", false);
                         inAirTimer = 0;
                     }
                     playerManager.isInAir = false;
@@ -345,7 +344,7 @@ namespace wwy
                 {
                     if (playerManager.isInteracting == false)
                     {
-                        animatorHandler.PlayTargetAnimation("Falling", true);
+                        playerAnimationManager.PlayTargetAnimation("Falling", true);
                     }
                     Debug.Log("falling");
                     Vector3 vel = rigidbody.velocity;

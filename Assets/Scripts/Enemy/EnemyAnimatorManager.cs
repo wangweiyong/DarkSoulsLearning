@@ -7,82 +7,33 @@ namespace wwy
     public class EnemyAnimatorManager : AnimatorManager
     {
         EnemyManager enemyManager;
-        EnemyStats enemyStats;
+        EnemyEffectsManager enemyEffectsManager;
         EnemyBossManager enemyBossManager;
-        private void Awake()
+        protected override void Awake()
         {
-            anim = GetComponent<Animator>();
-            enemyManager = GetComponentInParent<EnemyManager>();
-            enemyStats = GetComponentInParent<EnemyStats>();
-            enemyBossManager = GetComponentInParent<EnemyBossManager>();
+            base.Awake();
+            animator = GetComponent<Animator>();
+            enemyBossManager = GetComponent<EnemyBossManager>();
+            enemyManager = GetComponent<EnemyManager>();
+            enemyEffectsManager = GetComponent<EnemyEffectsManager>();
         }
-        public override void TakeCriticalDamage()
+        public void PlayWeaponTrailFX()
         {
-            enemyStats.TakeDamageNoAnimation(enemyManager.pendingCriticalDamage);
-            enemyManager.pendingCriticalDamage = 0;
+            enemyEffectsManager.PlayWeaponFX(false);
         }
         public void AwardSoulsOnDeath()
         {
-            PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+            PlayerStatsManager playerStats = FindObjectOfType<PlayerStatsManager>();
             SoulCountBar soulCountBar = FindObjectOfType<SoulCountBar>();
             if (playerStats != null)
             {
-                playerStats.AddSoulds(enemyStats.soulsAwardedOnDeath);
+                playerStats.AddSoulds(characterStatsManager.soulsAwardedOnDeath);
             }
             if(soulCountBar != null)
             {
                 soulCountBar.SetSoulCountText(playerStats.soulCount);
             }
         }
-
-        public void EnableIsParring()
-        {
-            enemyManager.isParrying = true;
-        }
-        public void DisableIsParring()
-        {
-            enemyManager.isParrying = false;
-        }
-
-        public void EnableCanBeRiposted()
-        {
-            enemyManager.canBeRiposte = true;
-        }
-        public void DisableCanBeRiposted()
-        {
-            enemyManager.canBeRiposte = false;
-
-        }
-
-        public void CanRotate()
-        {
-            anim.SetBool("canRotate", true);
-        }
-
-        public void StopRotate()
-        {
-            anim.SetBool("canRotate", false);
-
-        }
-        public void EnableCombo()
-        {
-            anim.SetBool("CanDoCombo", true);
-        }
-        public void DisableCombo()
-        {
-            anim.SetBool("CanDoCombo", false);
-        }
-
-        public void EnableIsInvulnerable()
-        {
-            anim.SetBool("isInvulnerable", true);
-        }
-        public void DisableIsInvulnerable()
-        {
-            anim.SetBool("isInvulnerable", false);
-
-        }
-
         public void InstantiateBossParticleFX()
         {
             BossFXTransform bossFxTranform = GetComponentInChildren<BossFXTransform>();
@@ -93,14 +44,14 @@ namespace wwy
         {
             float delta = Time.deltaTime;
             enemyManager.enemyRigidbody.drag = 0;
-            Vector3 deltaPosition = anim.deltaPosition;
+            Vector3 deltaPosition = animator.deltaPosition;
             deltaPosition.y = 0;
             Vector3 velocity = deltaPosition / delta;
             enemyManager.enemyRigidbody.velocity = velocity;
             
             if(enemyManager.isRotateingWithRootMotion)
             {
-                enemyManager.transform.rotation *= anim.deltaRotation;
+                enemyManager.transform.rotation *= animator.deltaRotation;
             }
         }
     }

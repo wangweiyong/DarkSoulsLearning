@@ -19,7 +19,7 @@ namespace wwy
         public bool isInteracting;
 
 
-        public virtual void AttempToConsumeItem(PlayerAnimatorManager playerAnimatorManager, WeaponSlotManager weaponSlotManager, PlayerEffectsManager playerEffectsManager)
+        public virtual void AttempToConsumeItem(PlayerAnimatorManager playerAnimatorManager, PlayerWeaponSlotManager weaponSlotManager, PlayerEffectsManager playerEffectsManager)
         {
             if(currentItemAmount > 0)
             {

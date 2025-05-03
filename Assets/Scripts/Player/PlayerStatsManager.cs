@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 namespace wwy
 {
-    public class PlayerStats : CharacterStats
+    public class PlayerStatsManager : CharacterStatsManager
     {
         public float statiminaRenerationAmount = 30f;
         float staminaRegenerationTimer = 0;
         PlayerManager playerManager;
 
-        PlayerAnimatorManager animatorHandler;
+        PlayerAnimatorManager playerAnimationManager;
 
         HealthBar healthBar;
         StaminaBar staminaBar;
@@ -22,7 +22,7 @@ namespace wwy
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindObjectOfType<StaminaBar>();
             focusPointBar = FindAnyObjectByType<FocusPointBar>();
-            animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
+            playerAnimationManager = GetComponent<PlayerAnimatorManager>();
         }
         void Start()
         {
@@ -67,7 +67,7 @@ namespace wwy
             return maxFocusPoints;
         }
 
-        public void TakeDamageNoAnimation(int damage)
+        public override void TakeDamageNoAnimation(int damage)
         {
 
             if (playerManager.isInvulnerable) return;
@@ -75,13 +75,9 @@ namespace wwy
             {
                 return;
             }
-            currentHealth = currentHealth - damage;
+            base.TakeDamageNoAnimation(damage);
             healthBar.SetCurrentHealth(currentHealth);
-            if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-                isDead = true;
-            }
+
         }
         public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
         {
@@ -91,12 +87,12 @@ namespace wwy
 
             healthBar.SetCurrentHealth(currentHealth);
 
-            animatorHandler.PlayTargetAnimation(damageAnimation, true);
+            playerAnimationManager.PlayTargetAnimation(damageAnimation, true);
         
             if(currentHealth <= 0)
             {
                 currentHealth = 0;
-                animatorHandler.PlayTargetAnimation("Dead_01", true);
+                playerAnimationManager.PlayTargetAnimation("Dead_01", true);
                 isDead = true;
             }
         }

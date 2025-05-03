@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 namespace wwy {
-    public class CharacterStats : MonoBehaviour
+    public class CharacterStatsManager : MonoBehaviour
     {
         public int healthLevel = 10;
         public int maxHealth;
@@ -17,6 +17,7 @@ namespace wwy {
         public int focusLevel = 10;
         public float maxFocusPoints;
         public float currentFocusPoints;
+        public int soulsAwardedOnDeath = 50;
 
 
         public int soulCount = 0;
@@ -51,6 +52,16 @@ namespace wwy {
             Debug.Log("finalDamage" + finalDamage);
             currentHealth = currentHealth - finalDamage;
 
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                isDead = true;
+            }
+        }
+
+        public virtual void TakeDamageNoAnimation(int damage)
+        {
+            currentHealth = currentHealth - damage;
             if (currentHealth <= 0)
             {
                 currentHealth = 0;

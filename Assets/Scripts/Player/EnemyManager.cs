@@ -10,22 +10,20 @@ namespace wwy
     {
         EnemyLocomotionManager enemyLocomotionManager;
         EnemyAnimatorManager enemyAnimatorManager;
-        EnemyStats enemyStats;
+        EnemyStatsManager enemyStatsManager;
 
-        public CharacterStats currentTarget;
+        public CharacterStatsManager currentTarget;
         public NavMeshAgent navMeshAgent;
         public Rigidbody enemyRigidbody;
 
 
         public bool isPerfomingAction;
-        public bool isInteracting;
 
         public State currentState;
 
         public float rotationSpeed = 15;
         public float maximumAggroRadius = 1.5f;
-        [Header("Combat Flags")]
-        public bool canDoCombo;
+
 
         [Header("AI Settings")]
         public float detectionRadius = 20;
@@ -42,8 +40,8 @@ namespace wwy
         private void Awake()
         {
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
-            enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
-            enemyStats = GetComponent<EnemyStats>();
+            enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
+            enemyStatsManager = GetComponent<EnemyStatsManager>();
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
             enemyRigidbody = GetComponent<Rigidbody>();
 
@@ -58,13 +56,13 @@ namespace wwy
         {
             HandleRecoveryTime();
             HandleStateMachine();
-            isInteracting = enemyAnimatorManager.anim.GetBool("isInteracting");
-            isRotateingWithRootMotion = enemyAnimatorManager.anim.GetBool("isRotatingWithRootMotion");
-            isPhaseShifting = enemyAnimatorManager.anim.GetBool("isPhaseShifting");
-            isInvulnerable = enemyAnimatorManager.anim.GetBool("isInvulnerable");
-            canDoCombo = enemyAnimatorManager.anim.GetBool("CanDoCombo");
-            enemyAnimatorManager.anim.SetBool("isDead", enemyStats.isDead);
-            canRotate = enemyAnimatorManager.anim.GetBool("canRotate");
+            isInteracting = enemyAnimatorManager.animator.GetBool("isInteracting");
+            isRotateingWithRootMotion = enemyAnimatorManager.animator.GetBool("isRotatingWithRootMotion");
+            isPhaseShifting = enemyAnimatorManager.animator.GetBool("isPhaseShifting");
+            isInvulnerable = enemyAnimatorManager.animator.GetBool("isInvulnerable");
+            canDoCombo = enemyAnimatorManager.animator.GetBool("CanDoCombo");
+            enemyAnimatorManager.animator.SetBool("isDead", enemyStatsManager.isDead);
+            canRotate = enemyAnimatorManager.animator.GetBool("canRotate");
         }
         private void FixedUpdate()
         {
@@ -76,7 +74,7 @@ namespace wwy
         {
             if(currentState != null)
             {
-                State nextState = currentState.Tick(this, enemyStats, enemyAnimatorManager);
+                State nextState = currentState.Tick(this, enemyStatsManager, enemyAnimatorManager);
                 if(nextState != null)
                 {
                     SwitchToNextState(nextState);

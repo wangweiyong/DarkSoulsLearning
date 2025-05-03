@@ -47,16 +47,16 @@ namespace wwy
 
         public Transform criticalAttackRayCastStartPoint;
         PlayerControls inputActions;
-        PlayerAttacker playerAttacker;
-        PlayerInventory playerInventory;
+        PlayerCombatManager playerCombatManager;
+        PlayerInventoryManager playerInventoryManager;
         PlayerManager playerManager;
         UIManager uiManager;
         CameraHandler cameraHandler;
         BlockingCollider blockingCollider;
         PlayerEffectsManager playerEffectsManager;
-        PlayerAnimatorManager animatorHandler;
-        PlayerStats playerStats;
-        WeaponSlotManager weaponSlotManager;
+        PlayerAnimatorManager playerAnimatorManager;
+        PlayerStatsManager playerStatsManager;
+        PlayerWeaponSlotManager weaponSlotManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -64,16 +64,16 @@ namespace wwy
 
         private void Awake()
         {
-            playerAttacker = GetComponentInChildren<PlayerAttacker>();
-            playerInventory= GetComponent<PlayerInventory>();
+            playerCombatManager = GetComponent<PlayerCombatManager>();
+            playerInventoryManager= GetComponent<PlayerInventoryManager>();
             playerManager = GetComponent<PlayerManager>();
-            playerStats = GetComponent<PlayerStats>();
-            weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
+            weaponSlotManager = GetComponent<PlayerWeaponSlotManager>();
             blockingCollider = GetComponentInChildren<BlockingCollider>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
-            animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
-            playerEffectsManager = GetComponentInChildren<PlayerEffectsManager>();
+            playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+            playerEffectsManager = GetComponent<PlayerEffectsManager>();
         }
 
         private void OnEnable()
@@ -151,12 +151,12 @@ namespace wwy
             if (b_Input)
             {
                 rollInputTimer += delta;
-                if(playerStats.currentStamina <= 0)
+                if(playerStatsManager.currentStamina <= 0)
                 {
                     sprintFlag = false;
                     b_Input = false;
                 }
-                if (moveAmount > 0.5f && playerStats.currentStamina > 0)
+                if (moveAmount > 0.5f && playerStatsManager.currentStamina > 0)
                 {
                     sprintFlag = true;
                 }
@@ -176,7 +176,7 @@ namespace wwy
         {
             if (rb_Input)
             {
-                playerAttacker.HandleRBAction();
+                playerCombatManager.HandleRBAction();
               /*  if (playerManager.canDoCombo)
                 {
                     comboFlag = true;
@@ -193,12 +193,12 @@ namespace wwy
             }
             if (rt_Input)
             {
-                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+                playerCombatManager.HandleHeavyAttack(playerInventoryManager.rightWeapon);
             }
             if (lb_Input)
             {
                 //do a block
-                playerAttacker.HandleLBAction();
+                playerCombatManager.HandleLBAction();
             }
             else
             {
@@ -219,7 +219,7 @@ namespace wwy
                 }
                 else
                 {
-                    playerAttacker.HandleLTAction();
+                    playerCombatManager.HandleLTAction();
                 }
             }
         }
@@ -228,12 +228,12 @@ namespace wwy
           
             if (d_Pad_Right)
             {
-                playerInventory.ChangeRightWeapon();
+                playerInventoryManager.ChangeRightWeapon();
             }
 
             else if(d_Pad_Left)
             {
-                playerInventory.ChangeLeftWeapon();
+                playerInventoryManager.ChangeLeftWeapon();
             }
         }
     
@@ -318,13 +318,13 @@ namespace wwy
                 if (twoHandFlag)
                 {
                     //Enable two handing
-                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventoryManager.rightWeapon, false);
                 }
                 else
                 {
                     //disable two handing
-                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
-                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventoryManager.rightWeapon, false);
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventoryManager.leftWeapon, true);
 
                 }
             }
@@ -335,7 +335,7 @@ namespace wwy
             if (critical_Attack_Input)
             {
                 critical_Attack_Input = false;
-                playerAttacker.AttemptBackStabOrRiposte();
+                playerCombatManager.AttemptBackStabOrRiposte();
             }
         }
     
@@ -344,7 +344,7 @@ namespace wwy
             if (x_Input)
             {
                 x_Input = false;
-                playerInventory.currentConsumableItem.AttempToConsumeItem(animatorHandler, weaponSlotManager, playerEffectsManager);
+                playerInventoryManager.currentConsumableItem.AttempToConsumeItem(playerAnimatorManager, weaponSlotManager, playerEffectsManager);
             }
         }
     }

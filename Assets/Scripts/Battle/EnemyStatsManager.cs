@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace wwy
 {
-    public class EnemyStats : CharacterStats
+    public class EnemyStatsManager : CharacterStatsManager
     {
-        EnemyManager enemyManager;
-        public int soulsAwardedOnDeath = 50;
         EnemyAnimatorManager enemyAnimatorManager;
         EnemyBossManager enemyBossManager;
 
@@ -16,8 +14,7 @@ namespace wwy
         public bool isBoss;
         private void Awake()
         {
-            enemyManager = GetComponent<EnemyManager>();
-            enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
+            enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
             enemyBossManager = GetComponent<EnemyBossManager>();
             maxHealth = SetMaxHealthFromHealthLevel();
             currentHealth = maxHealth;
@@ -35,10 +32,10 @@ namespace wwy
             return maxHealth;
         }
 
-        public void TakeDamageNoAnimation(int damage)
+        public override void TakeDamageNoAnimation(int damage)
         {
             if (isDead) return;
-            currentHealth = currentHealth - damage;
+            base.TakeDamageNoAnimation(damage);
             if (!isBoss)
             {
                 enemyHealthBar.SetHealth(currentHealth);
@@ -46,11 +43,6 @@ namespace wwy
             else if (isBoss && enemyBossManager != null)
             {
                 enemyBossManager.UpdateBossHealthBar(currentHealth, maxHealth);
-            }
-
-            if (currentHealth <= 0)
-            {
-                HandleDeath();
             }
         }
         public override void TakeDamage(int damage, string damageAnimation = "Damage_01")

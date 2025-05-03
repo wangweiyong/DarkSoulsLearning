@@ -10,7 +10,7 @@ namespace wwy
         public GameObject muzzleParticles;
 
         bool hasCollided = false;
-        CharacterStats spellTarget;
+        CharacterStatsManager spellTarget;
         Vector3 impactNormal;//Used to rotate the impact particles
         private void Start()
         {
@@ -32,11 +32,11 @@ namespace wwy
         {
             if(!hasCollided)
             {
-                spellTarget = other.transform.GetComponent<CharacterStats>();
+                spellTarget = other.transform.GetComponent<CharacterStatsManager>();
 
                 if(spellTarget != null)
                 {
-                    EnemyStats enemyStats = spellTarget as EnemyStats;
+                    EnemyStatsManager enemyStats = spellTarget as EnemyStatsManager;
                     if(enemyStats != null)
                     {
                         enemyStats.poiseResetTimer = enemyStats.totalPoiseResettime;

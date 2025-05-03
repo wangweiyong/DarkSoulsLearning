@@ -14,17 +14,27 @@ namespace wwy
         public CriticalDamageCollider backStabCollider;
         public CriticalDamageCollider riposteCollider;
 
+        [Header("IsInteracting")]
+        public bool isInteracting;
+
         [Header("Combat Flags")]
         public bool canBeRiposte;
         public bool canBeParried;
+        public bool canDoCombo;
         public bool isParrying;
         public bool isBlocking;
         public bool isInvulnerable;
-
+        public bool isUsingRightHand;
+        public bool isUsingLeftHand;
 
         [Header("Movement Flgas")]
         public bool isRotateingWithRootMotion;
         public bool canRotate;
+        public bool isSprinting;
+        public bool isInAir;
+        public bool isGrounded;
+        public bool isJumping;
+
 
         [Header("Spells")]
         public bool isFiringSpell;

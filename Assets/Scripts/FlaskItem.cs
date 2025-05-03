@@ -18,7 +18,7 @@ namespace wwy
         [Header("Recovery FX")]
         public GameObject recoveryFX;
 
-        public override void AttempToConsumeItem(PlayerAnimatorManager playerAnimatorManager, WeaponSlotManager weaponSlotManager, PlayerEffectsManager playerEffectsManager)
+        public override void AttempToConsumeItem(PlayerAnimatorManager playerAnimatorManager, PlayerWeaponSlotManager weaponSlotManager, PlayerEffectsManager playerEffectsManager)
         {
             base.AttempToConsumeItem(playerAnimatorManager, weaponSlotManager, playerEffectsManager);
             // add health or fp

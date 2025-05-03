@@ -4,21 +4,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 namespace wwy
 {
-    public class EnemyWeaponsSlotManager : MonoBehaviour
+    public class EnemyWeaponsSlotManager : CharacterWeaponSlotManager
     {
         public WeaponItem rightHandWeapon;
         public WeaponItem leftHandWeapon;
 
-        WeaponHolderSlots rightHandSlot;
-        WeaponHolderSlots leftHandSlot;
-
-        DamageCollider leftHandDamageCollider;
-        DamageCollider rightHandDamageCollider;
-
-        EnemyStats enemyStats;
+        EnemyStatsManager enemyStatsManager;
+        EnemyEffectsManager enemyEffectsManager;
         private void Awake()
         {
-            enemyStats = GetComponentInParent<EnemyStats>();
+            enemyStatsManager = GetComponent<EnemyStatsManager>();
+            enemyEffectsManager = GetComponent<EnemyEffectsManager>();
             LoadWeaponHolderSlots();
         }
         private void Start()
@@ -74,12 +70,13 @@ namespace wwy
             {
                 leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
                 leftHandDamageCollider.characterManager = GetComponentInParent<CharacterManager>();
+                enemyEffectsManager.leftWeaponFX = leftHandSlot.currentWeaponModel.GetComponent<WeaponFX>();
             }
             else
             {
                 rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
                 rightHandDamageCollider.characterManager = GetComponentInParent<CharacterManager>();
-
+                enemyEffectsManager.rightWeaponFX = rightHandSlot.currentWeaponModel.GetComponent<WeaponFX>();
             }
         }
 
@@ -112,12 +109,12 @@ namespace wwy
         #region Handle Weapon's Poise Bonus
         public void GrantWeaponAttackingPoiseBonus()
         {
-            enemyStats.totalPoiseDefense += enemyStats.offensivePoiseBonus;
+            enemyStatsManager.totalPoiseDefense += enemyStatsManager.offensivePoiseBonus;
         }
 
         public void ResetWeaponAttackingPoiseBonus()
         {
-            enemyStats.totalPoiseDefense = enemyStats.armorPoiseBonus;
+            enemyStatsManager.totalPoiseDefense = enemyStatsManager.armorPoiseBonus;
         }
         #endregion
     }

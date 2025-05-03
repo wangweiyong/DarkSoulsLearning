@@ -9,7 +9,7 @@ namespace wwy
         public PursueTargetState pursueTargetState;
         public LayerMask detectionLayers;
 
-        public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
+        public override State Tick(EnemyManager enemyManager, EnemyStatsManager enemyStats, EnemyAnimatorManager enemyAnimatorManager)
         {
             // look for a potential target
             //switch to the pursue target state if target is found
@@ -20,7 +20,7 @@ namespace wwy
 
             for (int i = 0; i < colliders.Length; ++i)
             {
-                CharacterStats characterStats = colliders[i].transform.GetComponent<CharacterStats>();
+                CharacterStatsManager characterStats = colliders[i].transform.GetComponent<CharacterStatsManager>();
                 if (characterStats != null)
                 {
                     //CHECK FOR TEAM ID

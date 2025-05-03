@@ -9,7 +9,7 @@ namespace wwy
         //handle switch attack patterns
         public string bossName;
         UIBossHealthBar bossHealthBar;
-        EnemyStats enemyStats;
+        EnemyStatsManager enemyStats;
         EnemyAnimatorManager enemyAnimatorManager;
         BossCombatStanceState bossCombatStanceState;
 
@@ -18,7 +18,7 @@ namespace wwy
         private void Awake()
         {
             bossHealthBar = FindObjectOfType<UIBossHealthBar>();
-            enemyStats = GetComponent<EnemyStats>();
+            enemyStats = GetComponent<EnemyStatsManager>();
             enemyAnimatorManager = GetComponentInChildren<EnemyAnimatorManager>();
             bossCombatStanceState = GetComponentInChildren<BossCombatStanceState>();
         }
@@ -43,8 +43,8 @@ namespace wwy
         {
             //play an animation / an event that trigget partical fx
             //switch attack actions
-            enemyAnimatorManager.anim.SetBool("isInvulnerable", true);
-            enemyAnimatorManager.anim.SetBool("isPhaseShifting", true);
+            enemyAnimatorManager.animator.SetBool("isInvulnerable", true);
+            enemyAnimatorManager.animator.SetBool("isPhaseShifting", true);
             enemyAnimatorManager.PlayTargetAnimation("Phase Shift", true);
             bossCombatStanceState.hasPhaseShifted = true;
         }
