@@ -16,24 +16,15 @@ MonoBehaviour:
   itemName: Wand
   modelPrefab: {fileID: 1927247168838044, guid: a2986e1a87665354780d3f37b3cf62ed, type: 3}
   isUnarmed: 0
-  right_hand_idle: 
-  left_hand_idle: 
-  th_idle: 
-  OH_Light_Attack_1: 
-  OH_Light_Attack_2: 
-  OH_Light_Attack_3: 
-  OH_Light_Attack_4: 
-  OH_Heavy_Attack_1: 
-  OH_Heavy_Attack_2: 
-  OH_Heavy_Attack_3: 
-  OH_Heavy_Attack_4: 
-  TH_Light_Attack_1: 
-  TH_Light_Attack_2: 
-  TH_Heavy_Attack_1: 
+  weaponController: {fileID: 0}
+  offHandIdleAnimation: Left Arm Idle_01
+  physicalDamage: 25
+  fireDamage: 25
+  criticalDamageMultiplier: 4
+  poiseBreak: 0
+  offensivePoiseBonus: 0
+  physicalDamageAbsorption: 0
+  weaponType: 2
   baseStamina: 0
   lightAttackMultiplier: 0
   heavyAttackMultiplier: 0
-  isSpellCaster: 0
-  isFaithCaster: 1
-  isPyroCaster: 0
-  isMeleeWeapon: 0

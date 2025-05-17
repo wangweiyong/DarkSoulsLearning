@@ -12,7 +12,7 @@ namespace wwy
             PlayerStatsManager playerStats=other.GetComponent<PlayerStatsManager>();
             if(playerStats != null )
             {
-                playerStats.TakeDamage(damage);
+                playerStats.TakeDamage(damage, 0);
             }
         }
     }

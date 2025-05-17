@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baedd0b08f137404daf947730017d9cc, type: 3}
+  m_Name: Boss Sword
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: cb159ef9bd2a71b42ba63b912a816362, type: 3}
+  itemName: Sword
+  modelPrefab: {fileID: 940994132575705378, guid: 9b2b116731d4dcd4b8790b2b00721814, type: 3}
+  isUnarmed: 0
+  weaponController: {fileID: 22100000, guid: 3f2c223f06cf0264d806f7b67f209df0, type: 2}
+  offHandIdleAnimation: Left Arm Idle_01
+  physicalDamage: 25
+  fireDamage: 25
+  criticalDamageMultiplier: 4
+  poiseBreak: 0
+  offensivePoiseBonus: 0
+  physicalDamageAbsorption: 0
+  weaponType: 4
+  baseStamina: 20
+  lightAttackMultiplier: 1
+  heavyAttackMultiplier: 2

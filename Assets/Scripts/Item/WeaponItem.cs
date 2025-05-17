@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace wwy
@@ -10,9 +8,13 @@ namespace wwy
         public GameObject modelPrefab;
         public bool isUnarmed;
 
+        [Header("Animator Replacer")]
+        public AnimatorOverrideController weaponController;
+        public string offHandIdleAnimation = "Left Arm Idle_01";
 
         [Header("Damage")]
-        public int baseDamage = 25;
+        public int physicalDamage = 25;
+        public int fireDamage = 25;
         public int criticalDamageMultiplier = 4;
 
         [Header("Poise")]
@@ -22,40 +24,12 @@ namespace wwy
         [Header("Absorption")]
         public float physicalDamageAbsorption;
 
-        [Header("Idle Animations")]
-        public string right_hand_idle;
-        public string left_hand_idle;
-        public string th_idle;
-
-
-        [Header("One Handed Attack Animations")]
-        public string OH_Light_Attack_1;
-        public string OH_Light_Attack_2;
-        public string OH_Light_Attack_3;
-        public string OH_Light_Attack_4;
-        public string OH_Heavy_Attack_1;
-        public string OH_Heavy_Attack_2;
-        public string OH_Heavy_Attack_3;
-        public string OH_Heavy_Attack_4;
-
-        [Header("Two Handed Attack Animations")]
-        public string TH_Light_Attack_1;
-        public string TH_Light_Attack_2;
-        public string TH_Heavy_Attack_1;
+        [Header("Weapon Type")]
+        public WeaponType weaponType;
 
         [Header("Weapon Stamina")]
         public float baseStamina;
         public float lightAttackMultiplier;
         public float heavyAttackMultiplier;
-
-        [Header("Weapon Art")]
-        public string weapon_art;
-
-        [Header("Weapon Type")]
-        public bool isSpellCaster;
-        public bool isFaithCaster;
-        public bool isPyroCaster;
-        public bool isMeleeWeapon;
-        public bool isShield;
     }
 }

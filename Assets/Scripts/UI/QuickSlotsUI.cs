@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ namespace wwy
 {
     public class QuickSlotsUI : MonoBehaviour
     {
+        public Image currentSpellIcon;
+        public Image currentConsumableIcon;
         public Image leftWeaponIcon;
         public Image rightWeaponIcon;
 
@@ -37,6 +40,32 @@ namespace wwy
                     leftWeaponIcon.sprite = null;
                     leftWeaponIcon.enabled = false;
                 }
+            }
+        }
+        public void UpdateCurrentSpellIcon(SpellItem spell)
+        {
+            if(spell.itemIcon !=null)
+            {
+                currentSpellIcon.sprite = spell.itemIcon;
+                currentSpellIcon.enabled = true;
+            }
+            else
+            {
+                currentSpellIcon.sprite = null;
+                currentSpellIcon.enabled = false;
+            }
+        }
+        public void UpdateCurrentConsumableIcon(ConsumableItem consumableItem)
+        {
+            if (consumableItem.itemIcon != null)
+            {
+                currentConsumableIcon.sprite = consumableItem.itemIcon;
+                currentConsumableIcon.enabled = true;
+            }
+            else
+            {
+                currentConsumableIcon.sprite = null;
+                currentConsumableIcon.enabled = false;
             }
         }
     }

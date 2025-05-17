@@ -21,7 +21,6 @@ namespace wwy
         private void Awake()
         {
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
-            cameraHandler = CameraHandler.singleton;
             inputHandler = GetComponent<InputHandler>();
             animator = GetComponentInChildren<Animator>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
@@ -30,7 +29,11 @@ namespace wwy
             playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
             playerEffectsManager = GetComponent<PlayerEffectsManager>();
         }
+        private void Start()
+        {
+            cameraHandler = CameraHandler.singleton;
 
+        }
         private void Update()
         {
             float delta = Time.deltaTime;
@@ -39,6 +42,7 @@ namespace wwy
             isJumping = animator.GetBool("isJumping");
             animator.SetBool("isInAir", isInAir);
             animator.SetBool("isBlocking", isBlocking);
+            animator.SetBool("isTwoHandingWeaon", isTwoHandingWeapon);
             isUsingLeftHand = animator.GetBool("isUsingLeftHand");
             isUsingRightHand = animator.GetBool("isUsingRightHand");
             isInvulnerable = animator.GetBool("isInvulnerable");

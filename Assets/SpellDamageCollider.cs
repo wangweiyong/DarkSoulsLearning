@@ -34,7 +34,7 @@ namespace wwy
             {
                 spellTarget = other.transform.GetComponent<CharacterStatsManager>();
 
-                if(spellTarget != null)
+                if(spellTarget != null && teamIDNumber != spellTarget.teamIDNumber)
                 {
                     EnemyStatsManager enemyStats = spellTarget as EnemyStatsManager;
                     if(enemyStats != null)
@@ -43,12 +43,11 @@ namespace wwy
                         enemyStats.totalPoiseDefense = enemyStats.totalPoiseDefense - poiseBreak;
                         if (enemyStats.totalPoiseDefense > poiseBreak)
                         {
-                            enemyStats.TakeDamageNoAnimation(currentWeaponDamage);
-                            Debug.Log("Enemy poise is current" + enemyStats.totalPoiseDefense);
+                            enemyStats.TakeDamageNoAnimation(0, fireDamage);
                         }
                         else
                         {
-                            enemyStats.TakeDamage(currentWeaponDamage);
+                            enemyStats.TakeDamage(0, fireDamage);
                         }
                     }
                 }

@@ -1,20 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace wwy
 {
-    public class AnimatorManager : MonoBehaviour
+    public class CharacterAnimatorManager : MonoBehaviour
     {
         public Animator animator;
         protected CharacterManager characterManager;
         protected CharacterStatsManager characterStatsManager;
         public bool canRotate;
 
+        protected RigBuilder rigBuilder;
+        public TwoBoneIKConstraint leftHandConstraint;
+        public TwoBoneIKConstraint rightHandConstraint;
+
         protected virtual void Awake()
         {
             characterManager = GetComponent<CharacterManager>();
             characterStatsManager = GetComponent<CharacterStatsManager>();
+            rigBuilder = GetComponent<RigBuilder>();
         }
         public void PlayTargetAnimation(string targetAnim, bool isInteracting, bool canRotate = false)
         {
@@ -33,7 +39,7 @@ namespace wwy
         }
         public virtual void TakeCriticalDamage()
         {
-            characterStatsManager.TakeDamageNoAnimation(characterManager.pendingCriticalDamage);
+            characterStatsManager.TakeDamageNoAnimation(characterManager.pendingCriticalDamage, 0);
             characterManager.pendingCriticalDamage = 0;
         }
 
@@ -83,6 +89,43 @@ namespace wwy
         public virtual void DisableIsParring()
         {
             characterManager.isParrying = false;
+        }
+        
+        public virtual void SetHandIKForWeapon(RightHandIKTarget rightHandTarget, LeftHandIKTarget leftHandTarget, bool isTwonHandingWeapon)
+        {
+            //check if we are two handing our weapon
+            //if we are, apply handl ik if needed
+            //assign hand ik to targets
+            //if not disable hand ik for now
+            if (isTwonHandingWeapon)
+            {
+                rightHandConstraint.data.target = rightHandTarget.transform;
+                rightHandConstraint.data.targetPositionWeight = 1;
+                rightHandConstraint.data.targetRotationWeight = 1;
+
+                leftHandConstraint.data.target = leftHandTarget.transform;
+                leftHandConstraint.data.targetPositionWeight = 1;
+                leftHandConstraint.data.targetRotationWeight = 1;
+            }
+            else
+            {
+                rightHandConstraint.data.target = null;
+                leftHandConstraint.data.target = null;
+            }
+
+            rigBuilder.Build();
+        }
+
+        public virtual void EraseHandIKForWeapon()
+        {
+            //reset all hand ik weights to 0
+            rightHandConstraint.data.target = null;
+            rightHandConstraint.data.targetPositionWeight = 0;
+            rightHandConstraint.data.targetRotationWeight = 0;
+
+            leftHandConstraint.data.target = null;
+            leftHandConstraint.data.targetPositionWeight = 0;
+            leftHandConstraint.data.targetRotationWeight = 0;
         }
     }
 }

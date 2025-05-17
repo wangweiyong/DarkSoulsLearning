@@ -54,6 +54,8 @@ namespace wwy
 
         private void AttackTarget(EnemyAnimatorManager enemyAnimatorManager, EnemyManager enemyManager)
         {
+            enemyAnimatorManager.animator.SetBool("isUsingRightHand", currentAttack.isRightHandAction);
+            enemyAnimatorManager.animator.SetBool("isUsingLeftHand", !currentAttack.isRightHandAction);
             enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
             enemyAnimatorManager.PlayWeaponTrailFX();
             enemyManager.currentRecoveryTime = currentAttack.recoveryTime;
@@ -61,6 +63,8 @@ namespace wwy
         }
         private void AttackTargetWithCombo(EnemyAnimatorManager enemyAnimatorManager, EnemyManager enemyManager)
         {
+            enemyAnimatorManager.animator.SetBool("isUsingRightHand", currentAttack.isRightHandAction);
+            enemyAnimatorManager.animator.SetBool("isUsingLeftHand", !currentAttack.isRightHandAction);
             willDoComboNextAttack = false;
             enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
             enemyAnimatorManager.PlayWeaponTrailFX();

@@ -32,10 +32,10 @@ namespace wwy
             return maxHealth;
         }
 
-        public override void TakeDamageNoAnimation(int damage)
+        public override void TakeDamageNoAnimation(int physicalDamage, int fireDamage)
         {
             if (isDead) return;
-            base.TakeDamageNoAnimation(damage);
+            base.TakeDamageNoAnimation(physicalDamage, fireDamage);
             if (!isBoss)
             {
                 enemyHealthBar.SetHealth(currentHealth);
@@ -45,9 +45,9 @@ namespace wwy
                 enemyBossManager.UpdateBossHealthBar(currentHealth, maxHealth);
             }
         }
-        public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
+        public override void TakeDamage(int physicalDamage, int fireDamage, string damageAnimation = "Damage_01")
         {
-            base.TakeDamage(damage, damageAnimation);
+            base.TakeDamage(physicalDamage, fireDamage, damageAnimation);
 
             if (!isBoss)
             {

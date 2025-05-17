@@ -319,13 +319,14 @@ namespace wwy
                 {
                     //Enable two handing
                     weaponSlotManager.LoadWeaponOnSlot(playerInventoryManager.rightWeapon, false);
+                    playerManager.isTwoHandingWeapon = true;
                 }
                 else
                 {
                     //disable two handing
                     weaponSlotManager.LoadWeaponOnSlot(playerInventoryManager.rightWeapon, false);
                     weaponSlotManager.LoadWeaponOnSlot(playerInventoryManager.leftWeapon, true);
-
+                    playerManager.isTwoHandingWeapon = false;
                 }
             }
         }

@@ -5,6 +5,11 @@ using wwy;
 
 public class ResetAnimatorBool : StateMachineBehaviour
 {
+    public string isUsingRightHand = "isUsingRightHand";
+    public bool isUsingRightHandStatus = false;
+    public string isUsingLeftHand = "isUsingLeftHand";
+    public bool isUsingLeftHandStatus = false;
+
     public string isInvulnerable = "isInvulnerable";
     public bool isInvulnerableStatus = false;
 
@@ -27,6 +32,8 @@ public class ResetAnimatorBool : StateMachineBehaviour
         animator.SetBool(isFiringSpellBool, isFiringSpellStatus);
         animator.SetBool(canRotateBool, canRotateStatus);
         animator.SetBool(isRotatingWithRootMotion, isRotatingWithRootMotionStatus);
+        animator.SetBool(isUsingLeftHand, isUsingLeftHandStatus);
+        animator.SetBool(isUsingRightHand, isUsingRightHandStatus);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

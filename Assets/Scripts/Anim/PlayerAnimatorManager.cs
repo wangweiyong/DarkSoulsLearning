@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace wwy
 {
-    public class PlayerAnimatorManager : AnimatorManager
+    public class PlayerAnimatorManager : CharacterAnimatorManager
     {
         private PlayerLocomotionManager playerLocomotionManager;
         int vertical;

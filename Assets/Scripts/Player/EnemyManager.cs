@@ -56,6 +56,10 @@ namespace wwy
         {
             HandleRecoveryTime();
             HandleStateMachine();
+
+            isUsingLeftHand = enemyAnimatorManager.animator.GetBool("isUsingLeftHand");
+            isUsingRightHand = enemyAnimatorManager.animator.GetBool("isUsingRightHand");
+
             isInteracting = enemyAnimatorManager.animator.GetBool("isInteracting");
             isRotateingWithRootMotion = enemyAnimatorManager.animator.GetBool("isRotatingWithRootMotion");
             isPhaseShifting = enemyAnimatorManager.animator.GetBool("isPhaseShifting");

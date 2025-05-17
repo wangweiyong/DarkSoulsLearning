@@ -6,6 +6,10 @@ using UnityEngine;
 namespace wwy {
     public class CharacterStatsManager : MonoBehaviour
     {
+        [Header("Team I.D")]
+        public int teamIDNumber = 0;
+
+
         public int healthLevel = 10;
         public int maxHealth;
         public int currentHealth;
@@ -38,18 +42,25 @@ namespace wwy {
         //Lighting Absorption
         //Magic Absorption
         //Dark Absorption
+        public float fireDamageAbsorptionHead;
+        public float fireDamageAbsorptionBody;
+        public float fireDamageAbsorptionLegs;
+        public float fireDamageAbsorptionHands;
+
 
         public bool isDead;
 
-        public virtual void TakeDamage(int physicalDamage, string damageAnimation = "Damage_01")
+        public virtual void TakeDamage(int physicalDamage, int fireDamage, string damageAnimation = "Damage_01")
         {
             if (isDead) return;
             float totalDamgePhysicalDamageAbsorption = 1 - (1 - physicalDamageAbsorptionHead / 100) * (1 - physicalDamageAbsorptionBody / 100)
                 * (1 - physicalDamageAbsorptionLegs / 100) * (1 - physicalDamageAbsorptionHands / 100);
-            Debug.Log("totalDamgePhysicalDamageAbsorption" + totalDamgePhysicalDamageAbsorption);
+
+            float totalDamgeFireDamageAbsorption = 1 - (1 - fireDamageAbsorptionHead / 100) * (1 - fireDamageAbsorptionBody / 100)
+    * (1 - fireDamageAbsorptionLegs / 100) * (1 - fireDamageAbsorptionHands / 100);
             physicalDamage = Mathf.RoundToInt(physicalDamage - physicalDamage * totalDamgePhysicalDamageAbsorption);
-            int finalDamage = physicalDamage; //+ fireDamage + lightingDamage + darkDamage
-            Debug.Log("finalDamage" + finalDamage);
+            fireDamage = Mathf.RoundToInt(fireDamage - fireDamage * totalDamgeFireDamageAbsorption);
+            int finalDamage = physicalDamage + fireDamage; //+ lightingDamage + darkDamage
             currentHealth = currentHealth - finalDamage;
 
             if (currentHealth <= 0)
@@ -59,9 +70,18 @@ namespace wwy {
             }
         }
 
-        public virtual void TakeDamageNoAnimation(int damage)
+        public virtual void TakeDamageNoAnimation(int physicalDamage, int fireDamage)
         {
-            currentHealth = currentHealth - damage;
+            if (isDead) return;
+            float totalDamgePhysicalDamageAbsorption = 1 - (1 - physicalDamageAbsorptionHead / 100) * (1 - physicalDamageAbsorptionBody / 100)
+                * (1 - physicalDamageAbsorptionLegs / 100) * (1 - physicalDamageAbsorptionHands / 100);
+
+            float totalDamgeFireDamageAbsorption = 1 - (1 - fireDamageAbsorptionHead / 100) * (1 - fireDamageAbsorptionBody / 100)
+    * (1 - fireDamageAbsorptionLegs / 100) * (1 - fireDamageAbsorptionHands / 100);
+            physicalDamage = Mathf.RoundToInt(physicalDamage - physicalDamage * totalDamgePhysicalDamageAbsorption);
+            fireDamage = Mathf.RoundToInt(fireDamage - fireDamage * totalDamgeFireDamageAbsorption);
+            int finalDamage = physicalDamage + fireDamage; //+ lightingDamage + darkDamage
+            currentHealth = currentHealth - finalDamage;
             if (currentHealth <= 0)
             {
                 currentHealth = 0;

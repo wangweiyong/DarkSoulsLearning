@@ -12,7 +12,7 @@ namespace wwy
 
         PlayerAnimatorManager playerAnimationManager;
 
-        HealthBar healthBar;
+        public HealthBar healthBar;
         StaminaBar staminaBar;
         FocusPointBar focusPointBar;
         // Start is called before the first frame update
@@ -67,7 +67,7 @@ namespace wwy
             return maxFocusPoints;
         }
 
-        public override void TakeDamageNoAnimation(int damage)
+        public override void TakeDamageNoAnimation(int physicalDamage, int fireDamage)
         {
 
             if (playerManager.isInvulnerable) return;
@@ -75,15 +75,15 @@ namespace wwy
             {
                 return;
             }
-            base.TakeDamageNoAnimation(damage);
+            base.TakeDamageNoAnimation(physicalDamage, fireDamage);
             healthBar.SetCurrentHealth(currentHealth);
 
         }
-        public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
+        public override void TakeDamage(int physicalDamage, int fireDamage,string damageAnimation = "Damage_01")
         {
             if (playerManager.isInvulnerable) return;
             
-            base.TakeDamage(damage, damageAnimation);
+            base.TakeDamage(physicalDamage, fireDamage, damageAnimation);
 
             healthBar.SetCurrentHealth(currentHealth);
 

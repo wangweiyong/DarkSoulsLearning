@@ -36,6 +36,8 @@ namespace wwy
         {
             base.SuccessfullyCastSpell(animatorHandler, playerStats, cameraHandler, weaponSlotManager);
             GameObject instantiateSpellFX = Instantiate(spellCastFX, weaponSlotManager.rightHandSlot.transform.position, cameraHandler.cameraPivotTransform.rotation);
+            SpellDamageCollider spellDamageCollider = instantiateSpellFX.GetComponent<SpellDamageCollider>();
+            spellDamageCollider.teamIDNumber = playerStats.teamIDNumber;
             rigidBody = instantiateSpellFX.GetComponent<Rigidbody>();
             //spellDamageCollider = instantiateSpellFX.GetComponent<SpellDamageCollider>();
             

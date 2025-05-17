@@ -13,10 +13,13 @@ namespace wwy
         public WeaponFX leftWeaponFX;
 
         [Header("Poison")]
+        public GameObject defaultPoisonParticleFX;
+        public GameObject currentPoisonParticleFX;
+        public Transform buildUpTransform;
         public bool isPoisoned;
         public float poisonBuildUp = 0; //build up over time that poisons the player after reaching 100
         public float poisonAmount = 100;//the amount of poison the player has to process before becoming unpoisoned
-        public float defaultPoisonAmount;//the default amount of poison a player has to process once they become poisoned
+        public float defaultPoisonAmount = 100;//the default amount of poison a player has to process once they become poisoned
         public int poisonDamage = 1;
         public float poisonTimer = 2;
         float timer;
@@ -73,6 +76,17 @@ namespace wwy
             {
                 isPoisoned = true;
                 poisonBuildUp = 0;
+                if (defaultPoisonParticleFX != null)
+                {
+                    if (buildUpTransform != null)
+                    {
+                        currentPoisonParticleFX = Instantiate(defaultPoisonParticleFX, buildUpTransform.transform);
+                    }
+                    else
+                    {
+                        currentPoisonParticleFX = Instantiate(defaultPoisonParticleFX, characterStatsManager.transform);
+                    }
+                }
             }
         }
     
@@ -95,6 +109,7 @@ namespace wwy
                 {
                     isPoisoned = false;
                     poisonAmount = defaultPoisonAmount;
+                    Destroy(currentPoisonParticleFX);
                 }
             }
         }

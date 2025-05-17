@@ -9,6 +9,7 @@ namespace wwy
     {
         public PlayerInventoryManager playerInventory;
         public EquipmentWindowUI equipmentWindowUI;
+        private QuickSlotsUI quickSlotUI;
         [Header("UI Windows")]
         public GameObject hudWindow;
         public GameObject selectWindow;
@@ -25,12 +26,17 @@ namespace wwy
         public Transform weaponInventorySlotsParent;
         public GameObject weaponInventorySlotPrefab;
         WeaponInventorySlot[] weaponInventorySlots; // Éú³ÉµÄslots
-
+        private void Awake()
+        {
+            quickSlotUI = GetComponentInChildren<QuickSlotsUI>();
+        }
 
         private void Start()
         {
             weaponInventorySlots = weaponInventorySlotsParent.GetComponentsInChildren<WeaponInventorySlot>();
             equipmentWindowUI.LoadWeaponsOnEquipmentScreen(playerInventory);
+            quickSlotUI.UpdateCurrentConsumableIcon(playerInventory.currentConsumableItem);
+            quickSlotUI.UpdateCurrentSpellIcon(playerInventory.currentSpell);
         }
         public void UpdateUI()
         {
