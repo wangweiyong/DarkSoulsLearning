@@ -47,7 +47,7 @@ namespace wwy
                         }
                         else
                         {
-                            enemyStats.TakeDamage(0, fireDamage);
+                            enemyStats.TakeDamage(0, fireDamage, currentDamageAnimation);
                         }
                     }
                 }

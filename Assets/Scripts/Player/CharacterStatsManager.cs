@@ -54,7 +54,7 @@ namespace wwy {
         {
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         }
-        public virtual void TakeDamage(int physicalDamage, int fireDamage, string damageAnimation = "Damage_01")
+        public virtual void TakeDamage(int physicalDamage, int fireDamage, string damageAnimation)
         {
             if (isDead) return;
             //characterAnimatorManager.EraseHandIKForWeapon();

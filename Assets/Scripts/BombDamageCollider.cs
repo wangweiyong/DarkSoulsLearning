@@ -37,7 +37,7 @@ namespace wwy
                     //check for friendly fire
                     if(character.teamIDNumber != teamIDNumber)
                     {
-                        character.TakeDamage(0, explosionDamage);
+                        character.TakeDamage(0, explosionDamage, currentDamageAnimation);
                     }
                 }
 
@@ -58,7 +58,7 @@ namespace wwy
                     //deal fire damage
                     if(character.teamIDNumber != teamIDNumber)
                     {
-                        character.TakeDamage(0, explosionSplashDamage);
+                        character.TakeDamage(0, explosionSplashDamage, currentDamageAnimation);
                     }
                 }
             }

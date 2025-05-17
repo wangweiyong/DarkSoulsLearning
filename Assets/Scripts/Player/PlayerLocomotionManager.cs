@@ -91,7 +91,7 @@ namespace wwy
                     playerAnimationManager.PlayTargetAnimation("Jump", true);
                     playerAnimationManager.animator.SetBool("isJumping", true);
 
-                    playerAnimationManager.EraseHandIKForWeapon();
+                    //playerAnimationManager.EraseHandIKForWeapon();
                     moveDirection.y = 0;
 
                     Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
@@ -257,7 +257,7 @@ namespace wwy
                 if(inputHandler.moveAmount > 0)
                 {
                     playerAnimationManager.PlayTargetAnimation("Rolling", true);
-                    playerAnimationManager.EraseHandIKForWeapon();
+                    //playerAnimationManager.EraseHandIKForWeapon();
                     moveDirection.y = 0;
                     Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = rollRotation;
@@ -266,7 +266,7 @@ namespace wwy
                 else
                 {
                     playerAnimationManager.PlayTargetAnimation("Backstep", true);
-                    playerAnimationManager.EraseHandIKForWeapon();
+                    //playerAnimationManager.EraseHandIKForWeapon();
                     playerStatsManager.TakeStaminaDamage(backstepStaminaCost);
                 }
             }

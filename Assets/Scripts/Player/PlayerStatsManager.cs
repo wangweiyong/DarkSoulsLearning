@@ -80,7 +80,7 @@ namespace wwy
             healthBar.SetCurrentHealth(currentHealth);
 
         }
-        public override void TakeDamage(int physicalDamage, int fireDamage,string damageAnimation = "Damage_01")
+        public override void TakeDamage(int physicalDamage, int fireDamage,string damageAnimation)
         {
             if (playerManager.isInvulnerable) return;
             

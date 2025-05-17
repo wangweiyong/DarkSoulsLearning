@@ -126,7 +126,7 @@ namespace wwy
             leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
             leftHandDamageCollider.physicalDamage = characterInventoryManager.leftWeapon.physicalDamage;
             leftHandDamageCollider.fireDamage = characterInventoryManager.leftWeapon.fireDamage;
-            leftHandDamageCollider.characterManager = GetComponentInParent<CharacterManager>();
+            leftHandDamageCollider.characterManager = characterManager;
             leftHandDamageCollider.poiseBreak = characterInventoryManager.leftWeapon.poiseBreak;
             leftHandDamageCollider.teamIDNumber = characterStatsManager.teamIDNumber;
             characterEffectsManager.leftWeaponFX = leftHandSlot.currentWeaponModel.GetComponentInChildren<WeaponFX>();
@@ -136,7 +136,7 @@ namespace wwy
             rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
             rightHandDamageCollider.physicalDamage = characterInventoryManager.rightWeapon.physicalDamage;
             rightHandDamageCollider.fireDamage = characterInventoryManager.rightWeapon.fireDamage;
-            rightHandDamageCollider.characterManager = GetComponentInParent<CharacterManager>();
+            rightHandDamageCollider.characterManager = characterManager;
             rightHandDamageCollider.poiseBreak = characterInventoryManager.rightWeapon.poiseBreak;
             rightHandDamageCollider.teamIDNumber = characterStatsManager.teamIDNumber;
             characterEffectsManager.rightWeaponFX = rightHandSlot.currentWeaponModel.GetComponentInChildren<WeaponFX>();
