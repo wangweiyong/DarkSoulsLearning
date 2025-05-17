@@ -125,6 +125,7 @@ namespace wwy
             if (playerStatsManager.isDead) return;
             HandleMoveInput(delta);
             HandleRollInput(delta);
+            HandleLBInput();
             HandleCombatInput(delta);
             HandleQuickSlotsInput(delta);
             HandleInteractingButtonInput();
@@ -138,13 +139,27 @@ namespace wwy
 
         private void HandleMoveInput(float delta)
         {
-            horizontal = movementInput.x;
-            vertical = movementInput.y;
-            moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
-            //float inputMagnitude = Mathf.Clamp01(Mathf.Sqrt(horizontal * horizontal + vertical * vertical));
-            //Debug.Log($"{moveAmount}, {inputMagnitude}");
-            mouseX = cameraInput.x;
-            mouseY = cameraInput.y;
+            if (playerManager.isAiming)
+            {
+                horizontal = movementInput.x;
+                vertical = movementInput.y;
+                moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical) / 2);
+                //float inputMagnitude = Mathf.Clamp01(Mathf.Sqrt(horizontal * horizontal + vertical * vertical));
+                //Debug.Log($"{moveAmount}, {inputMagnitude}");
+                mouseX = cameraInput.x;
+                mouseY = cameraInput.y;
+            }
+            else
+            {
+                horizontal = movementInput.x;
+                vertical = movementInput.y;
+                moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
+                //float inputMagnitude = Mathf.Clamp01(Mathf.Sqrt(horizontal * horizontal + vertical * vertical));
+                //Debug.Log($"{moveAmount}, {inputMagnitude}");
+                mouseX = cameraInput.x;
+                mouseY = cameraInput.y;
+            }
+
         }
         private void HandleRollInput(float delta)
         {
@@ -196,19 +211,7 @@ namespace wwy
             {
                 playerCombatManager.HandleHeavyAttack(playerInventoryManager.rightWeapon);
             }
-            if (lb_Input)
-            {
-                //do a block
-                playerCombatManager.HandleLBAction();
-            }
-            else
-            {
-                playerManager.isBlocking = false;
-                if (blockingCollider.blockingCollider.enabled)
-                {
-                    blockingCollider.DisableBlockingCollider();
-                }
-            }
+
             if (lt_Input)
             {
                 //if two handing handle weapon art
@@ -221,6 +224,32 @@ namespace wwy
                 else
                 {
                     playerCombatManager.HandleLTAction();
+                }
+            }
+        }
+        private void HandleLBInput()
+        {
+            if(playerManager.isInAir || playerManager.isSprinting || playerManager.isFiringSpell)
+            {
+                lb_Input = false;
+                return;
+            }
+            if (lb_Input)
+            {
+                //do a block
+                playerCombatManager.HandleLBAction();
+            }
+            else if(lb_Input == false)
+            {
+                playerManager.isBlocking = false;
+                if (blockingCollider.blockingCollider.enabled)
+                {
+                    blockingCollider.DisableBlockingCollider();
+                }
+
+                if (playerManager.isAiming)
+                {
+                    playerAnimatorManager.animator.SetBool("isAiming", false);
                 }
             }
         }

@@ -9,6 +9,7 @@ namespace wwy
         Unarmed,
         StraightSword,
         Shield,
+        Bow
     }
     public class Enums : MonoBehaviour
     {

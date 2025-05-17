@@ -24,6 +24,9 @@ public class ResetAnimatorBool : StateMachineBehaviour
 
     public string isRotatingWithRootMotion = "isRotatingWithRootMotion";
     public bool isRotatingWithRootMotionStatus = false;
+
+    public string isMirroredBool = "isMirrored";
+    public bool isMirroredStatus = false;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -34,6 +37,7 @@ public class ResetAnimatorBool : StateMachineBehaviour
         animator.SetBool(isRotatingWithRootMotion, isRotatingWithRootMotionStatus);
         animator.SetBool(isUsingLeftHand, isUsingLeftHandStatus);
         animator.SetBool(isUsingRightHand, isUsingRightHandStatus);
+        animator.SetBool(isMirroredBool, isMirroredStatus);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

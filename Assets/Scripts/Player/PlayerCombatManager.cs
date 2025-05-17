@@ -138,7 +138,8 @@ namespace wwy
             }
             else if (playerInventoryManager.rightWeapon.weaponType == WeaponType.SpellCaster || playerInventoryManager.rightWeapon.weaponType == WeaponType.PyromancyCaster || playerInventoryManager.rightWeapon.weaponType == WeaponType.FaithCaster)
             {
-                PerformRBMagicAction(playerInventoryManager.rightWeapon);
+                PerformMagicAction(playerInventoryManager.rightWeapon, true);
+                playerAnimatorHandler.animator.SetBool("isUsingLeftHand", true);
             }
         }
 
@@ -156,7 +157,32 @@ namespace wwy
         }
         public void HandleLBAction()
         {
-            PerformLBBlockingAction();
+            if (playerManager.isTwoHandingWeapon)
+            {
+                if(playerInventoryManager.rightWeapon.weaponType == WeaponType.Bow)
+                {
+                    //aim the bow
+                    PerformLBAimingAction();
+                }
+
+            }
+            else
+            {
+                if(playerInventoryManager.leftWeapon.weaponType == WeaponType.Shield ||
+                    playerInventoryManager.leftWeapon.weaponType == WeaponType.StraightSword)
+                {
+                    PerformLBBlockingAction();
+                }
+                else if (playerInventoryManager.leftWeapon.weaponType == WeaponType.FaithCaster ||
+   playerInventoryManager.leftWeapon.weaponType == WeaponType.PyromancyCaster)
+                {
+                    PerformMagicAction(playerInventoryManager.leftWeapon, true);
+                }
+            }
+        }
+        private void PerformLBAimingAction()
+        {
+            playerAnimatorHandler.animator.SetBool("isAiming", true);
         }
         private void PerformLTWeaponArt(bool isTwoHanding)
         {
@@ -194,7 +220,7 @@ namespace wwy
             //play FX
             playerEffectsManager.PlayWeaponFX(false);
         }
-        private void PerformRBMagicAction(WeaponItem weapon)
+        private void PerformMagicAction(WeaponItem weapon, bool isLeftHanded)
         {
             if (playerManager.isInteracting)
             {
@@ -207,7 +233,7 @@ namespace wwy
                     //check for fp
                     if(playerStatsManager.currentFocusPoints >= playerInventoryManager.currentSpell.focusPointCost)
                     {
-                        playerInventoryManager.currentSpell.AttempToCastSepll(playerAnimatorHandler, playerStatsManager, playerWeaponSlotManger);
+                        playerInventoryManager.currentSpell.AttempToCastSepll(playerAnimatorHandler, playerStatsManager, playerWeaponSlotManger, isLeftHanded);
                     }
                     else
                     {
@@ -222,7 +248,7 @@ namespace wwy
                     //check for fp
                     if (playerStatsManager.currentFocusPoints >= playerInventoryManager.currentSpell.focusPointCost)
                     {
-                        playerInventoryManager.currentSpell.AttempToCastSepll(playerAnimatorHandler, playerStatsManager, playerWeaponSlotManger);
+                        playerInventoryManager.currentSpell.AttempToCastSepll(playerAnimatorHandler, playerStatsManager, playerWeaponSlotManger,isLeftHanded);
                     }
                     else
                     {
@@ -234,7 +260,7 @@ namespace wwy
         
         private void SuccessfullyCastSpell()
         {
-            playerInventoryManager.currentSpell.SuccessfullyCastSpell(playerAnimatorHandler, playerStatsManager, cameraHandler, playerWeaponSlotManger);
+            playerInventoryManager.currentSpell.SuccessfullyCastSpell(playerAnimatorHandler, playerStatsManager, cameraHandler, playerWeaponSlotManger, playerManager.isUsingLeftHand);
             playerAnimatorHandler.animator.SetBool("isFiringSpell", true);
         }
         #endregion

@@ -45,6 +45,7 @@ namespace wwy
             isUsingRightHand = animator.GetBool("isUsingRightHand");
             isInvulnerable = animator.GetBool("isInvulnerable");
             isFiringSpell = animator.GetBool("isFiringSpell");
+            isAiming = animator.GetBool("isAiming");
             animator.SetBool("isDead", playerStatsManager.isDead);
             inputHandler.TickInput(delta);
             playerAnimatorManager.canRotate = animator.GetBool("canRotate");
