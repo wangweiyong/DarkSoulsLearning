@@ -16,6 +16,7 @@ namespace wwy
         public TwoBoneIKConstraint leftHandConstraint;
         public TwoBoneIKConstraint rightHandConstraint;
 
+        bool handIKWeightsRest = false;
         protected virtual void Awake()
         {
             characterManager = GetComponent<CharacterManager>();
@@ -115,17 +116,41 @@ namespace wwy
 
             rigBuilder.Build();
         }
+        public virtual void CheckHandIKWeight(RightHandIKTarget rightHandIK, LeftHandIKTarget leftHandIK, bool isTwoHandingWeaon)
+        {
+            if (characterManager.isInteracting) return;
+            if (handIKWeightsRest)
+            {
+                handIKWeightsRest = false;
+                if (rightHandConstraint.data.target != null)
+                {
+                    rightHandConstraint.data.target = rightHandIK.transform;
+                    rightHandConstraint.data.targetPositionWeight = 1;
+                    rightHandConstraint.data.targetRotationWeight = 1;
+                }
+                if (leftHandConstraint.data.target != null)
+                {
+                    leftHandConstraint.data.target = leftHandIK.transform;
+                    leftHandConstraint.data.targetPositionWeight = 1;
+                    leftHandConstraint.data.targetRotationWeight = 1;
+                }
+            }
+        }
 
         public virtual void EraseHandIKForWeapon()
         {
             //reset all hand ik weights to 0
-            rightHandConstraint.data.target = null;
-            rightHandConstraint.data.targetPositionWeight = 0;
-            rightHandConstraint.data.targetRotationWeight = 0;
-
-            leftHandConstraint.data.target = null;
-            leftHandConstraint.data.targetPositionWeight = 0;
-            leftHandConstraint.data.targetRotationWeight = 0;
+            handIKWeightsRest = true;
+            if(rightHandConstraint.data.target != null)
+            {
+                rightHandConstraint.data.targetPositionWeight = 0;
+                rightHandConstraint.data.targetRotationWeight = 0;
+            }
+            if(leftHandConstraint.data.target != null)
+            {
+                leftHandConstraint.data.targetPositionWeight = 0;
+                leftHandConstraint.data.targetRotationWeight = 0;
+            }
         }
     }
 }

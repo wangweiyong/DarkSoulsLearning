@@ -28,8 +28,8 @@ namespace wwy
         public WeaponItem attackingWeapon;
 
         [Header("Hand IK Target")]
-        RightHandIKTarget rightHandIKTarget;
-        LeftHandIKTarget leftHandIKTarget;
+        public RightHandIKTarget rightHandIKTarget;
+        public LeftHandIKTarget leftHandIKTarget;
 
         protected virtual void Awake()
         {

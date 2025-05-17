@@ -16,9 +16,10 @@ namespace wwy
         StaminaBar staminaBar;
         FocusPointBar focusPointBar;
         // Start is called before the first frame update
-        private void Awake()
+        protected override void Awake()
         {
-            playerManager= GetComponent<PlayerManager>();
+            base.Awake();
+            playerManager = GetComponent<PlayerManager>();
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindObjectOfType<StaminaBar>();
             focusPointBar = FindAnyObjectByType<FocusPointBar>();

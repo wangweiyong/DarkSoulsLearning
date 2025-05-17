@@ -122,6 +122,7 @@ namespace wwy
 
         public void TickInput(float delta)
         {
+            if (playerStatsManager.isDead) return;
             HandleMoveInput(delta);
             HandleRollInput(delta);
             HandleCombatInput(delta);

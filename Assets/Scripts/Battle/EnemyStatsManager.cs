@@ -12,8 +12,9 @@ namespace wwy
         public UIEnemyHealthBar enemyHealthBar;
 
         public bool isBoss;
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
             enemyBossManager = GetComponent<EnemyBossManager>();
             maxHealth = SetMaxHealthFromHealthLevel();

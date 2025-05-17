@@ -37,8 +37,9 @@ namespace wwy
         public float comboLikelyHodd = 50;
         public bool isPhaseShifting;
         public bool allowAIToPerformCombos;
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
             enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
             enemyStatsManager = GetComponent<EnemyStatsManager>();
@@ -68,8 +69,9 @@ namespace wwy
             enemyAnimatorManager.animator.SetBool("isDead", enemyStatsManager.isDead);
             canRotate = enemyAnimatorManager.animator.GetBool("canRotate");
         }
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
             enemyEffectsManager.HandleAllBuildUpEffects();
             navMeshAgent.transform.localPosition = Vector3.zero;
             navMeshAgent.transform.localRotation = Quaternion.identity;

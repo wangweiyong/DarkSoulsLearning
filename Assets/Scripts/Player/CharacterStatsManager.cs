@@ -6,6 +6,7 @@ using UnityEngine;
 namespace wwy {
     public class CharacterStatsManager : MonoBehaviour
     {
+        CharacterAnimatorManager characterAnimatorManager;
         [Header("Team I.D")]
         public int teamIDNumber = 0;
 
@@ -49,10 +50,14 @@ namespace wwy {
 
 
         public bool isDead;
-
+        protected virtual void Awake()
+        {
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        }
         public virtual void TakeDamage(int physicalDamage, int fireDamage, string damageAnimation = "Damage_01")
         {
             if (isDead) return;
+            //characterAnimatorManager.EraseHandIKForWeapon();
             float totalDamgePhysicalDamageAbsorption = 1 - (1 - physicalDamageAbsorptionHead / 100) * (1 - physicalDamageAbsorptionBody / 100)
                 * (1 - physicalDamageAbsorptionLegs / 100) * (1 - physicalDamageAbsorptionHands / 100);
 

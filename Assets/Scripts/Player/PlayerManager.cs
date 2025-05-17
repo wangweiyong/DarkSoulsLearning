@@ -15,11 +15,9 @@ namespace wwy
         PlayerAnimatorManager playerAnimatorManager;
         CameraHandler cameraHandler;
 
-
-
-
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
             inputHandler = GetComponent<InputHandler>();
             animator = GetComponentInChildren<Animator>();
@@ -58,8 +56,9 @@ namespace wwy
             CheckForInteractableObject();
         }
 
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
             float delta = Time.deltaTime;
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
             playerLocomotion.HandleMovement(delta);

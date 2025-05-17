@@ -6,6 +6,8 @@ namespace wwy
 {
     public class CharacterManager : MonoBehaviour
     {
+        CharacterAnimatorManager characterAnimatorManager;
+        CharacterWeaponSlotManager characterWeaponSlotManager;
         [Header("LockOn Transform")]
         public Transform lockOnTransform;
 
@@ -43,5 +45,16 @@ namespace wwy
         //Damage will be inflicted during an animation event
         //Used in backstab or riposte animations
         public int pendingCriticalDamage;
+
+        protected virtual void Awake()
+        {
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+            characterWeaponSlotManager = GetComponent<CharacterWeaponSlotManager>();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            characterAnimatorManager.CheckHandIKWeight(characterWeaponSlotManager.rightHandIKTarget, characterWeaponSlotManager.leftHandIKTarget, isTwoHandingWeapon);
+        }
     }
 }
