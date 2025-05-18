@@ -29,7 +29,7 @@ namespace wwy
         public bool isUsingRightHand;
         public bool isUsingLeftHand;
         public bool isTwoHandingWeapon;
-        public bool isAiming;
+        public bool isHoldingArrow;
 
         [Header("Movement Flgas")]
         public bool isRotateingWithRootMotion;

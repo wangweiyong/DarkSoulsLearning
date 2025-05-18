@@ -32,6 +32,7 @@ namespace wwy
         public bool lt_Input;
         public bool lb_Input;
         public bool critical_Attack_Input;
+        public bool hold_rb_Input;
         public bool jump_Input;
         public bool inventory_Input;
 
@@ -41,7 +42,7 @@ namespace wwy
         public bool d_Pad_Right;
         public bool right_Stick_Right_Input;
         public bool left_Stick_Left_Input;
-
+        public bool fireFlag;
 
         public float durationForRoll2Sprint = 0.3f;
 
@@ -87,6 +88,9 @@ namespace wwy
                 { cameraInput = inputActions.ReadValue<Vector2>(); };
 
                 inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+                inputActions.PlayerActions.HoldRB.performed += i => hold_rb_Input = true;
+                inputActions.PlayerActions.HoldRB.canceled += i => hold_rb_Input = false;
+                inputActions.PlayerActions.HoldRB.canceled += i => fireFlag = true;
                 inputActions.PlayerActions.RT.performed += i => rt_Input = true;
                 inputActions.PlayerActions.LT.performed += i => lt_Input = true;
                 inputActions.PlayerActions.LB.performed += i => lb_Input = true;
@@ -133,13 +137,14 @@ namespace wwy
             HandleInventoryInput();
             HandleLockOnInput();
             HandleTwoHandFlagInput();
-            HandleCriticalAttackInput();
+            //HandleCriticalAttackInput();
             HandleUseConsumableInput();
+            HandleHoldRBInput();
         }
 
         private void HandleMoveInput(float delta)
         {
-            if (playerManager.isAiming)
+            if (playerManager.isHoldingArrow)
             {
                 horizontal = movementInput.x;
                 vertical = movementInput.y;
@@ -247,9 +252,9 @@ namespace wwy
                     blockingCollider.DisableBlockingCollider();
                 }
 
-                if (playerManager.isAiming)
+                if (playerManager.isHoldingArrow)
                 {
-                    playerAnimatorManager.animator.SetBool("isAiming", false);
+                    //playerAnimatorManager.animator.SetBool("isAiming", false);
                 }
             }
         }
@@ -361,14 +366,14 @@ namespace wwy
             }
         }
     
-        private void HandleCriticalAttackInput()
+/*        private void HandleCriticalAttackInput()
         {
             if (critical_Attack_Input)
             {
                 critical_Attack_Input = false;
                 playerCombatManager.AttemptBackStabOrRiposte();
             }
-        }
+        }*/
     
         private void HandleUseConsumableInput()
         {
@@ -376,6 +381,24 @@ namespace wwy
             {
                 x_Input = false;
                 playerInventoryManager.currentConsumableItem.AttempToConsumeItem(playerAnimatorManager, weaponSlotManager, playerEffectsManager);
+            }
+        }
+        
+        private void HandleHoldRBInput()
+        {
+            if (hold_rb_Input)
+            {
+                //check if we are holding a bow
+                if(playerInventoryManager.rightWeapon.weaponType == WeaponType.Bow)
+                {
+                    //decide action
+                    playerCombatManager.HandleHoldRBAction();
+                }
+                else
+                {
+                    hold_rb_Input = false;
+                    playerCombatManager.AttemptBackStabOrRiposte();
+                }
             }
         }
     }

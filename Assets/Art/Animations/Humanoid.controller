@@ -1007,7 +1007,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isAiming
+    m_ConditionEvent: isHoldingArrow
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4089829558406239330}
@@ -1386,6 +1386,8 @@ MonoBehaviour:
   canRotateStatus: 1
   isRotatingWithRootMotion: isRotatingWithRootMotion
   isRotatingWithRootMotionStatus: 0
+  isMirroredBool: isMirrored
+  isMirroredStatus: 0
 --- !u!1102 &-2122646059380704509
 AnimatorState:
   serializedVersion: 6
@@ -1843,7 +1845,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isAiming
+  - m_Name: isHoldingArrow
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -2583,6 +2585,8 @@ MonoBehaviour:
   canRotateStatus: 1
   isRotatingWithRootMotion: isRotatingWithRootMotion
   isRotatingWithRootMotionStatus: 0
+  isMirroredBool: isMirrored
+  isMirroredStatus: 0
   isPhaseShifting: isPhaseShifting
   isPhaseShiftingStatus: 0
 --- !u!1101 &4943629666666009720
@@ -3227,7 +3231,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isAiming
+    m_ConditionEvent: isHoldingArrow
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1672030780900897312}
@@ -3324,3 +3328,5 @@ MonoBehaviour:
   canRotateStatus: 1
   isRotatingWithRootMotion: isRotatingWithRootMotion
   isRotatingWithRootMotionStatus: 0
+  isMirroredBool: isMirrored
+  isMirroredStatus: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace wwy
@@ -182,7 +183,51 @@ namespace wwy
         }
         private void PerformLBAimingAction()
         {
-            playerAnimatorHandler.animator.SetBool("isAiming", true);
+            //playerAnimatorHandler.animator.SetBool("isAiming", true);
+        }
+        public void HandleHoldRBAction()
+        {
+            if (playerManager.isTwoHandingWeapon)
+            {
+                //do a ranged attack(hold the arrow)
+                PerformRBRangedAction();
+            }
+            else
+            {
+                //do a melee attack(bow bash)
+            }
+        }
+        private void DrawArrowAction()
+        {
+            playerAnimatorHandler.animator.SetBool("isHoldingArrow", true);
+            playerAnimatorHandler.PlayTargetAnimation("Bow_TH_Draw_01", true);
+            GameObject loadedArrow = Instantiate(playerInventoryManager.currentAmmo.loadedItemModel, playerWeaponSlotManger.leftHandSlot.transform);
+            //animate the bow 
+            playerEffectsManager.currentRangedFX = loadedArrow;
+        }
+        private void PerformRBRangedAction()
+        {
+            if (playerStatsManager.currentStamina <= 0) return;
+
+            //playerAnimatorHandler.EraseHandIKForWeapon();
+            playerAnimatorHandler.animator.SetBool("isUsingRightHand", true);
+
+            if (!playerManager.isHoldingArrow)
+            {
+                //if we have ammo
+                //drain the arrow
+                //fire the arrow when we release RB
+                //otherwise play an animation to indicate we are out of ammo
+                if(playerInventoryManager.currentAmmo != null)
+                {
+                    //draw the arrow
+                    DrawArrowAction();
+                }
+                else
+                {
+                    playerAnimatorHandler.PlayTargetAnimation("Shrug", true);
+                }
+            }
         }
         private void PerformLTWeaponArt(bool isTwoHanding)
         {

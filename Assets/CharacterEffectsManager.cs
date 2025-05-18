@@ -6,6 +6,9 @@ namespace wwy
     public class CharacterEffectsManager : MonoBehaviour
     {
         CharacterStatsManager characterStatsManager;
+        [Header("Current Range FX")]
+        public GameObject currentRangedFX;
+
         [Header("Damage FX")]
         public GameObject bloodSplatterFX;
         [Header("Weapon FX")]

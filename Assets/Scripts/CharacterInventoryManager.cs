@@ -12,6 +12,7 @@ namespace wwy
         public ConsumableItem currentConsumableItem;
         [Header("Quick Slot Items")]
         public SpellItem currentSpell;
+        public RangedAmmoItem currentAmmo;
         public WeaponItem rightWeapon;
         public WeaponItem leftWeapon;
         public WeaponItem unarmedWeapon;

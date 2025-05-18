@@ -167,6 +167,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Hold RB",
+                    "type": "Button",
+                    "id": "950e581d-3943-42ea-bf8c-5f84a9ea45ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Critical Attack",
                     "type": "PassThrough",
                     "id": "afe17da0-831c-422d-8af4-2f8bfb8c8462",
@@ -398,6 +407,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "567f12e4-6eb9-4750-a33c-3fbbacc53160",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hold RB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
