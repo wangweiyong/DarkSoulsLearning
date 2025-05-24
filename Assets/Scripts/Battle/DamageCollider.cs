@@ -25,8 +25,8 @@ namespace wwy
         public float poiseBreak;
         public float offensivePoiseBonus;
 
-        bool shieldHasBeenHit;
-        bool hasBeenParried;
+        protected bool shieldHasBeenHit;
+        protected bool hasBeenParried;
         protected string currentDamageAnimation;
 
         protected virtual void Awake()
@@ -66,7 +66,7 @@ namespace wwy
                 }
             }
         }
-        private void OnTriggerEnter(Collider collision)
+        protected virtual void OnTriggerEnter(Collider collision)
         {
             //Debug.Log("Detect Collider" + collision.name);
             if(collision.tag == "Character")

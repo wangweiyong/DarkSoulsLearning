@@ -40,7 +40,7 @@ namespace wwy
             isJumping = animator.GetBool("isJumping");
             animator.SetBool("isInAir", isInAir);
             animator.SetBool("isBlocking", isBlocking);
-            animator.SetBool("isTwoHandingWeaon", isTwoHandingWeapon);
+            animator.SetBool("isTwoHandingLocomotion", isTwoHandingWeapon);
             isUsingLeftHand = animator.GetBool("isUsingLeftHand");
             isUsingRightHand = animator.GetBool("isUsingRightHand");
             isInvulnerable = animator.GetBool("isInvulnerable");

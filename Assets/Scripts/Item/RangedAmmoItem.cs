@@ -20,7 +20,7 @@ namespace wwy
         public int currentAmount = 99;
 
         [Header("Ammo Base Damage")]
-        public float physicalDamage = 0;
+        public int physicalDamage = 50;
         //magic damage
         //fire damage
         //dark damage

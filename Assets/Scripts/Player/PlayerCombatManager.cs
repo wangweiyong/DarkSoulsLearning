@@ -203,7 +203,54 @@ namespace wwy
             playerAnimatorHandler.PlayTargetAnimation("Bow_TH_Draw_01", true);
             GameObject loadedArrow = Instantiate(playerInventoryManager.currentAmmo.loadedItemModel, playerWeaponSlotManger.leftHandSlot.transform);
             //animate the bow 
+            Animator bowAnimator = playerWeaponSlotManger.rightHandSlot.GetComponentInChildren<Animator>();
+            bowAnimator.SetBool("isDrawn", true);
+            bowAnimator.Play("BOW_TH_DRAW_01");
             playerEffectsManager.currentRangedFX = loadedArrow;
+        }
+
+        public void FireArrowAction()
+        {
+            //create live arrow at specific location
+            //give ammo velocity
+            //destory previous loaded arrow fx
+            //set live arrow damage
+            //animate the bow firing the arrow
+            ArrowInstantiationLocotion arrowInstantiationLocotion;
+            arrowInstantiationLocotion = playerWeaponSlotManger.rightHandSlot.GetComponentInChildren<ArrowInstantiationLocotion>();
+
+            Animator bowAnimator = playerWeaponSlotManger.rightHandSlot.GetComponentInChildren<Animator>();
+            bowAnimator.SetBool("isDrawn", false);
+            bowAnimator.Play("BOW_TH_FIRE_01");
+            Destroy(playerEffectsManager.currentRangedFX); // destroy the loaded arrow model
+
+            //reset the player holding arrow flag
+            playerAnimatorHandler.PlayTargetAnimation("BOW_TH_FIRE_01", true);
+            playerAnimatorHandler.animator.SetBool("isHoldingArrow", false);
+
+            GameObject liveArrow = Instantiate(playerInventoryManager.currentAmmo.liveAmmoMode, arrowInstantiationLocotion.transform.position, cameraHandler.cameraPivotTransform.rotation);
+            Rigidbody rigidBody = liveArrow.GetComponentInChildren<Rigidbody>();
+            RangedProjectileDamageCollider damageCollider = liveArrow.GetComponentInChildren<RangedProjectileDamageCollider>();
+
+            if(cameraHandler.currentLockOnTarget != null)
+            {
+                //since while locked we are always facing our target we can copy our facing direction to our arrow facing when fired
+                Quaternion arrowRotation = Quaternion.LookRotation(transform.forward);
+                liveArrow.transform.rotation = arrowRotation;
+            }
+            else
+            {
+                liveArrow.transform.rotation = Quaternion.Euler(cameraHandler.cameraPivotTransform.eulerAngles.x, playerManager.lockOnTransform.eulerAngles.y, 0);
+            }
+            rigidBody.AddForce(liveArrow.transform.forward * playerInventoryManager.currentAmmo.forwardVelocity);
+            rigidBody.AddForce(liveArrow.transform.up * playerInventoryManager.currentAmmo.upwardVelocity);
+            rigidBody.useGravity = playerInventoryManager.currentAmmo.useGravity;
+            rigidBody.mass = playerInventoryManager.currentAmmo.ammoMass;
+            liveArrow.transform.parent = null;
+
+            damageCollider.characterManager = playerManager;
+            damageCollider.ammoItem = playerInventoryManager.currentAmmo;
+            damageCollider.physicalDamage = playerInventoryManager.currentAmmo.physicalDamage;
         }
         private void PerformRBRangedAction()
         {

@@ -3115,6 +3115,8 @@ MonoBehaviour:
   leftHandDamageCollider: {fileID: 0}
   rightHandDamageCollider: {fileID: 0}
   attackingWeapon: {fileID: 0}
+  rightHandIKTarget: {fileID: 0}
+  leftHandIKTarget: {fileID: 0}
 --- !u!114 &243944447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3209,6 +3211,7 @@ MonoBehaviour:
   isUsingRightHand: 0
   isUsingLeftHand: 0
   isTwoHandingWeapon: 0
+  isHoldingArrow: 0
   isRotateingWithRootMotion: 0
   canRotate: 0
   isSprinting: 0
@@ -3273,6 +3276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a0146d75a4aaf4f8922c8dc60ef00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRangedFX: {fileID: 0}
   bloodSplatterFX: {fileID: 0}
   rightWeaponFX: {fileID: 0}
   leftWeaponFX: {fileID: 0}
@@ -3302,6 +3306,7 @@ MonoBehaviour:
   currentLegEquipment: {fileID: 0}
   currentConsumableItem: {fileID: 0}
   currentSpell: {fileID: 0}
+  currentAmmo: {fileID: 0}
   rightWeapon: {fileID: 11400000, guid: d7226d73a4b684e418799c59866ca57d, type: 2}
   leftWeapon: {fileID: 0}
   unarmedWeapon: {fileID: 11400000, guid: 57b6ab04a59aff842b71ccf316d88767, type: 2}
@@ -3344,6 +3349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d57505b777fbc74c87dc46ce15ede1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRangedFX: {fileID: 0}
   bloodSplatterFX: {fileID: 0}
   rightWeaponFX: {fileID: 0}
   leftWeaponFX: {fileID: 0}
@@ -3411,6 +3417,8 @@ MonoBehaviour:
   leftHandDamageCollider: {fileID: 0}
   rightHandDamageCollider: {fileID: 0}
   attackingWeapon: {fileID: 0}
+  rightHandIKTarget: {fileID: 0}
+  leftHandIKTarget: {fileID: 0}
 --- !u!114 &245623356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3468,7 +3476,8 @@ MonoBehaviour:
   currentLegEquipment: {fileID: 11400000, guid: 63be6e22ed2fbe444944230276d5a1fb, type: 2}
   currentConsumableItem: {fileID: 11400000, guid: 062d95a5e0a7a4d47a447a00e9423dbb, type: 2}
   currentSpell: {fileID: 11400000, guid: ba8597f845a42224487c45783b259431, type: 2}
-  rightWeapon: {fileID: 11400000, guid: 9b1f55e17002d3648873bacaa8a9486c, type: 2}
+  currentAmmo: {fileID: 11400000, guid: 46bbf80e4e67bc7419535c1d5171af6c, type: 2}
+  rightWeapon: {fileID: 11400000, guid: 0958f0d8cdec30348a94660d330c3260, type: 2}
   leftWeapon: {fileID: 0}
   unarmedWeapon: {fileID: 11400000, guid: 57b6ab04a59aff842b71ccf316d88767, type: 2}
   weaponsInRightHandSlots:
@@ -3506,6 +3515,7 @@ MonoBehaviour:
   isUsingRightHand: 0
   isUsingLeftHand: 0
   isTwoHandingWeapon: 0
+  isHoldingArrow: 0
   isRotateingWithRootMotion: 0
   canRotate: 0
   isSprinting: 0
@@ -3550,6 +3560,7 @@ MonoBehaviour:
   lt_Input: 0
   lb_Input: 0
   critical_Attack_Input: 0
+  hold_rb_Input: 0
   jump_Input: 0
   inventory_Input: 0
   d_Pad_Up: 0
@@ -3558,6 +3569,7 @@ MonoBehaviour:
   d_Pad_Right: 0
   right_Stick_Right_Input: 0
   left_Stick_Left_Input: 0
+  fireFlag: 0
   durationForRoll2Sprint: 0.3
   criticalAttackRayCastStartPoint: {fileID: 1829575321}
 --- !u!114 &245623360
@@ -8314,6 +8326,8 @@ MonoBehaviour:
   leftHandDamageCollider: {fileID: 0}
   rightHandDamageCollider: {fileID: 0}
   attackingWeapon: {fileID: 0}
+  rightHandIKTarget: {fileID: 0}
+  leftHandIKTarget: {fileID: 0}
 --- !u!1 &1218731697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8985,6 +8999,7 @@ MonoBehaviour:
   isUsingRightHand: 0
   isUsingLeftHand: 0
   isTwoHandingWeapon: 0
+  isHoldingArrow: 0
   isRotateingWithRootMotion: 0
   canRotate: 0
   isSprinting: 0

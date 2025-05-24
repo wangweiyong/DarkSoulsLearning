@@ -140,6 +140,7 @@ namespace wwy
             //HandleCriticalAttackInput();
             HandleUseConsumableInput();
             HandleHoldRBInput();
+            HandleFireBowInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -384,12 +385,23 @@ namespace wwy
             }
         }
         
+        private void HandleFireBowInput()
+        {
+            if (fireFlag)
+            {
+                if (playerManager.isHoldingArrow)
+                {
+                    fireFlag = false;
+                    playerCombatManager.FireArrowAction();
+                }
+            }
+        }
         private void HandleHoldRBInput()
         {
             if (hold_rb_Input)
             {
                 //check if we are holding a bow
-                if(playerInventoryManager.rightWeapon.weaponType == WeaponType.Bow)
+                if (playerInventoryManager.rightWeapon.weaponType == WeaponType.Bow)
                 {
                     //decide action
                     playerCombatManager.HandleHoldRBAction();
