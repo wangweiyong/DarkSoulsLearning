@@ -4,15 +4,18 @@ namespace wwy
 {
     public class PlayerManager : CharacterManager
     {
-        InputHandler inputHandler;
+        public InputHandler inputHandler;
         PlayerLocomotionManager playerLocomotion;
-        PlayerStatsManager playerStatsManager;
-        PlayerEffectsManager playerEffectsManager;
+        public PlayerStatsManager playerStatsManager;
+        public PlayerInventoryManager playerInventoryManager;
+        public PlayerEffectsManager playerEffectsManager;
         public GameObject interactableUIGameObject;
         public GameObject itemInteractableGameObject;
+        public PlayerWeaponSlotManager playerWeaponSlotManager;
+        public PlayerCombatManager playerCombatManager;
         InteractableUI interactableUI;
         Animator animator;
-        PlayerAnimatorManager playerAnimatorManager;
+        public PlayerAnimatorManager playerAnimatorManager;
         CameraHandler cameraHandler;
 
         protected override void Awake()
@@ -26,6 +29,9 @@ namespace wwy
             interactableUI = FindObjectOfType<InteractableUI>();
             playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
             playerEffectsManager = GetComponent<PlayerEffectsManager>();
+            playerInventoryManager = GetComponent<PlayerInventoryManager>();
+            playerWeaponSlotManager = GetComponent<PlayerWeaponSlotManager>();
+            playerCombatManager = GetComponent<PlayerCombatManager>();
         }
         private void Start()
         {

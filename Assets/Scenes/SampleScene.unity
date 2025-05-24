@@ -3398,6 +3398,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b9015a082b7fd4c99eafca75afeb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oh_light_attack_01: OH_Light_Attack_01
+  oh_light_attack_02: OH_Light_Attack_02
+  oh_light_attack_03: OH_Light_Attack_03
+  oh_light_attack_04: OH_Light_Attack_04
+  oh_heavy_attack_01: OH_Heavy_Attack_01
+  oh_heavy_attack_02: OH_Heavy_Attack_02
+  th_light_attack_01: TH_Light_Attack_01
+  th_light_attack_02: TH_Light_Attack_02
+  th_heavy_attack_01: TH_Heavy_Attack_01
+  th_heavy_attack_02: TH_Heavy_Attack_02
+  oh_running_attack_01: OH_Running_Attack_01
+  oh_jumping_attack_01: OH_Jumping_Attack_01
+  th_running_attack_01: TH_Running_Attack_01
+  th_jumping_attack_01: TH_Jumping_Attack_01
   lastAttack: 
 --- !u!114 &245623355
 MonoBehaviour:
@@ -3478,7 +3492,7 @@ MonoBehaviour:
   currentConsumableItem: {fileID: 11400000, guid: 062d95a5e0a7a4d47a447a00e9423dbb, type: 2}
   currentSpell: {fileID: 11400000, guid: ba8597f845a42224487c45783b259431, type: 2}
   currentAmmo: {fileID: 11400000, guid: 46bbf80e4e67bc7419535c1d5171af6c, type: 2}
-  rightWeapon: {fileID: 11400000, guid: 0958f0d8cdec30348a94660d330c3260, type: 2}
+  rightWeapon: {fileID: 11400000, guid: 9b1f55e17002d3648873bacaa8a9486c, type: 2}
   leftWeapon: {fileID: 0}
   unarmedWeapon: {fileID: 11400000, guid: 57b6ab04a59aff842b71ccf316d88767, type: 2}
   weaponsInRightHandSlots:
@@ -3526,8 +3540,15 @@ MonoBehaviour:
   isJumping: 0
   isFiringSpell: 0
   pendingCriticalDamage: 0
+  inputHandler: {fileID: 0}
+  playerStatsManager: {fileID: 0}
+  playerInventoryManager: {fileID: 0}
+  playerEffectsManager: {fileID: 0}
   interactableUIGameObject: {fileID: 8395231060974552804}
   itemInteractableGameObject: {fileID: 8395231061998890204}
+  playerWeaponSlotManager: {fileID: 0}
+  playerCombatManager: {fileID: 0}
+  playerAnimatorManager: {fileID: 0}
 --- !u!114 &245623359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5200,6 +5221,7 @@ MonoBehaviour:
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 0
+  cameraObject: {fileID: 0}
   lookSpeed: 0.7
   leftAndRightAimingLookSpeed: 50
   originalSpeed: 0
