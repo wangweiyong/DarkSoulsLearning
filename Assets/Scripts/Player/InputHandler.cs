@@ -149,9 +149,14 @@ namespace wwy
             {
                 horizontal = movementInput.x;
                 vertical = movementInput.y;
-                moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical) / 2);
+                moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
                 //float inputMagnitude = Mathf.Clamp01(Mathf.Sqrt(horizontal * horizontal + vertical * vertical));
                 //Debug.Log($"{moveAmount}, {inputMagnitude}");
+                if(moveAmount > 0.5f)
+                {
+                    moveAmount = 0.5f;
+                }
+                
                 mouseX = cameraInput.x;
                 mouseY = cameraInput.y;
             }
@@ -251,6 +256,7 @@ namespace wwy
                 {
                     uiManager.crossHair.SetActive(false);
                     playerManager.isAiming = false;
+                    cameraHandler.ResetAimCameraRotation();
                 }
                 if (blockingCollider.blockingCollider.enabled)
                 {

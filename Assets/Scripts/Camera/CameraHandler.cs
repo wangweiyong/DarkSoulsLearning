@@ -157,6 +157,10 @@ namespace wwy
             targetRotationX = Quaternion.Slerp(cameraTransform.localRotation, targetRotationX, 1);
             cameraTransform.localRotation = targetRotationX;
         }
+        public void ResetAimCameraRotation()
+        {
+            cameraTransform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
         private void HandleCameraCollisions(float delta)
         {
             float targetPosition = defaultPosition;

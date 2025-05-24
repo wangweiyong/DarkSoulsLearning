@@ -24,4 +24,4 @@ MonoBehaviour:
   physicalDamage: 25
   loadedItemModel: {fileID: 3494759983405798009, guid: 23b2ca4f3eff62c4eb20fdfbb8655f77, type: 3}
   liveAmmoMode: {fileID: 3494759983405798009, guid: 2dec5fad0c8c3d74ab525010cdb19775, type: 3}
-  penetratedMode: {fileID: 3494759983405798009, guid: 2dec5fad0c8c3d74ab525010cdb19775, type: 3}
+  penetratedMode: {fileID: 3494759983405798009, guid: c565e7b148d7ad64fa98be21ddf0cfc1, type: 3}

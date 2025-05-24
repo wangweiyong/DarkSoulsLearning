@@ -55,6 +55,19 @@ namespace wwy
                 IllusionaryWall illusionaryWall = collision.GetComponent<IllusionaryWall>();
                 illusionaryWall.wallHasBeenHit = true;
             }
+            
+            if(!hasAlreadyPenetratedSurface && penetratedProjectile == null)
+            {
+                hasAlreadyPenetratedSurface = true;
+                Vector3 contactPoint = collision.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                GameObject penetrateArrow = Instantiate(ammoItem.penetratedMode, contactPoint, Quaternion.Euler(0, 0, 0));
+
+                penetratedProjectile = penetrateArrow;
+                penetrateArrow.transform.parent = collision.transform;
+                penetrateArrow.transform.rotation = Quaternion.LookRotation(gameObject.transform.forward);
+            }
+
+            Destroy(transform.root.gameObject);
         }
     }
 }
