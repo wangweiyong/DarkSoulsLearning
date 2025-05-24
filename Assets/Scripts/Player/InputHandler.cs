@@ -215,7 +215,7 @@ namespace wwy
             }
             if (rt_Input)
             {
-                playerCombatManager.HandleHeavyAttack(playerInventoryManager.rightWeapon);
+                playerCombatManager.HandleRTAction();
             }
 
             if (lt_Input)
