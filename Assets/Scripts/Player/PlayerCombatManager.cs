@@ -238,7 +238,10 @@ namespace wwy
         }
         private void PerformLBAimingAction()
         {
-            //playerAnimatorHandler.animator.SetBool("isAiming", true);
+            if (playerManager.isAiming) return;
+            inputHandler.uiManager.crossHair.SetActive(true);
+            playerManager.isAiming = true;
+
         }
         public void HandleHoldRBAction()
         {
@@ -287,15 +290,32 @@ namespace wwy
             Rigidbody rigidBody = liveArrow.GetComponentInChildren<Rigidbody>();
             RangedProjectileDamageCollider damageCollider = liveArrow.GetComponentInChildren<RangedProjectileDamageCollider>();
 
-            if(cameraHandler.currentLockOnTarget != null)
+            if (playerManager.isAiming)
             {
-                //since while locked we are always facing our target we can copy our facing direction to our arrow facing when fired
-                Quaternion arrowRotation = Quaternion.LookRotation(transform.forward);
-                liveArrow.transform.rotation = arrowRotation;
+                Ray ray = cameraHandler.cameraObject.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                RaycastHit hitPoint;
+                if(Physics.Raycast(ray, out hitPoint, 100.0f))
+                {
+                    liveArrow.transform.LookAt(hitPoint.point);
+                    Debug.Log(hitPoint.transform.name);
+                }
+                else
+                {
+                    liveArrow.transform.rotation = Quaternion.Euler(cameraHandler.cameraTransform.localEulerAngles.x, playerManager.lockOnTransform.eulerAngles.y, 0);
+                }
             }
             else
             {
-                liveArrow.transform.rotation = Quaternion.Euler(cameraHandler.cameraPivotTransform.eulerAngles.x, playerManager.lockOnTransform.eulerAngles.y, 0);
+                if (cameraHandler.currentLockOnTarget != null)
+                {
+                    //since while locked we are always facing our target we can copy our facing direction to our arrow facing when fired
+                    Quaternion arrowRotation = Quaternion.LookRotation(cameraHandler.currentLockOnTarget.lockOnTransform.position - liveArrow.transform.position);
+                    liveArrow.transform.rotation = arrowRotation;
+                }
+                else
+                {
+                    liveArrow.transform.rotation = Quaternion.Euler(cameraHandler.cameraPivotTransform.eulerAngles.x, playerManager.lockOnTransform.eulerAngles.y, 0);
+                }
             }
             rigidBody.AddForce(liveArrow.transform.forward * playerInventoryManager.currentAmmo.forwardVelocity);
             rigidBody.AddForce(liveArrow.transform.up * playerInventoryManager.currentAmmo.upwardVelocity);

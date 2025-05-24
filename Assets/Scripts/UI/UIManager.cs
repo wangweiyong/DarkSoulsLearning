@@ -10,6 +10,8 @@ namespace wwy
         public PlayerInventoryManager playerInventory;
         public EquipmentWindowUI equipmentWindowUI;
         private QuickSlotsUI quickSlotUI;
+        [Header("HUD")]
+        public GameObject crossHair;
         [Header("UI Windows")]
         public GameObject hudWindow;
         public GameObject selectWindow;

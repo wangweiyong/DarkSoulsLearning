@@ -51,7 +51,7 @@ namespace wwy
         PlayerCombatManager playerCombatManager;
         PlayerInventoryManager playerInventoryManager;
         PlayerManager playerManager;
-        UIManager uiManager;
+        public UIManager uiManager;
         CameraHandler cameraHandler;
         BlockingCollider blockingCollider;
         PlayerEffectsManager playerEffectsManager;
@@ -247,15 +247,15 @@ namespace wwy
             }
             else if(lb_Input == false)
             {
-                playerManager.isBlocking = false;
+                if (playerManager.isAiming)
+                {
+                    uiManager.crossHair.SetActive(false);
+                    playerManager.isAiming = false;
+                }
                 if (blockingCollider.blockingCollider.enabled)
                 {
+                    playerManager.isBlocking = false;
                     blockingCollider.DisableBlockingCollider();
-                }
-
-                if (playerManager.isHoldingArrow)
-                {
-                    //playerAnimatorManager.animator.SetBool("isAiming", false);
                 }
             }
         }
