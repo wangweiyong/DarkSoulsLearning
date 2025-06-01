@@ -105,14 +105,14 @@ namespace wwy
         Vector3 normalVector = new Vector3(0,1,0);
         Vector3 targetPosition;
 
-        public void HandleRotation(float delta)
+        public void HandleRotation()
         {
             if (playerAnimationManager.canRotate)
             {
                 if (playerManager.isAiming)
                 {
                     Quaternion targetRotation = Quaternion.Euler(0, cameraHandler.cameraTransform.eulerAngles.y, 0);
-                    Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, 1);
                     transform.rotation = playerRotation;
                 }
                 else
@@ -166,7 +166,7 @@ namespace wwy
 
                         float rs = rotationSpeed;
                         Quaternion tr = Quaternion.LookRotation(targetDir);
-                        Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * rotationSpeed * delta);
+                        Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * rotationSpeed * Time.deltaTime);
                         myTransform.rotation = targetRotation;
                     }
                 }
@@ -178,7 +178,7 @@ namespace wwy
         }
         private Vector3 lastEulerRot;
         private float lastMoveAmount;
-        public void HandleMovement(float delta)
+        public void HandleMovement()
         {
             if (inputHandler.rollFlag)
             {
@@ -245,7 +245,7 @@ namespace wwy
             }
             return angle;
         }
-        public void HandleRollingAndSprint(float delta)
+        public void HandleRollingAndSprint()
         {
             if (playerAnimationManager.animator.GetBool("isInteracting"))
             {
@@ -260,6 +260,7 @@ namespace wwy
 
             if (inputHandler.rollFlag)
             {
+                inputHandler.rollFlag = false;
                 moveDirection = cameraObject.forward * inputHandler.vertical;
                 moveDirection += cameraObject.right * inputHandler.horizontal;
 
@@ -282,7 +283,7 @@ namespace wwy
         }
         
         
-        public void HandleFalling(float delta, Vector3 moveDirection)
+        public void HandleFalling(Vector3 moveDirection)
         {
             playerManager.isGrounded = false;
             RaycastHit hit;

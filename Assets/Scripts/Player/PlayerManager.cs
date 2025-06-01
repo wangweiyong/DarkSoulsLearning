@@ -14,9 +14,10 @@ namespace wwy
         public PlayerWeaponSlotManager playerWeaponSlotManager;
         public PlayerCombatManager playerCombatManager;
         InteractableUI interactableUI;
+        public PlayerEquipmentManager playerEquipmentManager;
         Animator animator;
         public PlayerAnimatorManager playerAnimatorManager;
-        CameraHandler cameraHandler;
+        public CameraHandler cameraHandler;
 
         protected override void Awake()
         {
@@ -24,6 +25,7 @@ namespace wwy
             backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
             inputHandler = GetComponent<InputHandler>();
             animator = GetComponentInChildren<Animator>();
+            playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
             playerLocomotion = GetComponent<PlayerLocomotionManager>();
             interactableUI = FindObjectOfType<InteractableUI>();
@@ -47,15 +49,13 @@ namespace wwy
             animator.SetBool("isInAir", isInAir);
             animator.SetBool("isBlocking", isBlocking);
             animator.SetBool("isTwoHandingLocomotion", isTwoHandingWeapon);
-            isUsingLeftHand = animator.GetBool("isUsingLeftHand");
-            isUsingRightHand = animator.GetBool("isUsingRightHand");
             isInvulnerable = animator.GetBool("isInvulnerable");
             isFiringSpell = animator.GetBool("isFiringSpell");
             isHoldingArrow = animator.GetBool("isHoldingArrow");
             animator.SetBool("isDead", playerStatsManager.isDead);
             inputHandler.TickInput(delta);
             playerAnimatorManager.canRotate = animator.GetBool("canRotate");
-            playerLocomotion.HandleRollingAndSprint(delta);
+            playerLocomotion.HandleRollingAndSprint();
             playerLocomotion.HandleJumping();
 
             playerStatsManager.RegenerateStamina();
@@ -66,12 +66,10 @@ namespace wwy
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
-            float delta = Time.deltaTime;
-            playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
-            playerLocomotion.HandleMovement(delta);
-            playerLocomotion.HandleRotation(delta);
+            playerLocomotion.HandleFalling(playerLocomotion.moveDirection);
+            playerLocomotion.HandleMovement();
+            playerLocomotion.HandleRotation();
             playerEffectsManager.HandleAllBuildUpEffects();
-            inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
         }
         private void LateUpdate()
@@ -82,18 +80,12 @@ namespace wwy
                 cameraHandler.FollowTarget(delta);
                 cameraHandler.HandleCameraRotation();
             }
-
-            //Update InputHandler
-            inputHandler.rb_Input = false;
-            inputHandler.rt_Input = false;
             inputHandler.d_Pad_Down = false;
             inputHandler.d_Pad_Left = false;
             inputHandler.d_Pad_Right = false;
             inputHandler.d_Pad_Up = false;
             inputHandler.a_Input = false;
-            inputHandler.jump_Input = false;
             inputHandler.inventory_Input = false;
-            inputHandler.lt_Input = false;  
             isSprinting = inputHandler.b_Input;
 
             if (isInAir)

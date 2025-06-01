@@ -121,5 +121,11 @@ namespace wwy {
                 totalPoiseDefense = armorPoiseBonus;
             }
         }
+
+
+        public void DrainStaminaBasedOnAttackType()
+        {
+
+        }
     }
 }

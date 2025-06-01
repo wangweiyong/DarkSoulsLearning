@@ -1565,18 +1565,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isUsingLeftHand
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: isUsingRightHand
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: isInvulnerable
     m_Type: 4
     m_DefaultFloat: 0
@@ -2178,6 +2166,8 @@ MonoBehaviour:
   canRotateStatus: 1
   isRotatingWithRootMotion: isRotatingWithRootMotion
   isRotatingWithRootMotionStatus: 0
+  isMirroredBool: isMirrored
+  isMirroredStatus: 0
   isPhaseShifting: isPhaseShifting
   isPhaseShiftingStatus: 0
 --- !u!1101 &4943629666666009720
@@ -2841,3 +2831,5 @@ MonoBehaviour:
   canRotateStatus: 1
   isRotatingWithRootMotion: isRotatingWithRootMotion
   isRotatingWithRootMotionStatus: 0
+  isMirroredBool: isMirrored
+  isMirroredStatus: 0

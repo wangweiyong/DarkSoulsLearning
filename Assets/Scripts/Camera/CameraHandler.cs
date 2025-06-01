@@ -98,8 +98,8 @@ namespace wwy
         }
         public void HandleStandardCameraRotation()
         {
-                leftAndRightAngle += (inputHandler.mouseX * lookSpeed);
-                upAndDownAngle -= (inputHandler.mouseY * pivotSpeed);
+                leftAndRightAngle += (inputHandler.mouseX * lookSpeed) * Time.deltaTime;
+                upAndDownAngle -= (inputHandler.mouseY * pivotSpeed) * Time.deltaTime;
                 upAndDownAngle = Mathf.Clamp(upAndDownAngle, minimumPivot, maximumPivot);
 
                 /* Vector3 rotation = Vector3.zero;
@@ -137,8 +137,8 @@ namespace wwy
 
         private void HandleAimedCameraRotation()
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            cameraPivotTransform.rotation = Quaternion.Euler(0, 0, 0);
+            //transform.rotation = Quaternion.Euler(0, 0, 0);
+            //cameraPivotTransform.rotation = Quaternion.Euler(0, 0, 0);
             Quaternion targetRotationX;
             Quaternion targetRotationY;
             Vector3 cameraRotationX = Vector3.zero;
@@ -156,6 +156,7 @@ namespace wwy
             targetRotationX = Quaternion.Euler(cameraRotationX);
             targetRotationX = Quaternion.Slerp(cameraTransform.localRotation, targetRotationX, 1);
             cameraTransform.localRotation = targetRotationX;
+
         }
         public void ResetAimCameraRotation()
         {

@@ -8,6 +8,7 @@ namespace wwy
         SpellCaster,
         Unarmed,
         StraightSword,
+        SmallShield,
         Shield,
         Bow
     }

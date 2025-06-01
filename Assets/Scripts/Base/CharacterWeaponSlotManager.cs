@@ -23,10 +23,6 @@ namespace wwy
         public DamageCollider leftHandDamageCollider;
         public DamageCollider rightHandDamageCollider;
 
-
-        [Header("Attacking Weapon")]
-        public WeaponItem attackingWeapon;
-
         [Header("Hand IK Target")]
         public RightHandIKTarget rightHandIKTarget;
         public LeftHandIKTarget leftHandIKTarget;
@@ -173,7 +169,8 @@ namespace wwy
         }
         public virtual void GrantWeaponAttackingPoiseBonus()
         {
-            characterStatsManager.totalPoiseDefense += attackingWeapon.offensivePoiseBonus;
+            WeaponItem currentWeaponBeingUsed = characterInventoryManager.currentItemBeingUsed as WeaponItem;
+            characterStatsManager.totalPoiseDefense += currentWeaponBeingUsed.offensivePoiseBonus;
         }
 
         public virtual void ResetWeaponAttackingPoiseBonus()

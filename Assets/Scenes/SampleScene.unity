@@ -3114,7 +3114,6 @@ MonoBehaviour:
   backSlot: {fileID: 0}
   leftHandDamageCollider: {fileID: 0}
   rightHandDamageCollider: {fileID: 0}
-  attackingWeapon: {fileID: 0}
   rightHandIKTarget: {fileID: 0}
   leftHandIKTarget: {fileID: 0}
 --- !u!114 &243944447
@@ -3302,6 +3301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14f3c96e8497c7469a687202ecdabaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentItemBeingUsed: {fileID: 0}
   currentHelmetEquipment: {fileID: 0}
   currentTorsoEquipment: {fileID: 0}
   currentLegEquipment: {fileID: 0}
@@ -3431,7 +3431,6 @@ MonoBehaviour:
   backSlot: {fileID: 0}
   leftHandDamageCollider: {fileID: 0}
   rightHandDamageCollider: {fileID: 0}
-  attackingWeapon: {fileID: 0}
   rightHandIKTarget: {fileID: 0}
   leftHandIKTarget: {fileID: 0}
 --- !u!114 &245623356
@@ -3486,6 +3485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531183dc2d3ed2449a6b7332b04ea72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentItemBeingUsed: {fileID: 0}
   currentHelmetEquipment: {fileID: 11400000, guid: a9fbde68e5d13f544908c6b1ea4092d1, type: 2}
   currentTorsoEquipment: {fileID: 11400000, guid: 5c67ac87dc7d49642ad953b8ef7778f4, type: 2}
   currentLegEquipment: {fileID: 11400000, guid: 63be6e22ed2fbe444944230276d5a1fb, type: 2}
@@ -3493,7 +3493,7 @@ MonoBehaviour:
   currentSpell: {fileID: 11400000, guid: ba8597f845a42224487c45783b259431, type: 2}
   currentAmmo: {fileID: 11400000, guid: 46bbf80e4e67bc7419535c1d5171af6c, type: 2}
   rightWeapon: {fileID: 11400000, guid: 9b1f55e17002d3648873bacaa8a9486c, type: 2}
-  leftWeapon: {fileID: 0}
+  leftWeapon: {fileID: 11400000, guid: 02ba222acfc14cb47aaa12f7de39afd2, type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 57b6ab04a59aff842b71ccf316d88767, type: 2}
   weaponsInRightHandSlots:
   - {fileID: 11400000, guid: 9b1f55e17002d3648873bacaa8a9486c, type: 2}
@@ -3548,6 +3548,7 @@ MonoBehaviour:
   itemInteractableGameObject: {fileID: 8395231061998890204}
   playerWeaponSlotManager: {fileID: 0}
   playerCombatManager: {fileID: 0}
+  playerEquipmentManager: {fileID: 0}
   playerAnimatorManager: {fileID: 0}
 --- !u!114 &245623359
 MonoBehaviour:
@@ -5222,12 +5223,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   cameraObject: {fileID: 0}
-  lookSpeed: 0.7
+  lookSpeed: 100
   leftAndRightAimingLookSpeed: 50
   originalSpeed: 0
   speedUpMultiplier: 1.5
   followSpeed: 0.1
-  pivotSpeed: 0.7
+  pivotSpeed: 100
   upAndDownAimingLookSpeed: 50
   minimumPivot: -35
   maximumPivot: 35
@@ -8461,7 +8462,6 @@ MonoBehaviour:
   backSlot: {fileID: 0}
   leftHandDamageCollider: {fileID: 0}
   rightHandDamageCollider: {fileID: 0}
-  attackingWeapon: {fileID: 0}
   rightHandIKTarget: {fileID: 0}
   leftHandIKTarget: {fileID: 0}
 --- !u!1 &1218731697

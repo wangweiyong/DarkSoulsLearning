@@ -4,6 +4,9 @@ namespace wwy
     public class CharacterInventoryManager : MonoBehaviour
     {
         protected CharacterWeaponSlotManager characterWeaponSlotManager;
+        [Header("Current Item Being Used")]
+        public Item currentItemBeingUsed;
+
         [Header("Current Equipment")]
         public HelmetEquipment currentHelmetEquipment;
         public TorsoEquipment currentTorsoEquipment;
