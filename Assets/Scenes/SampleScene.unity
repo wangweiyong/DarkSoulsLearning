@@ -19434,7 +19434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a404c00f4b01241b7a9fa95e8c57f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsManager: {fileID: 245623356}
+  playerManager: {fileID: 245623358}
   confimLevelUpButton: {fileID: 65679698}
   currentPlayerLevel: 0
   projectedPlayerLevel: 0
