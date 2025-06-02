@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace wwy
 {
     public class UIManager : MonoBehaviour
     {
-        public PlayerInventoryManager playerInventory;
+        PlayerManager playerManager;
         public EquipmentWindowUI equipmentWindowUI;
         private QuickSlotsUI quickSlotUI;
         [Header("HUD")]
         public GameObject crossHair;
+        public Text soulCount;
+
         [Header("UI Windows")]
         public GameObject hudWindow;
         public GameObject selectWindow;
         public GameObject weaponInventoryWindow;
         public GameObject equipmentScreenWindow;
+        public GameObject levelUpWindow;
 
         [Header("Equipment Window Slot Selected")]
         public bool rightHandSlot01Selected;
@@ -31,29 +35,31 @@ namespace wwy
         private void Awake()
         {
             quickSlotUI = GetComponentInChildren<QuickSlotsUI>();
+            playerManager = FindObjectOfType<PlayerManager>();
         }
 
         private void Start()
         {
             weaponInventorySlots = weaponInventorySlotsParent.GetComponentsInChildren<WeaponInventorySlot>();
-            equipmentWindowUI.LoadWeaponsOnEquipmentScreen(playerInventory);
-            quickSlotUI.UpdateCurrentConsumableIcon(playerInventory.currentConsumableItem);
-            quickSlotUI.UpdateCurrentSpellIcon(playerInventory.currentSpell);
+            equipmentWindowUI.LoadWeaponsOnEquipmentScreen(playerManager.playerInventoryManager);
+            quickSlotUI.UpdateCurrentConsumableIcon(playerManager.playerInventoryManager.currentConsumableItem);
+            quickSlotUI.UpdateCurrentSpellIcon(playerManager.playerInventoryManager.currentSpell);
+            soulCount.text = playerManager.playerStatsManager.currentSoulCount.ToString();
         }
         public void UpdateUI()
         {
             #region Weapon Inventory Slots
             for(int i = 0; i < weaponInventorySlots.Length; ++i)
             {
-                if(i < playerInventory.weaponsInventory.Count)
+                if(i < playerManager.playerInventoryManager.weaponsInventory.Count)
                 {
                     //ui格子少于玩家的库存武器数量
-                    if(weaponInventorySlots.Length < playerInventory.weaponsInventory.Count)
+                    if(weaponInventorySlots.Length < playerManager.playerInventoryManager.weaponsInventory.Count)
                     {
                         Instantiate(weaponInventorySlotPrefab, weaponInventorySlotsParent);
                         weaponInventorySlots = weaponInventorySlotsParent.GetComponentsInChildren<WeaponInventorySlot>();
                     }
-                    weaponInventorySlots[i].AddItem(playerInventory.weaponsInventory[i]);
+                    weaponInventorySlots[i].AddItem(playerManager.playerInventoryManager.weaponsInventory[i]);
                 }
                 else
                 {

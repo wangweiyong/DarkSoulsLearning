@@ -11,21 +11,29 @@ namespace wwy {
         public int teamIDNumber = 0;
 
 
-        public int healthLevel = 10;
         public int maxHealth;
         public int currentHealth;
 
-        public int staminaLevel = 10;
         public float maxStamina;
         public float currentStamina;
 
-        public int focusLevel = 10;
         public float maxFocusPoints;
         public float currentFocusPoints;
         public int soulsAwardedOnDeath = 50;
 
 
-        public int soulCount = 0;
+        public int currentSoulCount = 0;
+        [Header("Character Level")]
+        public int playerLevel = 1;
+        [Header("Stat Levels")]
+        public int healthLevel = 10;
+        public int staminaLevel = 10;
+        public int focusLevel = 10;
+        public int strengthLevel = 10;
+        public int dexterityLevel = 10;
+        public int intelligenceLevel = 10;
+        public int faithLevel = 10;
+        public int poiseLevel = 10;
 
         [Header("Poise")]
         public float totalPoiseDefense;//total poise during damage caclulation
@@ -122,6 +130,23 @@ namespace wwy {
             }
         }
 
+        public int SetMaxHealthFromHealthLevel()
+        {
+            maxHealth = healthLevel * 10;
+            return maxHealth;
+        }
+
+        public float SetMaxStaminaFromStaminaLevel()
+        {
+            maxStamina = staminaLevel * 10;
+            return maxStamina;
+        }
+
+        public float SetMaxFocusPointsFromFocusLevel()
+        {
+            maxFocusPoints = focusLevel * 10;
+            return maxFocusPoints;
+        }
 
         public void DrainStaminaBasedOnAttackType()
         {

@@ -31,7 +31,7 @@ namespace wwy
             }
             if(soulCountBar != null)
             {
-                soulCountBar.SetSoulCountText(playerStats.soulCount);
+                soulCountBar.SetSoulCountText(playerStats.currentSoulCount);
             }
         }
         public void InstantiateBossParticleFX()

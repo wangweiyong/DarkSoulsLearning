@@ -50,23 +50,6 @@ namespace wwy
             }
             healthBar.SetCurrentHealth(currentHealth);
         }
-        private int SetMaxHealthFromHealthLevel()
-        {
-            maxHealth = healthLevel * 10;
-            return maxHealth;
-        }
-
-        private float SetMaxStaminaFromStaminaLevel()
-        {
-            maxStamina = staminaLevel * 10;
-            return maxStamina;
-        }
-
-        private float SetMaxFocusPointsFromFocusLevel()
-        {
-            maxFocusPoints = focusLevel * 10;
-            return maxFocusPoints;
-        }
 
         public override void TakeDamageNoAnimation(int physicalDamage, int fireDamage)
         {
@@ -149,7 +132,7 @@ namespace wwy
 
         public void AddSoulds(int souls)
         {
-            soulCount = soulCount + souls;
+            currentSoulCount = currentSoulCount + souls;
         }
 
         public override void HandlePoiseResetTimer()

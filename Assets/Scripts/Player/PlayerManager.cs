@@ -4,6 +4,7 @@ namespace wwy
 {
     public class PlayerManager : CharacterManager
     {
+        public UIManager uIManager;
         public InputHandler inputHandler;
         PlayerLocomotionManager playerLocomotion;
         public PlayerStatsManager playerStatsManager;
@@ -34,6 +35,7 @@ namespace wwy
             playerInventoryManager = GetComponent<PlayerInventoryManager>();
             playerWeaponSlotManager = GetComponent<PlayerWeaponSlotManager>();
             playerCombatManager = GetComponent<PlayerCombatManager>();
+            uIManager = FindObjectOfType<UIManager>();
         }
         private void Start()
         {
